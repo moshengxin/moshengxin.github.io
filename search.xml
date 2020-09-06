@@ -32,8 +32,14 @@
 <p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br><a href="http://baidu.com/">百度</a></p>
 <p><code>  技术这个东西。只能自己慢慢摸索</code></p>
 ]]></content>
+      <categories>
+        <category>Java</category>
+        <category>List</category>
+        <category>开发</category>
+      </categories>
       <tags>
-        <tag>tags</tag>
+        <tag>教程</tag>
+        <tag>语法</tag>
       </tags>
   </entry>
 </search>
