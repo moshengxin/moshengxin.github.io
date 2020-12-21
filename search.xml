@@ -19,6 +19,25 @@
       </tags>
   </entry>
   <entry>
+    <title>Ping测试两个IP网络之间的连通性</title>
+    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
+<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
+<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
+<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
+<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
+<p><em>好记性不如烂笔头，多记录多学习</em></p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript中Array的一些常用方法和操作</title>
     <url>/2020/12/01/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<a id="more"></a>
@@ -43,25 +62,6 @@
       </categories>
       <tags>
         <tag>JavaScript Array</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ping测试两个IP网络之间的连通性</title>
-    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
-<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
-<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
-<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
-<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
-<p><em>好记性不如烂笔头，多记录多学习</em></p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -102,20 +102,6 @@
       </tags>
   </entry>
   <entry>
-    <title>postgres数据库备份和还原命令-亲测有效</title>
-    <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h2 id="cmd命令备份本地postgres数据库以及还原"><a href="#cmd命令备份本地postgres数据库以及还原" class="headerlink" title="cmd命令备份本地postgres数据库以及还原"></a>cmd命令备份本地postgres数据库以及还原</h2><p>ps:<br>1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>2、备份后的文件格式是.bak(其它格式我没有测试过)<br>3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>口令为你的数据库密码，回车。备份成功。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
-]]></content>
-      <categories>
-        <category>数据库 postgres</category>
-      </categories>
-      <tags>
-        <tag>postgresql 运维</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue element子组件中调用父组件数据</title>
     <url>/2020/07/03/vue%20element%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%B0%83%E7%94%A8%E7%88%B6%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<a id="more"></a>
@@ -146,6 +132,20 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>postgres数据库备份和还原命令-亲测有效</title>
+    <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h2 id="cmd命令备份本地postgres数据库以及还原"><a href="#cmd命令备份本地postgres数据库以及还原" class="headerlink" title="cmd命令备份本地postgres数据库以及还原"></a>cmd命令备份本地postgres数据库以及还原</h2><p>ps:<br>1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>2、备份后的文件格式是.bak(其它格式我没有测试过)<br>3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>口令为你的数据库密码，回车。备份成功。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
+]]></content>
+      <categories>
+        <category>数据库 postgres</category>
+      </categories>
+      <tags>
+        <tag>postgresql 运维</tag>
       </tags>
   </entry>
   <entry>
