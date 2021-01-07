@@ -6,7 +6,7 @@
   <link href="http://14uy2u.coding-pages.com/atom.xml" rel="self"/>
   
   <link href="http://14uy2u.coding-pages.com/"/>
-  <updated>2020-12-02T04:27:07.243Z</updated>
+  <updated>2021-01-07T08:51:21.351Z</updated>
   <id>http://14uy2u.coding-pages.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ActiveMq学习</title>
+    <link href="http://14uy2u.coding-pages.com/2021/01/07/ActiveMq/"/>
+    <id>http://14uy2u.coding-pages.com/2021/01/07/ActiveMq/</id>
+    <published>2021-01-07T08:19:18.000Z</published>
+    <updated>2021-01-07T08:51:21.351Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="ActiveMq相关认识"><a href="#ActiveMq相关认识" class="headerlink" title="ActiveMq相关认识"></a>ActiveMq相关认识</h1><p>   ActiveMq是一个消息队列中间件，类似的还有RabbitMQ、Kafka等。</p><h2 id="ActiveMq的优点或者作用"><a href="#ActiveMq的优点或者作用" class="headerlink" title="ActiveMq的优点或者作用"></a>ActiveMq的优点或者作用</h2><h3 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h3><ul><li>在大型网站中最常见使用消息中间件，能降低应用的耦合度。<br>比如：在订单系统和库存系统中引入消息中间件，如果用户下单成功后，库存系统刚好发生宕机故障，也不会影响数据，因为下单成功后，已经把减库存的操作持久化告诉ActiveMq，ActiveMq会在库存系统恢复正常的时候提醒写入数据到库存系统。<h3 id="流量消峰-解决高并发场景"><a href="#流量消峰-解决高并发场景" class="headerlink" title="流量消峰(解决高并发场景)"></a>流量消峰(解决高并发场景)</h3></li><li>没有中间件的之前，在整点秒杀和抢购活动中，大量的同一请求会同时对数据库进行CRUD操作。因为ActiveMq是先进先出，所以当有大量同求时，先经过ActiveMq把请求集中起来统一管理，采用定义好的规则把请求分批处理。这样就能直到保护数据库的作用。<br>上面所说规则可理解为，500个商品，100000个抢购请求，那么ActiveMq就会把所有的请求先集中处理，前500个先进先出，500之后的就抢购失败，不经过数据库处理，直接抛弃用户请求或跳转到抢购失败页面提示用户抢购失败。<br>ps:解耦这个特定业务环境下是使用<strong>发布-订阅模式</strong>的<h3 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h3></li><li>将不是很重要的业务逻辑进行异步处理，比如注册功能，传统的注册功能要在完成发送注册邮件和注册短信后才响应给前端，这样显得有点慢，因为邮件和短信提示不算是很重要，可以在响应给用户后慢一点点发邮件和短信提示，所以我们可以把这两个部分都交给ActiveMq来异步处理。<br>具体可以看这篇博客<a href="https://www.cnblogs.com/cxyyh/p/10700437.html">戳这里</a>有图文，更易理解</li></ul><h2 id="ActiveMq的两种消息模型"><a href="#ActiveMq的两种消息模型" class="headerlink" title="ActiveMq的两种消息模型"></a>ActiveMq的两种消息模型</h2><h3 id="ptp-点到点模型"><a href="#ptp-点到点模型" class="headerlink" title="ptp(点到点模型)"></a>ptp(点到点模型)</h3><ul><li>生产者和消费者一对一关系，消息保证送达，离线消费者可以在下次上线后收到之前积压的消息。<h3 id="p-s-发布-订阅模型"><a href="#p-s-发布-订阅模型" class="headerlink" title="p/s(发布/订阅模型)"></a>p/s(发布/订阅模型)</h3></li><li>生产者和消费者一对多关系，一个消息生产者可以被多个消费者订阅消费。类似关注微信公众号一样，在你关注公众号前，公众号发布的文章，你是不能接收到推送的。只有你订阅后，公众号推送的文章你才能收到提醒。  <h4 id="p-s普通订阅"><a href="#p-s普通订阅" class="headerlink" title="p/s普通订阅"></a>p/s普通订阅</h4></li><li>当没有持久订阅者和在线的普通订阅者，消息不会保存，普通订阅者上线后也收不到该消息。<h4 id="p-s持久订阅"><a href="#p-s持久订阅" class="headerlink" title="p/s持久订阅"></a>p/s持久订阅</h4></li><li>如果有离线的持久订阅者，ActiveMq会为该持久订阅者保存消息，当该持久订阅者上线后，会收到消息。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;ActiveMq相关认识&quot;&gt;&lt;a href=&quot;#ActiveMq相关认识&quot; class=&quot;headerlink&quot; title=&quot;ActiveMq相关认识&quot;&gt;&lt;/a&gt;ActiveMq相关认识&lt;/h1&gt;&lt;p&gt;   ActiveMq是一个消息队列中间件，类似的还有Rab</summary>
+      
+    
+    
+    
+    <category term="消息中间件" scheme="http://14uy2u.coding-pages.com/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+    <category term="高并发" scheme="http://14uy2u.coding-pages.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaScript中Array的一些常用方法和操作</title>
