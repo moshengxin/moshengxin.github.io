@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ActiveMq学习</title>
+    <url>/2021/01/07/ActiveMq/</url>
+    <content><![CDATA[<h1 id="ActiveMq相关认识"><a href="#ActiveMq相关认识" class="headerlink" title="ActiveMq相关认识"></a>ActiveMq相关认识</h1><p>   ActiveMq是一个消息队列中间件，类似的还有RabbitMQ、Kafka等。</p>
+<h2 id="ActiveMq的优点或者作用"><a href="#ActiveMq的优点或者作用" class="headerlink" title="ActiveMq的优点或者作用"></a>ActiveMq的优点或者作用</h2><h3 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h3><ul>
+<li>在大型网站中最常见使用消息中间件，能降低应用的耦合度。<br>比如：在订单系统和库存系统中引入消息中间件，如果用户下单成功后，库存系统刚好发生宕机故障，也不会影响数据，因为下单成功后，已经把减库存的操作持久化告诉ActiveMq，ActiveMq会在库存系统恢复正常的时候提醒写入数据到库存系统。<h3 id="流量消峰-解决高并发场景"><a href="#流量消峰-解决高并发场景" class="headerlink" title="流量消峰(解决高并发场景)"></a>流量消峰(解决高并发场景)</h3></li>
+<li>没有中间件的之前，在整点秒杀和抢购活动中，大量的同一请求会同时对数据库进行CRUD操作。因为ActiveMq是先进先出，所以当有大量同求时，先经过ActiveMq把请求集中起来统一管理，采用定义好的规则把请求分批处理。这样就能直到保护数据库的作用。<br>上面所说规则可理解为，500个商品，100000个抢购请求，那么ActiveMq就会把所有的请求先集中处理，前500个先进先出，500之后的就抢购失败，不经过数据库处理，直接抛弃用户请求或跳转到抢购失败页面提示用户抢购失败。<br>ps:解耦这个特定业务环境下是使用<strong>发布-订阅模式</strong>的<h3 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h3></li>
+<li>将不是很重要的业务逻辑进行异步处理，比如注册功能，传统的注册功能要在完成发送注册邮件和注册短信后才响应给前端，这样显得有点慢，因为邮件和短信提示不算是很重要，可以在响应给用户后慢一点点发邮件和短信提示，所以我们可以把这两个部分都交给ActiveMq来异步处理。<br>具体可以看这篇博客<a href="https://www.cnblogs.com/cxyyh/p/10700437.html">戳这里</a>有图文，更易理解</li>
+</ul>
+<h2 id="ActiveMq的两种消息模型"><a href="#ActiveMq的两种消息模型" class="headerlink" title="ActiveMq的两种消息模型"></a>ActiveMq的两种消息模型</h2><h3 id="ptp-点到点模型"><a href="#ptp-点到点模型" class="headerlink" title="ptp(点到点模型)"></a>ptp(点到点模型)</h3><ul>
+<li>生产者和消费者一对一关系，消息保证送达，离线消费者可以在下次上线后收到之前积压的消息。<h3 id="p-s-发布-订阅模型"><a href="#p-s-发布-订阅模型" class="headerlink" title="p/s(发布/订阅模型)"></a>p/s(发布/订阅模型)</h3></li>
+<li>生产者和消费者一对多关系，一个消息生产者可以被多个消费者订阅消费。类似关注微信公众号一样，在你关注公众号前，公众号发布的文章，你是不能接收到推送的。只有你订阅后，公众号推送的文章你才能收到提醒。  <h4 id="p-s普通订阅"><a href="#p-s普通订阅" class="headerlink" title="p/s普通订阅"></a>p/s普通订阅</h4></li>
+<li>当没有持久订阅者和在线的普通订阅者，消息不会保存，普通订阅者上线后也收不到该消息。<h4 id="p-s持久订阅"><a href="#p-s持久订阅" class="headerlink" title="p/s持久订阅"></a>p/s持久订阅</h4></li>
+<li>如果有离线的持久订阅者，ActiveMq会为该持久订阅者保存消息，当该持久订阅者上线后，会收到消息。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>消息中间件</category>
+      </categories>
+      <tags>
+        <tag>高并发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JAVA判断某天是周几</title>
     <url>/2020/07/31/JAVA%E5%88%A4%E6%96%AD%E6%9F%90%E5%A4%A9%E6%98%AF%E5%91%A8%E5%87%A0/</url>
     <content><![CDATA[<a id="more"></a>
@@ -16,25 +39,6 @@
       </categories>
       <tags>
         <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ping测试两个IP网络之间的连通性</title>
-    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
-<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
-<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
-<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
-<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
-<p><em>好记性不如烂笔头，多记录多学习</em></p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -62,6 +66,25 @@
       </categories>
       <tags>
         <tag>JavaScript Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ping测试两个IP网络之间的连通性</title>
+    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
+<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
+<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
+<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
+<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
+<p><em>好记性不如烂笔头，多记录多学习</em></p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -99,6 +122,47 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux常用命令和操作总结</title>
+    <url>/2020/10/02/linux/</url>
+    <content><![CDATA[<h1 id="Linux常用命令和操作总结"><a href="#Linux常用命令和操作总结" class="headerlink" title="Linux常用命令和操作总结"></a>Linux常用命令和操作总结</h1><h2 id="Linux是什么"><a href="#Linux是什么" class="headerlink" title="Linux是什么"></a>Linux是什么</h2><p>非官方套路，开始先来一大堆看不懂的介绍。</p>
+<ul>
+<li>Linux 是在 1991 由林纳斯·托瓦兹在赫尔辛基大学上学时创立的，主要受到 Minix 和 Unix 思想的启发，所以Linux继承了Unix。</li>
+<li>Linux是开源的，目前我所了解到的Linux的发行版有Ubuntu和CentOS。当然还有其它的。<strong>本篇主要是在Ubuntu 20.04.1版本上操作Linux</strong>。</li>
+<li>目前国内 Linux 更多的是应用于服务器上，而桌面操作系统更多使用的是 Windows。<h2 id="相关环境准备"><a href="#相关环境准备" class="headerlink" title="相关环境准备"></a>相关环境准备</h2></li>
+<li>Ubuntu的运行要依赖于Vm虚拟机，关于Vm和Ubuntu的安装，可以戳这里<a href="https://blog.csdn.net/hao5119266/article/details/89198275">快点我</a>，跟着教程一步步来。相信我，你可以的。<h2 id="Linux常用命令总结"><a href="#Linux常用命令总结" class="headerlink" title="Linux常用命令总结"></a>Linux常用命令总结</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;进入文件夹</span><br><span class="line">cd dir          </span><br><span class="line">&#x2F;&#x2F;跳转到首次进入终端时的路径，相当于用户根目录吧。</span><br><span class="line">cd ~		</span><br><span class="line">&#x2F;&#x2F;返回上一级，如果是..&#x2F;..则代表返回上两级</span><br><span class="line">cd ..		</span><br><span class="line">&#x2F;&#x2F;返回进入此目录之前所在目录(注意和cd..区分开来)</span><br><span class="line">cd - 		</span><br><span class="line">&#x2F;&#x2F;查看当前目录下有什么内容</span><br><span class="line">ls	</span><br><span class="line">&#x2F;&#x2F;罗列出当前文件或目录的详细信息，含有时间、读写权限、大小、时间等信息 	</span><br><span class="line">ll	</span><br><span class="line">&#x2F;&#x2F;查看当前所在的全路径	</span><br><span class="line">pwd </span><br><span class="line">&#x2F;&#x2F;清除屏幕所有命令		</span><br><span class="line">clear	</span><br><span class="line">&#x2F;&#x2F;把file文件移动到dir目录，其中file也可以是一个目录	</span><br><span class="line">mv file dir	</span><br><span class="line">&#x2F;&#x2F;把file文件复制一份到dir目录</span><br><span class="line">cp -r fileurl dir        </span><br><span class="line">&#x2F;&#x2F;解压xxx.tar.gz到当前目录     </span><br><span class="line">tar zxvf xxx.tar.gz     </span><br><span class="line">&#x2F;&#x2F;把xxx.tar.gz解压到指定的dir文件夹      </span><br><span class="line">tar zxvf xxx.tar.gz -C dir   </span><br><span class="line">&#x2F;&#x2F;参数为文件或者文件夹的路径。使用sudo会要求用户输入密码。   </span><br><span class="line">sudo rm -r 参数      </span><br><span class="line">&#x2F;&#x2F;查看ubuntu版本号         </span><br><span class="line">cat &#x2F;etc&#x2F;issue	             </span><br><span class="line">&#x2F;&#x2F;安装软件 </span><br><span class="line">sudo apt install [software]  </span><br><span class="line">&#x2F;&#x2F;卸载软件</span><br><span class="line">sudo apt remove [software]   </span><br></pre></td></tr></table></figure>
+<h2 id="Linux终端里的颜色区分"><a href="#Linux终端里的颜色区分" class="headerlink" title="Linux终端里的颜色区分"></a>Linux终端里的颜色区分</h2></li>
+</ul>
+<ol>
+<li>蓝色——&gt;目录</li>
+<li>绿色——&gt;可执行文件</li>
+<li>红色——&gt;压缩文件</li>
+<li>浅蓝色—&gt;链接文件</li>
+<li>灰色——&gt;其他文件<h2 id="vim编辑器日常使用"><a href="#vim编辑器日常使用" class="headerlink" title="vim编辑器日常使用"></a>vim编辑器日常使用</h2></li>
+</ol>
+<ul>
+<li>vim编辑器有3种模式，分别是<strong>命令模式、插入模式、底线命令模式</strong>。<br><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/01/08/sn2Iqs.png"></li>
+<li>在进行编辑时，你要注意的是模式的切换，vi编辑**默认进入命令模式(此时不能输入内容)**，如果想在文件中插入内容，则要先按下”i”，然后才可以输入，输入完后，再按Esc退出插入模式。然后按“shift+;”输入:冒号，进入底线命令。再输入wq保存退出。</li>
+<li>如果在编辑过程中==出现键盘方向键变成ABCD==的情况，解决方法如下：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;按顺序执行以下命令</span><br><span class="line">sudo apt-get remove vim-common</span><br><span class="line">sudo apt-get install aptitude</span><br><span class="line">sudo aptitude install vim</span><br></pre></td></tr></table></figure>
+<h2 id="vim设置永久显示行号命令"><a href="#vim设置永久显示行号命令" class="headerlink" title="vim设置永久显示行号命令"></a>vim设置永久显示行号命令</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;按顺序执行以下命令</span><br><span class="line">vim ~&#x2F;.vimrc    &#x2F;&#x2F;打开配置文件</span><br><span class="line">:set nu         &#x2F;&#x2F;在编辑区中输入:set nu</span><br><span class="line">:wq             &#x2F;&#x2F;保存并退出</span><br></pre></td></tr></table></figure></li>
+<li>如果用:wq保存文件报“无法打开并写入文件”错误，请用下面的命令保存：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;忽略权限保存</span><br><span class="line">: w ! sudo tee %</span><br></pre></td></tr></table></figure>
+<h2 id="Linux软件安装-Ubuntu下"><a href="#Linux软件安装-Ubuntu下" class="headerlink" title="Linux软件安装(Ubuntu下)"></a>Linux软件安装(Ubuntu下)</h2></li>
+<li>Linux 大小写敏感</li>
+<li>如果发现使用”sudo apt-get install xxxx”命令报“在等待缓存锁：无法获得锁……由进程7358持有”错误的话，可以使用以下命令解决<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;依次运行</span><br><span class="line">sudo rm &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock-frontend</span><br><span class="line">sudo rm &#x2F;var&#x2F;cache&#x2F;apt&#x2F;archives&#x2F;lock</span><br><span class="line">sudo rm &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="tomcat安装"><a href="#tomcat安装" class="headerlink" title="tomcat安装"></a>tomcat安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;创建tomcat命令</span><br><span class="line">mkdir tomcat   </span><br><span class="line">&#x2F;&#x2F;进入tomcat目录</span><br><span class="line">cd tomcat     </span><br><span class="line">&#x2F;&#x2F;下载tomcat8.5压缩包</span><br><span class="line">wget https:&#x2F;&#x2F;mirrors.bfsu.edu.cn&#x2F;apache&#x2F;tomcat&#x2F;tomcat-8&#x2F;v8.5.61&#x2F;bin&#x2F;apache-tomcat-8.5.61.tar.gz  </span><br><span class="line">&#x2F;&#x2F;解压到当前目录</span><br><span class="line">tar xzvf apache-tomcat-8.5.61.tar.gz   </span><br><span class="line">&#x2F;&#x2F;然后进入 apache-tomcat-8.5.61</span><br><span class="line">cd apache-tomcat-8.5.61&#x2F;   </span><br><span class="line">&#x2F;&#x2F;进入到bin目录       </span><br><span class="line">cd bin     </span><br><span class="line">&#x2F;&#x2F;启动tomcat，并自行在浏览器输入localhost:8080查看是否启动成功                       </span><br><span class="line">.&#x2F;startup.sh      </span><br><span class="line">&#x2F;&#x2F;停止tomcat                 </span><br><span class="line">.&#x2F;shutdown.sh            </span><br></pre></td></tr></table></figure>
+<h3 id="mysql安装"><a href="#mysql安装" class="headerlink" title="mysql安装"></a>mysql安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">   &#x2F;&#x2F;以下是根据回忆写的。其中有可能会少了某一步，有待验证</span><br><span class="line">&#x2F;&#x2F;1、创建文件夹：</span><br><span class="line">mkdir mysql</span><br><span class="line">&#x2F;&#x2F;2、cd mysql后下载rpm文件：</span><br><span class="line">wget https:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql57-community-release-el7-11.noarch.rpm</span><br><span class="line">&#x2F;&#x2F;3、安装服务</span><br><span class="line">yum install -y mysql-community-server</span><br><span class="line">&#x2F;&#x2F;4、启动mysql：</span><br><span class="line">service mysqld start</span><br><span class="line">&#x2F;&#x2F;5、登录mysql:  </span><br><span class="line">sudo mysql -u root -p</span><br><span class="line">&#x2F;&#x2F;6、查看所有库：</span><br><span class="line">show databases;（ps:sql命令不要忘记结束;标记）</span><br><span class="line">&#x2F;&#x2F;7、选择使用某个库：</span><br><span class="line">use 库名</span><br><span class="line">&#x2F;&#x2F;8、查看库中所有表：</span><br><span class="line">show tables;</span><br></pre></td></tr></table></figure>
+<h3 id="nginx安装"><a href="#nginx安装" class="headerlink" title="nginx安装"></a>nginx安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;1、安装：</span><br><span class="line">sudo apt install nginx</span><br><span class="line">&#x2F;&#x2F;2、查看版本：</span><br><span class="line">nginx -V</span><br><span class="line">&#x2F;&#x2F;3、启动nginx：</span><br><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;nginx start</span><br><span class="line">&#x2F;&#x2F;4、浏览器访问：localhost:80显示欢迎页代表启动成功(nginx默认端口80)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -170,29 +234,6 @@
       <tags>
         <tag>教程</tag>
         <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ActiveMq学习</title>
-    <url>/2021/01/07/ActiveMq/</url>
-    <content><![CDATA[<h1 id="ActiveMq相关认识"><a href="#ActiveMq相关认识" class="headerlink" title="ActiveMq相关认识"></a>ActiveMq相关认识</h1><p>   ActiveMq是一个消息队列中间件，类似的还有RabbitMQ、Kafka等。</p>
-<h2 id="ActiveMq的优点或者作用"><a href="#ActiveMq的优点或者作用" class="headerlink" title="ActiveMq的优点或者作用"></a>ActiveMq的优点或者作用</h2><h3 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h3><ul>
-<li>在大型网站中最常见使用消息中间件，能降低应用的耦合度。<br>比如：在订单系统和库存系统中引入消息中间件，如果用户下单成功后，库存系统刚好发生宕机故障，也不会影响数据，因为下单成功后，已经把减库存的操作持久化告诉ActiveMq，ActiveMq会在库存系统恢复正常的时候提醒写入数据到库存系统。<h3 id="流量消峰-解决高并发场景"><a href="#流量消峰-解决高并发场景" class="headerlink" title="流量消峰(解决高并发场景)"></a>流量消峰(解决高并发场景)</h3></li>
-<li>没有中间件的之前，在整点秒杀和抢购活动中，大量的同一请求会同时对数据库进行CRUD操作。因为ActiveMq是先进先出，所以当有大量同求时，先经过ActiveMq把请求集中起来统一管理，采用定义好的规则把请求分批处理。这样就能直到保护数据库的作用。<br>上面所说规则可理解为，500个商品，100000个抢购请求，那么ActiveMq就会把所有的请求先集中处理，前500个先进先出，500之后的就抢购失败，不经过数据库处理，直接抛弃用户请求或跳转到抢购失败页面提示用户抢购失败。<br>ps:解耦这个特定业务环境下是使用<strong>发布-订阅模式</strong>的<h3 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h3></li>
-<li>将不是很重要的业务逻辑进行异步处理，比如注册功能，传统的注册功能要在完成发送注册邮件和注册短信后才响应给前端，这样显得有点慢，因为邮件和短信提示不算是很重要，可以在响应给用户后慢一点点发邮件和短信提示，所以我们可以把这两个部分都交给ActiveMq来异步处理。<br>具体可以看这篇博客<a href="https://www.cnblogs.com/cxyyh/p/10700437.html">戳这里</a>有图文，更易理解</li>
-</ul>
-<h2 id="ActiveMq的两种消息模型"><a href="#ActiveMq的两种消息模型" class="headerlink" title="ActiveMq的两种消息模型"></a>ActiveMq的两种消息模型</h2><h3 id="ptp-点到点模型"><a href="#ptp-点到点模型" class="headerlink" title="ptp(点到点模型)"></a>ptp(点到点模型)</h3><ul>
-<li>生产者和消费者一对一关系，消息保证送达，离线消费者可以在下次上线后收到之前积压的消息。<h3 id="p-s-发布-订阅模型"><a href="#p-s-发布-订阅模型" class="headerlink" title="p/s(发布/订阅模型)"></a>p/s(发布/订阅模型)</h3></li>
-<li>生产者和消费者一对多关系，一个消息生产者可以被多个消费者订阅消费。类似关注微信公众号一样，在你关注公众号前，公众号发布的文章，你是不能接收到推送的。只有你订阅后，公众号推送的文章你才能收到提醒。  <h4 id="p-s普通订阅"><a href="#p-s普通订阅" class="headerlink" title="p/s普通订阅"></a>p/s普通订阅</h4></li>
-<li>当没有持久订阅者和在线的普通订阅者，消息不会保存，普通订阅者上线后也收不到该消息。<h4 id="p-s持久订阅"><a href="#p-s持久订阅" class="headerlink" title="p/s持久订阅"></a>p/s持久订阅</h4></li>
-<li>如果有离线的持久订阅者，ActiveMq会为该持久订阅者保存消息，当该持久订阅者上线后，会收到消息。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>消息中间件</category>
-      </categories>
-      <tags>
-        <tag>高并发</tag>
       </tags>
   </entry>
 </search>
