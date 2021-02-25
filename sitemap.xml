@@ -207,14 +207,14 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
+    <loc>http://14uy2u.coding-pages.com/tags/SpringBoot/</loc>
     <lastmod>2021-02-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/tags/SpringBoot/</loc>
+    <loc>http://14uy2u.coding-pages.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-02-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -307,13 +307,6 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/categories/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2021-02-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://14uy2u.coding-pages.com/categories/%E6%95%B4%E5%90%88/</loc>
     <lastmod>2021-02-25</lastmod>
     <changefreq>daily</changefreq>
@@ -321,7 +314,21 @@
   </url>
   
   <url>
+    <loc>http://14uy2u.coding-pages.com/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2021-02-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://14uy2u.coding-pages.com/categories/%E6%97%A5%E6%9C%9F%E5%8A%A030%E5%A4%A9-Calendar%E7%B1%BB%E8%AE%A1%E7%AE%97%E6%97%A5%E6%9C%9F/</loc>
+    <lastmod>2021-02-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://14uy2u.coding-pages.com/categories/Linux/</loc>
     <lastmod>2021-02-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -336,13 +343,6 @@
   
   <url>
     <loc>http://14uy2u.coding-pages.com/categories/List-%E9%9B%86%E5%90%88/</loc>
-    <lastmod>2021-02-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://14uy2u.coding-pages.com/categories/Linux/</loc>
     <lastmod>2021-02-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
