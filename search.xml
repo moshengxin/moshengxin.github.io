@@ -69,6 +69,25 @@
       </tags>
   </entry>
   <entry>
+    <title>Ping测试两个IP网络之间的连通性</title>
+    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
+<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
+<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
+<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
+<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
+<p><em>好记性不如烂笔头，多记录多学习</em></p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot项目整合Swagger-UI接口文档</title>
     <url>/2020/11/01/SpringBoot%E6%95%B4%E5%90%88Swagger-UI%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
     <content><![CDATA[<span id="more"></span>
@@ -87,25 +106,6 @@
       </categories>
       <tags>
         <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ping测试两个IP网络之间的连通性</title>
-    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
-<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
-<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
-<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
-<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
-<p><em>好记性不如烂笔头，多记录多学习</em></p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -215,46 +215,6 @@
       </tags>
   </entry>
   <entry>
-    <title>List去重</title>
-    <url>/2021/01/17/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="List去重总结"><a href="#List去重总结" class="headerlink" title="List去重总结"></a>List去重总结</h1><h2 id="List和Set区别"><a href="#List和Set区别" class="headerlink" title="List和Set区别"></a>List和Set区别</h2><p>Java中的集合分三大类，分别是Set（集），List（列表）以及Map（映射）</p>
-<ul>
-<li><p>1、List和Set都是接口继承于Collection接口。</p>
-</li>
-<li><p>2、List有序可重复的。而Set无序不可重复的</p>
-</li>
-<li><p>3、List接口的三个实现类：LinkedList，ArrayList，Vector ，Set接口的两个实现类：HashSet，LinkedHashSet</p>
-</li>
-<li><p>4、List适合经常追加数据，插入，删除数据。但随机取数效率比较低。</p>
-</li>
-<li><p>5、Set适合经常地随机储存，插入，删除。但是在遍历时效率比较低。 </p>
-<h2 id="去重方法"><a href="#去重方法" class="headerlink" title="去重方法"></a>去重方法</h2></li>
-<li><p>1、运用Set无序不重复特性</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">HashSet&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;(list1.size());  </span><br><span class="line">List&lt;Integer&gt; newlist= <span class="keyword">new</span> ArrayList&lt;Integer&gt;(list1.size());  </span><br><span class="line"><span class="keyword">for</span> (Integer it : list1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (set.add(it)) &#123;   <span class="comment">//运用Set无序不可重复特点来判断</span></span><br><span class="line">        newlist.add(it);  <span class="comment">//把不重复的数据添加到新的newlist</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">list1.clear();   <span class="comment">//循环后把原list1清空</span></span><br><span class="line">list1.addAll(newlist);  <span class="comment">//再把新的newlist全部加到list1中去，得到去重后的list1</span></span><br><span class="line">System.out.println(list1);  <span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
-<li><p>2、list转set自动去重</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//list2转set的时候去重,set再转newlist2</span></span><br><span class="line">LinkedList&lt;Integer&gt; list2= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">LinkedHashSet&lt;Integer&gt; lhset= <span class="keyword">new</span> LinkedHashSet&lt;&gt;(list2);</span><br><span class="line"></span><br><span class="line">LinkedList&lt;Integer&gt; newlist2= <span class="keyword">new</span> LinkedList&lt;&gt;(lhset);</span><br><span class="line"></span><br><span class="line">System.out.println(newlist2);<span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
-<li><p>3、遍历list3，用contains判断有重复的就不存放到newlist3中去。循环结束后把list3清空，再把newlist3全部放进去，得到去重后的list3</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// </span></span><br><span class="line">LinkedList&lt;Integer&gt; list3= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">LinkedList&lt;Integer&gt; newlist3=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list3.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!newlist3.contains(list3.get(i)))&#123;</span><br><span class="line">        newlist3.add(list3.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">list3.clear();</span><br><span class="line">list3.addAll(newlist3);</span><br><span class="line">System.out.println(list3); <span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
-<li><p>4、用Stream流的distinct方法去重</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> LinkedList&lt;Integer&gt; list4= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line"> Stream&lt;Integer&gt; liststream= list4.stream().distinct();</span><br><span class="line"></span><br><span class="line"><span class="comment">// distinct.forEach(res-&gt; System.out.println(res));  //输出每一项    </span></span><br><span class="line"><span class="comment">//重复后的liststream转成newlist4</span></span><br><span class="line">List&lt;Integer&gt; newlist4= liststream.collect(Collectors.toList());  </span><br><span class="line"> System.out.println(newlist4);<span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
-<li><p>5、如果List中存放的是Entity类对象，要根据某个字段去重，可考虑TreeSet去重</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实体类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> score;</span><br><span class="line">    ......       <span class="comment">//省略get、set、构造等一系列方法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">List&lt;Student&gt; students = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">91</span>),</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">90</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小黑&quot;</span>, <span class="number">19</span>, <span class="number">60</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小白&quot;</span>, <span class="number">22</span>, <span class="number">89</span>)</span><br><span class="line">        );</span><br><span class="line"><span class="comment">//定义一个Student类的TreeSet,根据Name字段比较去重的比较器</span></span><br><span class="line">TreeSet&lt;Student&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;(Comparator.comparing(Student::getName)); </span><br><span class="line"><span class="comment">//Students实体类对象students添加到TreeSet中去进行比较</span></span><br><span class="line">treeSet.addAll(students);</span><br><span class="line"><span class="comment">//TreeSet再转换成List</span></span><br><span class="line">List&lt;Student&gt; resList= treeSet.stream().collect(Collectors.toList());</span><br><span class="line">System.out.println(resList);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="就着Stream-顺便记录一下排序"><a href="#就着Stream-顺便记录一下排序" class="headerlink" title="就着Stream,顺便记录一下排序"></a>就着Stream,顺便记录一下排序</h3><ul>
-<li>java8新特性了解一下<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实体类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> score;</span><br><span class="line">    ......       <span class="comment">//省略get、set、构造等一系列方法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">List&lt;Student&gt; students = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">91</span>),</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">90</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小黑&quot;</span>, <span class="number">19</span>, <span class="number">60</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小白&quot;</span>, <span class="number">22</span>, <span class="number">89</span>)</span><br><span class="line">        );</span><br><span class="line"> <span class="comment">//students对象转流后进行sorted排序，根据Age字段排序，limit取前两条。</span></span><br><span class="line">Stream&lt;Student&gt; sortedStream = students.stream().sorted((item2, item1) -&gt; item1.getAge() - item2.getAge()).limit(<span class="number">2</span>);</span><br><span class="line">List&lt;Student&gt; newList= sortedStream.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>List 集合</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>postgres数据库备份和还原命令-亲测有效</title>
     <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
     <content><![CDATA[<span id="more"></span>
@@ -299,6 +259,46 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>List去重</title>
+    <url>/2021/01/17/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="List去重总结"><a href="#List去重总结" class="headerlink" title="List去重总结"></a>List去重总结</h1><h2 id="List和Set区别"><a href="#List和Set区别" class="headerlink" title="List和Set区别"></a>List和Set区别</h2><p>Java中的集合分三大类，分别是Set（集），List（列表）以及Map（映射）</p>
+<ul>
+<li><p>1、List和Set都是接口继承于Collection接口。</p>
+</li>
+<li><p>2、List有序可重复的。而Set无序不可重复的</p>
+</li>
+<li><p>3、List接口的三个实现类：LinkedList，ArrayList，Vector ，Set接口的两个实现类：HashSet，LinkedHashSet</p>
+</li>
+<li><p>4、List适合经常追加数据，插入，删除数据。但随机取数效率比较低。</p>
+</li>
+<li><p>5、Set适合经常地随机储存，插入，删除。但是在遍历时效率比较低。 </p>
+<h2 id="去重方法"><a href="#去重方法" class="headerlink" title="去重方法"></a>去重方法</h2></li>
+<li><p>1、运用Set无序不重复特性</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">HashSet&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;(list1.size());  </span><br><span class="line">List&lt;Integer&gt; newlist= <span class="keyword">new</span> ArrayList&lt;Integer&gt;(list1.size());  </span><br><span class="line"><span class="keyword">for</span> (Integer it : list1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (set.add(it)) &#123;   <span class="comment">//运用Set无序不可重复特点来判断</span></span><br><span class="line">        newlist.add(it);  <span class="comment">//把不重复的数据添加到新的newlist</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">list1.clear();   <span class="comment">//循环后把原list1清空</span></span><br><span class="line">list1.addAll(newlist);  <span class="comment">//再把新的newlist全部加到list1中去，得到去重后的list1</span></span><br><span class="line">System.out.println(list1);  <span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>2、list转set自动去重</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//list2转set的时候去重,set再转newlist2</span></span><br><span class="line">LinkedList&lt;Integer&gt; list2= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">LinkedHashSet&lt;Integer&gt; lhset= <span class="keyword">new</span> LinkedHashSet&lt;&gt;(list2);</span><br><span class="line"></span><br><span class="line">LinkedList&lt;Integer&gt; newlist2= <span class="keyword">new</span> LinkedList&lt;&gt;(lhset);</span><br><span class="line"></span><br><span class="line">System.out.println(newlist2);<span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>3、遍历list3，用contains判断有重复的就不存放到newlist3中去。循环结束后把list3清空，再把newlist3全部放进去，得到去重后的list3</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// </span></span><br><span class="line">LinkedList&lt;Integer&gt; list3= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">LinkedList&lt;Integer&gt; newlist3=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list3.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!newlist3.contains(list3.get(i)))&#123;</span><br><span class="line">        newlist3.add(list3.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">list3.clear();</span><br><span class="line">list3.addAll(newlist3);</span><br><span class="line">System.out.println(list3); <span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>4、用Stream流的distinct方法去重</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> LinkedList&lt;Integer&gt; list4= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line"> Stream&lt;Integer&gt; liststream= list4.stream().distinct();</span><br><span class="line"></span><br><span class="line"><span class="comment">// distinct.forEach(res-&gt; System.out.println(res));  //输出每一项    </span></span><br><span class="line"><span class="comment">//重复后的liststream转成newlist4</span></span><br><span class="line">List&lt;Integer&gt; newlist4= liststream.collect(Collectors.toList());  </span><br><span class="line"> System.out.println(newlist4);<span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>5、如果List中存放的是Entity类对象，要根据某个字段去重，可考虑TreeSet去重</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实体类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> score;</span><br><span class="line">    ......       <span class="comment">//省略get、set、构造等一系列方法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">List&lt;Student&gt; students = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">91</span>),</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">90</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小黑&quot;</span>, <span class="number">19</span>, <span class="number">60</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小白&quot;</span>, <span class="number">22</span>, <span class="number">89</span>)</span><br><span class="line">        );</span><br><span class="line"><span class="comment">//定义一个Student类的TreeSet,根据Name字段比较去重的比较器</span></span><br><span class="line">TreeSet&lt;Student&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;(Comparator.comparing(Student::getName)); </span><br><span class="line"><span class="comment">//Students实体类对象students添加到TreeSet中去进行比较</span></span><br><span class="line">treeSet.addAll(students);</span><br><span class="line"><span class="comment">//TreeSet再转换成List</span></span><br><span class="line">List&lt;Student&gt; resList= treeSet.stream().collect(Collectors.toList());</span><br><span class="line">System.out.println(resList);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="就着Stream-顺便记录一下排序"><a href="#就着Stream-顺便记录一下排序" class="headerlink" title="就着Stream,顺便记录一下排序"></a>就着Stream,顺便记录一下排序</h3><ul>
+<li>java8新特性了解一下<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实体类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> score;</span><br><span class="line">    ......       <span class="comment">//省略get、set、构造等一系列方法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">List&lt;Student&gt; students = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">91</span>),</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">90</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小黑&quot;</span>, <span class="number">19</span>, <span class="number">60</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小白&quot;</span>, <span class="number">22</span>, <span class="number">89</span>)</span><br><span class="line">        );</span><br><span class="line"> <span class="comment">//students对象转流后进行sorted排序，根据Age字段排序，limit取前两条。</span></span><br><span class="line">Stream&lt;Student&gt; sortedStream = students.stream().sorted((item2, item1) -&gt; item1.getAge() - item2.getAge()).limit(<span class="number">2</span>);</span><br><span class="line">List&lt;Student&gt; newList= sortedStream.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>List 集合</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
