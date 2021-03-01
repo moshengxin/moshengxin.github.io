@@ -255,20 +255,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue element子组件中调用父组件数据</title>
-    <url>/2020/07/03/vue%20element%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%B0%83%E7%94%A8%E7%88%B6%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="vue-element子组件中调用父组件数据"><a href="#vue-element子组件中调用父组件数据" class="headerlink" title="vue element子组件中调用父组件数据"></a>vue element子组件中调用父组件数据</h2><p>看图吧。我是一个沉默寡言的代码编辑者。图中描述的应该算是比较详细的了。<br>图一：一个是小头爸爸，一个是大头儿子<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913278.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图一：一个是小头爸爸，一个是大头儿子"><br>图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913253.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’"><br>图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)"><br>图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913195.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。"><br>好了，完成。拿到数据你就可以随便用了。</p>
-]]></content>
-      <categories>
-        <category>子组件调用父组件数据 父子组件之前通信</category>
-      </categories>
-      <tags>
-        <tag>vue javascript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>postgres数据库备份和还原命令-亲测有效</title>
     <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
     <content><![CDATA[<span id="more"></span>
@@ -280,6 +266,20 @@
       </categories>
       <tags>
         <tag>postgresql 运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue element子组件中调用父组件数据</title>
+    <url>/2020/07/03/vue%20element%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%B0%83%E7%94%A8%E7%88%B6%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="vue-element子组件中调用父组件数据"><a href="#vue-element子组件中调用父组件数据" class="headerlink" title="vue element子组件中调用父组件数据"></a>vue element子组件中调用父组件数据</h2><p>看图吧。我是一个沉默寡言的代码编辑者。图中描述的应该算是比较详细的了。<br>图一：一个是小头爸爸，一个是大头儿子<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913278.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图一：一个是小头爸爸，一个是大头儿子"><br>图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913253.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’"><br>图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)"><br>图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913195.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。"><br>好了，完成。拿到数据你就可以随便用了。</p>
+]]></content>
+      <categories>
+        <category>子组件调用父组件数据 父子组件之前通信</category>
+      </categories>
+      <tags>
+        <tag>vue javascript</tag>
       </tags>
   </entry>
   <entry>
