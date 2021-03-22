@@ -61,6 +61,61 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot整合Redis(其实不难)</title>
+    <url>/2021/03/07/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<h1 id="两种整合方法"><a href="#两种整合方法" class="headerlink" title="两种整合方法"></a>两种整合方法</h1><blockquote>
+<p>一种是spring-boot-starter-data-redis<br>另一种是jedis</p>
+</blockquote>
+<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>1、添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--redis依赖配置--&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2、SpringBoot配置文件定义redis相关</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">spring</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span> <span class="comment"># Redis主机地址</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span> <span class="comment"># Redis数据库下标（从0开始，默认第一个库）</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span> <span class="comment"># Redis端口</span></span><br><span class="line">    <span class="attr">password:</span> <span class="comment"># Redis密码（默认为空）</span></span><br><span class="line">    <span class="attr">jedis:</span></span><br><span class="line">      <span class="attr">pool:</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">8</span> <span class="comment"># 连接池最大连接数（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-wait:</span> <span class="string">-1ms</span> <span class="comment"># 连接池最大阻塞等待时间（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">8</span> <span class="comment"># 连接池中的最大空闲连接</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 连接池中的最小空闲连接</span></span><br><span class="line">        <span class="attr">timeout:</span> <span class="string">3000ms</span> <span class="comment"># 连接超时时间（毫秒）</span></span><br><span class="line"><span class="comment"># 自定义redis的key的前缀和到期时间</span></span><br><span class="line"><span class="attr">redis:</span></span><br><span class="line">  <span class="attr">key:</span></span><br><span class="line">    <span class="attr">prefix:</span></span><br><span class="line">      <span class="attr">authCode:</span> <span class="string">&quot;portal:authCode:&quot;</span></span><br><span class="line">    <span class="attr">expire:</span></span><br><span class="line">      <span class="attr">authCode:</span> <span class="number">120</span> <span class="comment"># 验证码超期时间</span></span><br></pre></td></tr></table></figure>
+<p>3、定义一个redis的常用操作接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 存储数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function">String <span class="title">get</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设置超期时间</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">expire</span><span class="params">(String key, <span class="keyword">long</span> expire)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自增操作</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> delta 自增步长</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function">Long <span class="title">increment</span><span class="params">(String key, <span class="keyword">long</span> delta)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、创建RedisService接口的实现类RedisServiceImpl，并在实现类中导入第一步依赖中的StringRedisTemplate类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisServiceImpl</span> <span class="keyword">implements</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">expire</span><span class="params">(String key, <span class="keyword">long</span> expire)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.expire(key, expire, TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.delete(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Long <span class="title">increment</span><span class="params">(String key, <span class="keyword">long</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().increment(key,delta);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>RedisTemplate的以字符串为中心的扩展。 由于大多数针对Redis的操作都是基于String的，因此此类提供了一个专用类，该类可最大程度地减少其通用template配置，尤其是在序列化程序方面。</p>
+</blockquote>
+<p>5、使用方法<br>1.在要使用的类中，注入接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> RedisService redisService;</span><br></pre></td></tr></table></figure>
+
+<p>2.get set expire使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//取出配置文件中自定义的key的前缀和到期时间</span></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;redis.key.prefix.authCode&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String REDIS_KEY_PREFIX_AUTH_CODE;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;redis.key.expire.authCode&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Long AUTH_CODE_EXPIRE_SECONDS;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">//设置值</span></span><br><span class="line"> redisService.set(REDIS_KEY_PREFIX_AUTH_CODE+<span class="string">&quot;任一字符串&quot;</span>,value)  </span><br><span class="line"> <span class="comment">//获取值  </span></span><br><span class="line"> redisService.get(key)  </span><br><span class="line"> <span class="comment">//设置到期时间expirationdate</span></span><br><span class="line"> redisService.expire(key,AUTH_CODE_EXPIRE_SECONDS) </span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><blockquote>
+<p>配置文件和上面的一样，只是依赖和工具类不一样。个人觉得这种方法好点。这个能操作除了String类型外，还可以操作其它类型的数据。</p>
+</blockquote>
+<p>1.添加jedis依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.JedisUtil工具类编写</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.host&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String redis_host;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.port&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer redis_port;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.jedis.pool.max-idle&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer max_idle;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.jedis.pool.min-idle&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer min_idle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取redis操作对象</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Jedis <span class="title">getJedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = redis_host;</span><br><span class="line">        <span class="keyword">int</span> port = redis_port;</span><br><span class="line">        <span class="keyword">int</span> maxTotal = max_idle;</span><br><span class="line">        <span class="keyword">int</span> maxIdle = min_idle;</span><br><span class="line">        <span class="comment">//设置配置信息</span></span><br><span class="line">  JedisPoolConfig jedisPoolConfig = <span class="keyword">new</span> JedisPoolConfig();</span><br><span class="line">        jedisPoolConfig.setMaxIdle(maxIdle);</span><br><span class="line">        jedisPoolConfig.setMaxTotal(maxTotal);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//初始化</span></span><br><span class="line">  JedisPool jedisPool = <span class="keyword">new</span> JedisPool(jedisPoolConfig, host, port);</span><br><span class="line">        Jedis jedis=jedisPool.getResource();</span><br><span class="line">        <span class="keyword">return</span> jedis;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.使用方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注入工具类</span></span><br><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> JedisUtil jedisUtil;</span><br><span class="line"></span><br><span class="line">省略...</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取jedis对象，操作String类型，其它类型的省略。</span></span><br><span class="line">Jedis jedis = jedisUtil.getJedis();</span><br><span class="line">jedis.set(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;value&quot;</span>);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java 日期往后加30天(非工作日)</title>
+    <url>/2020/05/28/java%20%E6%97%A5%E6%9C%9F%E5%BE%80%E5%90%8E%E5%8A%A030%E5%A4%A9(%E9%9D%9E%E5%B7%A5%E4%BD%9C%E6%97%A5)/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<p>@[TOC](Java 日期往后加30天 非工作日)<br>    ## 一开始我是用Long时间戳毫秒来计算，不知怎么地，我得出的时间没有加，反而变少了，所以后面就用了Calendar类进行操作，得出想要的结果 。<br>        ###<br>        下面是打断点得出的时间错误的图<br>        <img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200528151224282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>    修改后的代码。只列出主要部分</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//能拿到推后30天时间的代码</span></span><br><span class="line"> <span class="comment">//获取系统当前时间</span></span><br><span class="line">     Calendar currentdate = Calendar.getInstance();</span><br><span class="line">     <span class="comment">//在这里进行加30天（ps:周六周日也算在里边了）</span></span><br><span class="line">     currentdate.add(Calendar.DATE, <span class="number">30</span>);</span><br><span class="line">     <span class="comment">//得到最后的时间</span></span><br><span class="line">     Date finalday = currentdate.getTime(); </span><br></pre></td></tr></table></figure>
+<p>结尾：第一次分享，好怕怕。</p>
+]]></content>
+      <categories>
+        <category>日期加30天 Calendar类计算日期</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot项目整合Swagger-UI接口文档</title>
     <url>/2020/11/01/SpringBoot%E6%95%B4%E5%90%88Swagger-UI%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
     <content><![CDATA[<span id="more"></span>
@@ -79,49 +134,6 @@
       </categories>
       <tags>
         <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript中Array的一些常用方法和操作</title>
-    <url>/2020/12/01/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<span id="more"></span>
-<h1 id="JavaScript中Array的一些常用方法和操作"><a href="#JavaScript中Array的一些常用方法和操作" class="headerlink" title="JavaScript中Array的一些常用方法和操作"></a>JavaScript中Array的一些常用方法和操作</h1><p>JavaScript的 Array 对象是用于构造数组的全局对象，数组是类似于列表的高阶对象</p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="数组创建"><a href="#数组创建" class="headerlink" title="数组创建"></a>数组创建</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组创建</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">&#x27;Apple&#x27;</span>, <span class="string">&#x27;Banana&#x27;</span>];</span><br></pre></td></tr></table></figure>
-
-<h3 id="数组长度"><a href="#数组长度" class="headerlink" title="数组长度"></a>数组长度</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组长度</span></span><br><span class="line"><span class="keyword">var</span> length=array.length();   <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组取值"><a href="#数组取值" class="headerlink" title="数组取值"></a>数组取值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1、通过数组下标取值</span></span><br><span class="line"><span class="keyword">var</span> first = array[<span class="number">0</span>];   <span class="comment">//Apple</span></span><br><span class="line"><span class="comment">//2、for循环也可以取到想要的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> array)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;下标&quot;</span>+index)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;值&quot;</span>+array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//向数组中添加数据(可在for循环中连续添加数据)</span></span><br><span class="line">array.push(obj)  <span class="comment">//obj为插入对象或者数据</span></span><br></pre></td></tr></table></figure>
-<h3 id="判断数据在数组中对下标"><a href="#判断数据在数组中对下标" class="headerlink" title="判断数据在数组中对下标"></a>判断数据在数组中对下标</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//某个数据在数组中对下标</span></span><br><span class="line">array.indexOf(<span class="string">&#x27;Apple&#x27;</span>);  <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
-<h3 id="替换数组对应下标的数据"><a href="#替换数组对应下标的数据" class="headerlink" title="替换数组对应下标的数据"></a>替换数组对应下标的数据</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//替换数组对应下标的元素，index为你要替换的下标位置，replaceData为替换数据。</span></span><br><span class="line">array.splice(index,<span class="number">1</span>,replaceData)</span><br></pre></td></tr></table></figure>
-<h3 id="数组连接或者合并"><a href="#数组连接或者合并" class="headerlink" title="数组连接或者合并"></a>数组连接或者合并</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并两个或多个数组(可为空数组)。此方法不会更改现有数组，而是返回一个新数组。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];   <span class="comment">//可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array2 = [<span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>];		<span class="comment">//也可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array3 = array1.concat(array2);  <span class="comment">//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span></span><br></pre></td></tr></table></figure>
-<h3 id="查找满足条件的第一个值"><a href="#查找满足条件的第一个值" class="headerlink" title="查找满足条件的第一个值"></a>查找满足条件的第一个值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回数组中满足条件的第一个元素的值。否则返回 undefined。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"><span class="keyword">const</span> found = array1.find(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">10</span>);  <span class="comment">//从左到右，大于10的第一个数是12。</span></span><br><span class="line"><span class="built_in">console</span>.log(found);  <span class="comment">//所以输出12</span></span><br></pre></td></tr></table></figure>
-<h3 id="判断数组是否包含某个值"><a href="#判断数组是否包含某个值" class="headerlink" title="判断数组是否包含某个值"></a>判断数组是否包含某个值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否包含某个值</span></span><br><span class="line"><span class="keyword">const</span> pets = [<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">&#x27;cat&#x27;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组转字符串，元素拼接成字符串"><a href="#数组转字符串，元素拼接成字符串" class="headerlink" title="数组转字符串，元素拼接成字符串"></a>数组转字符串，元素拼接成字符串</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组转字符串，元素拼接成字符串</span></span><br><span class="line"><span class="keyword">const</span> elements = [<span class="string">&#x27;Fire&#x27;</span>, <span class="string">&#x27;Air&#x27;</span>, <span class="string">&#x27;Water&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(elements.join());  <span class="comment">//&quot;Fire,Air,Water&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;&#x27;</span>)); <span class="comment">//&quot;FireAirWater&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;-&#x27;</span>)); <span class="comment">//&quot;Fire-Air-Water&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组倒置与排序"><a href="#数组倒置与排序" class="headerlink" title="数组倒置与排序"></a>数组倒置与排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组倒置</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(array1.reverse()) <span class="comment">//[&quot;3&quot;, &quot;2&quot;, &quot;1&quot;]</span></span><br><span class="line"><span class="comment">//数组排序方法1</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(numbers); <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">//数组排序方法2</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]; </span><br><span class="line">numbers.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b); </span><br><span class="line"><span class="built_in">console</span>.log(numbers);  <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<h3 id="清空数组"><a href="#清空数组" class="headerlink" title="清空数组"></a>清空数组</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line">array1= [];</span><br><span class="line"><span class="comment">//方法2 </span></span><br><span class="line">array2.splice(<span class="number">0</span>,array2.length);  </span><br><span class="line"><span class="comment">//方法3</span></span><br><span class="line">array3.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript Array</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java 日期往后加30天(非工作日)</title>
-    <url>/2020/05/28/java%20%E6%97%A5%E6%9C%9F%E5%BE%80%E5%90%8E%E5%8A%A030%E5%A4%A9(%E9%9D%9E%E5%B7%A5%E4%BD%9C%E6%97%A5)/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<p>@[TOC](Java 日期往后加30天 非工作日)<br>    ## 一开始我是用Long时间戳毫秒来计算，不知怎么地，我得出的时间没有加，反而变少了，所以后面就用了Calendar类进行操作，得出想要的结果 。<br>        ###<br>        下面是打断点得出的时间错误的图<br>        <img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200528151224282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>    修改后的代码。只列出主要部分</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//能拿到推后30天时间的代码</span></span><br><span class="line"> <span class="comment">//获取系统当前时间</span></span><br><span class="line">     Calendar currentdate = Calendar.getInstance();</span><br><span class="line">     <span class="comment">//在这里进行加30天（ps:周六周日也算在里边了）</span></span><br><span class="line">     currentdate.add(Calendar.DATE, <span class="number">30</span>);</span><br><span class="line">     <span class="comment">//得到最后的时间</span></span><br><span class="line">     Date finalday = currentdate.getTime(); </span><br></pre></td></tr></table></figure>
-<p>结尾：第一次分享，好怕怕。</p>
-]]></content>
-      <categories>
-        <category>日期加30天 Calendar类计算日期</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -206,6 +218,33 @@
 <h3 id="tomcat安装"><a href="#tomcat安装" class="headerlink" title="tomcat安装"></a>tomcat安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;创建tomcat命令</span><br><span class="line">mkdir tomcat   </span><br><span class="line">&#x2F;&#x2F;进入tomcat目录</span><br><span class="line">cd tomcat     </span><br><span class="line">&#x2F;&#x2F;下载tomcat8.5压缩包</span><br><span class="line">wget https:&#x2F;&#x2F;mirrors.bfsu.edu.cn&#x2F;apache&#x2F;tomcat&#x2F;tomcat-8&#x2F;v8.5.61&#x2F;bin&#x2F;apache-tomcat-8.5.61.tar.gz  </span><br><span class="line">&#x2F;&#x2F;解压到当前目录</span><br><span class="line">tar xzvf apache-tomcat-8.5.61.tar.gz   </span><br><span class="line">&#x2F;&#x2F;然后进入 apache-tomcat-8.5.61</span><br><span class="line">cd apache-tomcat-8.5.61&#x2F;   </span><br><span class="line">&#x2F;&#x2F;进入到bin目录       </span><br><span class="line">cd bin     </span><br><span class="line">&#x2F;&#x2F;启动tomcat，并自行在浏览器输入localhost:8080查看是否启动成功                       </span><br><span class="line">.&#x2F;startup.sh      </span><br><span class="line">&#x2F;&#x2F;停止tomcat                 </span><br><span class="line">.&#x2F;shutdown.sh            </span><br></pre></td></tr></table></figure>
 <h3 id="mysql安装"><a href="#mysql安装" class="headerlink" title="mysql安装"></a>mysql安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">   &#x2F;&#x2F;以下是根据回忆写的。其中有可能会少了某一步，有待验证</span><br><span class="line">&#x2F;&#x2F;1、创建文件夹：</span><br><span class="line">mkdir mysql</span><br><span class="line">&#x2F;&#x2F;2、cd mysql后下载rpm文件：</span><br><span class="line">wget https:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql57-community-release-el7-11.noarch.rpm</span><br><span class="line">&#x2F;&#x2F;3、安装服务</span><br><span class="line">yum install -y mysql-community-server</span><br><span class="line">&#x2F;&#x2F;4、启动mysql：</span><br><span class="line">service mysqld start</span><br><span class="line">&#x2F;&#x2F;5、登录mysql:  </span><br><span class="line">sudo mysql -u root -p</span><br><span class="line">&#x2F;&#x2F;6、查看所有库：</span><br><span class="line">show databases;（ps:sql命令不要忘记结束;标记）</span><br><span class="line">&#x2F;&#x2F;7、选择使用某个库：</span><br><span class="line">use 库名</span><br><span class="line">&#x2F;&#x2F;8、查看库中所有表：</span><br><span class="line">show tables;</span><br></pre></td></tr></table></figure>
 <h3 id="nginx安装"><a href="#nginx安装" class="headerlink" title="nginx安装"></a>nginx安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;1、安装：</span><br><span class="line">sudo apt install nginx</span><br><span class="line">&#x2F;&#x2F;2、查看版本：</span><br><span class="line">nginx -V</span><br><span class="line">&#x2F;&#x2F;3、启动nginx：</span><br><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;nginx start</span><br><span class="line">&#x2F;&#x2F;4、浏览器访问：localhost:80显示欢迎页代表启动成功(nginx默认端口80)</span><br></pre></td></tr></table></figure>
+<h3 id="top命令查看Linux进程相关"><a href="#top命令查看Linux进程相关" class="headerlink" title="top命令查看Linux进程相关"></a>top命令查看Linux进程相关</h3><blockquote>
+<p>查看所有进程：top</p>
+</blockquote>
+<blockquote>
+<p>退出top命令行：q</p>
+</blockquote>
+<blockquote>
+<p>按Cpu占比排序(高–低)：shift + p</p>
+</blockquote>
+<blockquote>
+<p>按内存占比排序(高–低)：shift + m</p>
+</blockquote>
+<blockquote>
+<p>切换排序列：shift + &gt;或者shift + &lt;</p>
+</blockquote>
+<blockquote>
+<p>top命令默认的排序列是“%CPU”。</p>
+</blockquote>
+<blockquote>
+<p>高亮显示排序列：x</p>
+</blockquote>
+<blockquote>
+<p>查看8080端口占用的PID进程：lsof -i:8080（主要看项目yml配置文件用的是哪个端口）  </p>
+</blockquote>
+<blockquote>
+<p>杀进程：kill -9 PID代号   </p>
+</blockquote>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -215,17 +254,30 @@
       </tags>
   </entry>
   <entry>
-    <title>postgres数据库备份和还原命令-亲测有效</title>
-    <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
+    <title>JavaScript中Array的一些常用方法和操作</title>
+    <url>/2020/12/01/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<span id="more"></span>
+<h1 id="JavaScript中Array的一些常用方法和操作"><a href="#JavaScript中Array的一些常用方法和操作" class="headerlink" title="JavaScript中Array的一些常用方法和操作"></a>JavaScript中Array的一些常用方法和操作</h1><p>JavaScript的 Array 对象是用于构造数组的全局对象，数组是类似于列表的高阶对象</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><h3 id="数组创建"><a href="#数组创建" class="headerlink" title="数组创建"></a>数组创建</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组创建</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">&#x27;Apple&#x27;</span>, <span class="string">&#x27;Banana&#x27;</span>];</span><br></pre></td></tr></table></figure>
 
-<h2 id="cmd命令备份本地postgres数据库以及还原"><a href="#cmd命令备份本地postgres数据库以及还原" class="headerlink" title="cmd命令备份本地postgres数据库以及还原"></a>cmd命令备份本地postgres数据库以及还原</h2><p>ps:<br>1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>2、备份后的文件格式是.bak(其它格式我没有测试过)<br>3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>口令为你的数据库密码，回车。备份成功。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
+<h3 id="数组长度"><a href="#数组长度" class="headerlink" title="数组长度"></a>数组长度</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组长度</span></span><br><span class="line"><span class="keyword">var</span> length=array.length();   <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组取值"><a href="#数组取值" class="headerlink" title="数组取值"></a>数组取值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1、通过数组下标取值</span></span><br><span class="line"><span class="keyword">var</span> first = array[<span class="number">0</span>];   <span class="comment">//Apple</span></span><br><span class="line"><span class="comment">//2、for循环也可以取到想要的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> array)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;下标&quot;</span>+index)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;值&quot;</span>+array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//向数组中添加数据(可在for循环中连续添加数据)</span></span><br><span class="line">array.push(obj)  <span class="comment">//obj为插入对象或者数据</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断数据在数组中对下标"><a href="#判断数据在数组中对下标" class="headerlink" title="判断数据在数组中对下标"></a>判断数据在数组中对下标</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//某个数据在数组中对下标</span></span><br><span class="line">array.indexOf(<span class="string">&#x27;Apple&#x27;</span>);  <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+<h3 id="替换数组对应下标的数据"><a href="#替换数组对应下标的数据" class="headerlink" title="替换数组对应下标的数据"></a>替换数组对应下标的数据</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//替换数组对应下标的元素，index为你要替换的下标位置，replaceData为替换数据。</span></span><br><span class="line">array.splice(index,<span class="number">1</span>,replaceData)</span><br></pre></td></tr></table></figure>
+<h3 id="数组连接或者合并"><a href="#数组连接或者合并" class="headerlink" title="数组连接或者合并"></a>数组连接或者合并</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并两个或多个数组(可为空数组)。此方法不会更改现有数组，而是返回一个新数组。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];   <span class="comment">//可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array2 = [<span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>];		<span class="comment">//也可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array3 = array1.concat(array2);  <span class="comment">//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="查找满足条件的第一个值"><a href="#查找满足条件的第一个值" class="headerlink" title="查找满足条件的第一个值"></a>查找满足条件的第一个值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回数组中满足条件的第一个元素的值。否则返回 undefined。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"><span class="keyword">const</span> found = array1.find(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">10</span>);  <span class="comment">//从左到右，大于10的第一个数是12。</span></span><br><span class="line"><span class="built_in">console</span>.log(found);  <span class="comment">//所以输出12</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断数组是否包含某个值"><a href="#判断数组是否包含某个值" class="headerlink" title="判断数组是否包含某个值"></a>判断数组是否包含某个值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否包含某个值</span></span><br><span class="line"><span class="keyword">const</span> pets = [<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">&#x27;cat&#x27;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组转字符串，元素拼接成字符串"><a href="#数组转字符串，元素拼接成字符串" class="headerlink" title="数组转字符串，元素拼接成字符串"></a>数组转字符串，元素拼接成字符串</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组转字符串，元素拼接成字符串</span></span><br><span class="line"><span class="keyword">const</span> elements = [<span class="string">&#x27;Fire&#x27;</span>, <span class="string">&#x27;Air&#x27;</span>, <span class="string">&#x27;Water&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(elements.join());  <span class="comment">//&quot;Fire,Air,Water&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;&#x27;</span>)); <span class="comment">//&quot;FireAirWater&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;-&#x27;</span>)); <span class="comment">//&quot;Fire-Air-Water&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组倒置与排序"><a href="#数组倒置与排序" class="headerlink" title="数组倒置与排序"></a>数组倒置与排序</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组倒置</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(array1.reverse()) <span class="comment">//[&quot;3&quot;, &quot;2&quot;, &quot;1&quot;]</span></span><br><span class="line"><span class="comment">//数组排序方法1</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(numbers); <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">//数组排序方法2</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]; </span><br><span class="line">numbers.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b); </span><br><span class="line"><span class="built_in">console</span>.log(numbers);  <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+<h3 id="清空数组"><a href="#清空数组" class="headerlink" title="清空数组"></a>清空数组</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line">array1= [];</span><br><span class="line"><span class="comment">//方法2 </span></span><br><span class="line">array2.splice(<span class="number">0</span>,array2.length);  </span><br><span class="line"><span class="comment">//方法3</span></span><br><span class="line">array3.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>数据库 postgres</category>
+        <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>postgresql 运维</tag>
+        <tag>JavaScript Array</tag>
       </tags>
   </entry>
   <entry>
@@ -252,7 +304,7 @@
 <li><p>4、用Stream流的distinct方法去重</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> LinkedList&lt;Integer&gt; list4= <span class="keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line"> Stream&lt;Integer&gt; liststream= list4.stream().distinct();</span><br><span class="line"></span><br><span class="line"><span class="comment">// distinct.forEach(res-&gt; System.out.println(res));  //输出每一项    </span></span><br><span class="line"><span class="comment">//重复后的liststream转成newlist4</span></span><br><span class="line">List&lt;Integer&gt; newlist4= liststream.collect(Collectors.toList());  </span><br><span class="line"> System.out.println(newlist4);<span class="comment">//[1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure></li>
 <li><p>5、如果List中存放的是Entity类对象，要根据某个字段去重，可考虑TreeSet去重</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实体类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> score;</span><br><span class="line">    ......       <span class="comment">//省略get、set、构造等一系列方法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">List&lt;Student&gt; students = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">91</span>),</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">90</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小黑&quot;</span>, <span class="number">19</span>, <span class="number">60</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小白&quot;</span>, <span class="number">22</span>, <span class="number">89</span>)</span><br><span class="line">        );</span><br><span class="line"><span class="comment">//定义一个Student类的TreeSet,根据Name字段比较去重的比较器</span></span><br><span class="line">TreeSet&lt;Student&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;(Comparator.comparing(Student::getName)); </span><br><span class="line"><span class="comment">//Students实体类对象students添加到TreeSet中去进行比较</span></span><br><span class="line">treeSet.addAll(students);</span><br><span class="line"><span class="comment">//TreeSet再转换成List</span></span><br><span class="line">List&lt;Student&gt; resList= treeSet.stream().collect(Collectors.toList());</span><br><span class="line">System.out.println(resList);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//实体类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> score;</span><br><span class="line">    ......       <span class="comment">//省略get、set、构造等一系列方法</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">List&lt;Student&gt; students = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">91</span>),</span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小明&quot;</span>, <span class="number">20</span>, <span class="number">90</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小黑&quot;</span>, <span class="number">19</span>, <span class="number">60</span>), </span><br><span class="line">        <span class="keyword">new</span> Student(<span class="string">&quot;小白&quot;</span>, <span class="number">22</span>, <span class="number">89</span>)</span><br><span class="line">        );</span><br><span class="line"><span class="comment">//定义一个Student类的TreeSet,根据Name字段比较去重的比较器</span></span><br><span class="line">TreeSet&lt;Student&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;&gt;(Comparator.comparing(Student::getName)); </span><br><span class="line"><span class="comment">//Students实体类对象students添加到TreeSet中去进行比较</span></span><br><span class="line">treeSet.addAll(students);</span><br><span class="line"><span class="comment">//TreeSet再转换成List</span></span><br><span class="line">List&lt;Student&gt; resList= treeSet.stream().collect(Collectors.toList());</span><br><span class="line">System.out.println(resList);</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -266,6 +318,77 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring实现Aop切面编程(日志记录)</title>
+    <url>/2021/03/07/spring%E5%AE%9E%E7%8E%B0%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="Spring两大特性"><a href="#Spring两大特性" class="headerlink" title="Spring两大特性"></a>Spring两大特性</h1><ul>
+<li>IOC(控制反转)<blockquote>
+<p>IOC：通俗点来讲，就是把对象的创建交给Spring容器来管理，不用我们手动new</p>
+</blockquote>
+</li>
+<li>AOP(面向切面编程)<blockquote>
+<p>AOP：定义一个切面，在切面中执行特定代码，实现代码增强，常用于日志打印，异常处理，性能耗时计算，事务处理，安全验证等等，</p>
+</blockquote>
+<h1 id="用AOP和不用AOP做日志记录的区别"><a href="#用AOP和不用AOP做日志记录的区别" class="headerlink" title="用AOP和不用AOP做日志记录的区别"></a>用AOP和不用AOP做日志记录的区别</h1></li>
+<li>不用AOP:<blockquote>
+<p>每个方法都要写记录日志的代码，代码多，工作量大</p>
+</blockquote>
+</li>
+<li>使用AOP:<blockquote>
+<p>日志统一交给某个类(切面配置类)来记录，这样做的好处是业务代码简洁了，也能达到一定的解耦等等</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="AOP实战之旅-基于注解"><a href="#AOP实战之旅-基于注解" class="headerlink" title="AOP实战之旅(基于注解)"></a>AOP实战之旅(基于注解)</h1><ul>
+<li>实战环境：jdk8、SpringBoot2.4.3、maven3.6。</li>
+<li>@Pointcut: </li>
+<li>@Before: 切面方法执行之前执行</li>
+<li>@After: 切面方法执行之后执行 。</li>
+<li>@AfterRunning: 切面方法成功返回结果之后执行</li>
+<li>@AfterThrowing: 切面方法抛出异常后执行<h2 id="1、SpringBoot项目搭建，并加入AOP依赖"><a href="#1、SpringBoot项目搭建，并加入AOP依赖" class="headerlink" title="1、SpringBoot项目搭建，并加入AOP依赖"></a>1、SpringBoot项目搭建，并<font color="red"><strong>加入AOP依赖</strong></font></h2></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2、创建切面类SystemLogAspect"><a href="#2、创建切面类SystemLogAspect" class="headerlink" title="2、创建切面类SystemLogAspect"></a>2、创建切面类SystemLogAspect</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Aspect</span>  <span class="comment">//标识为一个切面类</span></span><br><span class="line"><span class="meta">@Component</span>   <span class="comment">//交给Spring管理</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemLogAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//@Pointcut(&quot;@annotation(com.demo.aop.joggle.SystemLogInterface)&quot;)  //应用在有@SystemLogInterface注解的方法上</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">controllerAspect</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    System.out.println(<span class="string">&quot;我是切点&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Before(&quot;controllerAspect()&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBefore</span><span class="params">(JoinPoint joinPoint)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 线程绑定变量（该数据只有当前请求的线程可见）</span></span><br><span class="line">    Date beginTime = <span class="keyword">new</span> Date();</span><br><span class="line">    System.out.println(<span class="string">&quot;方法执行前通知&quot;</span>);</span><br><span class="line">    <span class="comment">//doSomething</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@AfterReturning(&quot;controllerAspect()&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">(JoinPoint joinPoint)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;方法返回结果后执行&quot;</span>);</span><br><span class="line">    <span class="comment">//doSomething</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@AfterThrowing(&quot;controllerAspect()&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterThrow</span><span class="params">(JoinPoint joinPoint)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;方法发生异常后执行&quot;</span>);</span><br><span class="line">    <span class="comment">//doSomething</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、创建自定义注解SystemLogInterface"><a href="#3、创建自定义注解SystemLogInterface" class="headerlink" title="3、创建自定义注解SystemLogInterface"></a>3、创建自定义注解SystemLogInterface</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:切面注解</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@author</span>: Mosey</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@time</span>: 2021/3/6 14:50</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span><span class="comment">//作用于参数或方法上 </span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span>   </span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SystemLogInterface &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、创建TestController，并在test方法处使用自定义的SystemLogInterface注解"><a href="#4、创建TestController，并在test方法处使用自定义的SystemLogInterface注解" class="headerlink" title="4、创建TestController，并在test方法处使用自定义的SystemLogInterface注解"></a>4、创建TestController，并在test方法处使用自定义的SystemLogInterface注解</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/test&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span> </span><br><span class="line"><span class="meta">@RestController</span>   </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SystemLogInterface</span></span><br><span class="line">    <span class="meta">@GetMapping(value = &quot;/aop&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">      System.out.println(<span class="string">&quot;方法正在执行中。。。&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;访问成功&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5、运行项目。访问localhost-8080-test-aop会打印出下面的结果"><a href="#5、运行项目。访问localhost-8080-test-aop会打印出下面的结果" class="headerlink" title="5、运行项目。访问localhost:8080/test/aop会打印出下面的结果"></a>5、运行项目。访问localhost:8080/test/aop会打印出下面的结果</h2><blockquote>
+<p>方法执行前通知<br>    方法正在执行中。。。<br>    方法返回结果后执行</p>
+</blockquote>
+<p>ＰＳ：如果方法运行时发生异常，会进入到@AfterThrowing中，如果我们有在test()方法中捕获异常，则不会进入@AfterThrowing。</p>
+<h1 id="AOP实战之旅-不基于注解"><a href="#AOP实战之旅-不基于注解" class="headerlink" title="AOP实战之旅(不基于注解)"></a>AOP实战之旅(不基于注解)</h1><ul>
+<li>上面的切面类SystemLogAspect的切点用到的是@Pointcut(“@annotation(com.demo.aop.joggle.SystemLogInterface)”)基于注解实现AOP的。</li>
+<li>其实我们也可以用@Pointcut(“execution(* com.demo.aop.controller..test())”)来进行切点。</li>
+<li>execution(* com.demo.aop.controller..test())意思是：com.demo.aop.controller包下的所有类的test方法(),括号里边的..表示任何参数。</li>
+<li>PS:切点换成execution表达式后，要把controller层的@SystemLogInterface注解注释掉。</li>
+<li>运行结果和上面的一样<blockquote>
+<p>方法执行前通知<br>  方法正在执行中。。。<br>  方法返回结果后执行</p>
+</blockquote>
+<h2 id="execution表达式"><a href="#execution表达式" class="headerlink" title="execution表达式"></a>execution表达式</h2>更多有关于execution表达式的，可以看下面的截图，execution也可以用连接符&amp;&amp; || 和!等匹配多个表达式，具体问题具体分析<br><a href="https://imgtu.com/i/617yvT"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/03/09/617yvT.png" alt="617yvT.png"></a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>spring</category>
+      </categories>
+      <tags>
+        <tag>Aop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>postgres数据库备份和还原命令-亲测有效</title>
+    <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="cmd命令备份本地postgres数据库以及还原"><a href="#cmd命令备份本地postgres数据库以及还原" class="headerlink" title="cmd命令备份本地postgres数据库以及还原"></a>cmd命令备份本地postgres数据库以及还原</h2><p>ps:<br>1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>2、备份后的文件格式是.bak(其它格式我没有测试过)<br>3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>口令为你的数据库密码，回车。备份成功。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
+]]></content>
+      <categories>
+        <category>数据库 postgres</category>
+      </categories>
+      <tags>
+        <tag>postgresql 运维</tag>
       </tags>
   </entry>
   <entry>
@@ -331,30 +454,6 @@
       </tags>
   </entry>
   <entry>
-    <title>我用命令创建的第一篇博客</title>
-    <url>/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="记录和学习MarkDown语法"><a href="#记录和学习MarkDown语法" class="headerlink" title="记录和学习MarkDown语法"></a>记录和学习MarkDown语法</h1><h2 id="上面的是一级标题。本标题是二级标题"><a href="#上面的是一级标题。本标题是二级标题" class="headerlink" title="上面的是一级标题。本标题是二级标题"></a>上面的是一级标题。本标题是二级标题</h2><h3 id="我是三级标题"><a href="#我是三级标题" class="headerlink" title="我是三级标题"></a>我是三级标题</h3><h4 id="我是四级标题"><a href="#我是四级标题" class="headerlink" title="我是四级标题"></a>我是四级标题</h4><h5 id="我是五级标题"><a href="#我是五级标题" class="headerlink" title="我是五级标题"></a>我是五级标题</h5><p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br>一个井号加空格，表示一级标题，两个井号代表二级标题。依此类推</p>
-<p>要加粗的文字左右分别用两个*号包起来，比如：<strong>我是加粗的</strong></p>
-<p>要倾斜的文字左右分别用一个星号包起来 比如：<em>我怎么倾斜了</em></p>
-<p>要加删除线文字，左右分别加两个波浪线，比如：<del>这是加删除线的文字</del></p>
-<p>三个或者三个以上的 - 或者 * 都可以是分割线<br>分割线</p>
-<hr>
-<!--<img src= "/img/loading.gif" data-lazy-src="/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/Mosey.jpg" class="" title="作者镇楼">-->
-
-<p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br><a href="http://baidu.com/">百度</a></p>
-<p><code>  技术这个东西。只能自己慢慢摸索</code></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-        <category>List</category>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>教程</tag>
-        <tag>语法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多数据源配置</title>
     <url>/2020/09/01/%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h1 id="SSM项目配置多数据源"><a href="#SSM项目配置多数据源" class="headerlink" title="SSM项目配置多数据源"></a>SSM项目配置多数据源</h1><ul>
@@ -379,6 +478,30 @@
       </categories>
       <tags>
         <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我用命令创建的第一篇博客</title>
+    <url>/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="记录和学习MarkDown语法"><a href="#记录和学习MarkDown语法" class="headerlink" title="记录和学习MarkDown语法"></a>记录和学习MarkDown语法</h1><h2 id="上面的是一级标题。本标题是二级标题"><a href="#上面的是一级标题。本标题是二级标题" class="headerlink" title="上面的是一级标题。本标题是二级标题"></a>上面的是一级标题。本标题是二级标题</h2><h3 id="我是三级标题"><a href="#我是三级标题" class="headerlink" title="我是三级标题"></a>我是三级标题</h3><h4 id="我是四级标题"><a href="#我是四级标题" class="headerlink" title="我是四级标题"></a>我是四级标题</h4><h5 id="我是五级标题"><a href="#我是五级标题" class="headerlink" title="我是五级标题"></a>我是五级标题</h5><p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br>一个井号加空格，表示一级标题，两个井号代表二级标题。依此类推</p>
+<p>要加粗的文字左右分别用两个*号包起来，比如：<strong>我是加粗的</strong></p>
+<p>要倾斜的文字左右分别用一个星号包起来 比如：<em>我怎么倾斜了</em></p>
+<p>要加删除线文字，左右分别加两个波浪线，比如：<del>这是加删除线的文字</del></p>
+<p>三个或者三个以上的 - 或者 * 都可以是分割线<br>分割线</p>
+<hr>
+<!--<img src= "/img/loading.gif" data-lazy-src="/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/Mosey.jpg" class="" title="作者镇楼">-->
+
+<p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br><a href="http://baidu.com/">百度</a></p>
+<p><code>  技术这个东西。只能自己慢慢摸索</code></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+        <category>List</category>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>语法</tag>
       </tags>
   </entry>
   <entry>
@@ -407,12 +530,7 @@
 <h2 id="redis常用命令学习总结"><a href="#redis常用命令学习总结" class="headerlink" title="redis常用命令学习总结"></a>redis常用命令学习总结</h2><ul>
 <li>redis共有16个库，顺序从下标0开始。默认是第一个库，如要切换库，则要使用命令select index    例如：select 1代表切换到第二个库。</li>
 <li>查看库中所有的键：    keys * </li>
-<li>命令太多要清屏：   clear <h3 id="老老实实做一个redis练习生"><a href="#老老实实做一个redis练习生" class="headerlink" title="老老实实做一个redis练习生"></a>老老实实做一个redis练习生</h3>会唱、跳、rap、篮球还不够，还要会redis基础命令，下面是每个类型相关。</li>
-<li>String相关<br><a href="https://imgchr.com/i/yqv0vq"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqv0vq.png" alt="yqv0vq.png"></a><br><a href="https://imgchr.com/i/yqvrrV"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvrrV.png" alt="yqvrrV.png"></a></li>
-<li>Hash相关<br><a href="https://imgchr.com/i/yqvhx1"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvhx1.png" alt="yqvhx1.png"></a></li>
-<li>List相关<br><a href="https://imgchr.com/i/yqvbIe"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvbIe.png" alt="yqvbIe.png"></a></li>
-<li>Set相关<br><a href="https://imgchr.com/i/yqvXRA"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvXRA.png" alt="yqvXRA.png"></a></li>
-<li>Sorted Set相关<br>偷一下懒，移步去看<a href="https://www.runoob.com/redis/redis-sorted-sets.html">菜鸟教程对应版块</a><h2 id="redis的几个特性理解"><a href="#redis的几个特性理解" class="headerlink" title="redis的几个特性理解"></a>redis的几个特性理解</h2></li>
+<li>命令太多要清屏：   clear <h3 id="老老实实做一个redis练习生"><a href="#老老实实做一个redis练习生" class="headerlink" title="老老实实做一个redis练习生"></a>老老实实做一个redis练习生</h3>会唱、跳、rap、篮球还不够，还要会redis基础命令，下面是每个类型相关。<h4 id="String相关"><a href="#String相关" class="headerlink" title="String相关"></a>String相关</h4><a href="https://imgchr.com/i/yqv0vq"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqv0vq.png" alt="yqv0vq.png"></a><br><a href="https://imgchr.com/i/yqvrrV"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvrrV.png" alt="yqvrrV.png"></a><h4 id="Hash相关"><a href="#Hash相关" class="headerlink" title="Hash相关"></a>Hash相关</h4><a href="https://imgchr.com/i/yqvhx1"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvhx1.png" alt="yqvhx1.png"></a><h4 id="List相关"><a href="#List相关" class="headerlink" title="List相关"></a>List相关</h4><a href="https://imgchr.com/i/yqvbIe"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvbIe.png" alt="yqvbIe.png"></a><h4 id="Set相关"><a href="#Set相关" class="headerlink" title="Set相关"></a>Set相关</h4><a href="https://imgchr.com/i/yqvXRA"><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvXRA.png" alt="yqvXRA.png"></a><h4 id="Sorted-Set相关"><a href="#Sorted-Set相关" class="headerlink" title="Sorted Set相关"></a>Sorted Set相关</h4>偷一下懒，移步去看<a href="https://www.runoob.com/redis/redis-sorted-sets.html">菜鸟教程对应版块</a><h2 id="redis的几个特性理解"><a href="#redis的几个特性理解" class="headerlink" title="redis的几个特性理解"></a>redis的几个特性理解</h2></li>
 </ul>
 <ol>
 <li>缓存穿透 、   <ul>

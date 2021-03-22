@@ -1,0 +1,1 @@
+"use strict";var st,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="🤞等风等雨也等你",clearTimeout(st)):(document.title="😁欢迎回来",st=setTimeout(function(){document.title=OriginTitile},3e3))});
