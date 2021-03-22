@@ -228,6 +228,20 @@
   </url>
   
   <url>
+    <loc>http://14uy2u.coding-pages.com/tags/JavaScript-Array/</loc>
+    <lastmod>2021-03-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://14uy2u.coding-pages.com/tags/SpringBoot/</loc>
+    <lastmod>2021-03-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://14uy2u.coding-pages.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
@@ -242,13 +256,6 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/tags/SpringBoot/</loc>
-    <lastmod>2021-03-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://14uy2u.coding-pages.com/tags/ubuntu/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
@@ -256,7 +263,7 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/tags/JavaScript-Array/</loc>
+    <loc>http://14uy2u.coding-pages.com/tags/postgresql-%E8%BF%90%E7%BB%B4/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -264,13 +271,6 @@
   
   <url>
     <loc>http://14uy2u.coding-pages.com/tags/Aop/</loc>
-    <lastmod>2021-03-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://14uy2u.coding-pages.com/tags/postgresql-%E8%BF%90%E7%BB%B4/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -335,6 +335,20 @@
   </url>
   
   <url>
+    <loc>http://14uy2u.coding-pages.com/categories/JavaScript/</loc>
+    <lastmod>2021-03-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://14uy2u.coding-pages.com/categories/%E6%95%B4%E5%90%88/</loc>
+    <lastmod>2021-03-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://14uy2u.coding-pages.com/categories/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
@@ -356,13 +370,6 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/categories/%E6%95%B4%E5%90%88/</loc>
-    <lastmod>2021-03-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://14uy2u.coding-pages.com/categories/%E8%A7%84%E8%8C%83/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
@@ -377,13 +384,6 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/categories/JavaScript/</loc>
-    <lastmod>2021-03-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://14uy2u.coding-pages.com/categories/List-%E9%9B%86%E5%90%88/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
@@ -391,14 +391,14 @@
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/categories/spring/</loc>
+    <loc>http://14uy2u.coding-pages.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93-postgres/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://14uy2u.coding-pages.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93-postgres/</loc>
+    <loc>http://14uy2u.coding-pages.com/categories/spring/</loc>
     <lastmod>2021-03-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
