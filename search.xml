@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JAVA判断某天是周几</title>
-    <url>/2020/07/31/JAVA%E5%88%A4%E6%96%AD%E6%9F%90%E5%A4%A9%E6%98%AF%E5%91%A8%E5%87%A0/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="java判断周六周日，周一到周五"><a href="#java判断周六周日，周一到周五" class="headerlink" title="java判断周六周日，周一到周五"></a>java判断周六周日，周一到周五</h2><p>这里利用到了Calendar类</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DateFormat sdf &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span><br><span class="line">        String Date &#x3D; &quot;2020-08-03&quot;;  &#x2F;&#x2F;定义初始是周一</span><br><span class="line">        Date testdate &#x3D; sdf.parse(Date);</span><br><span class="line">        Calendar cal &#x3D; Calendar.getInstance();</span><br><span class="line">        cal.setTime(testdate); </span><br><span class="line">       if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.MONDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周一&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">        &#x2F;&#x2F;日期加一天</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.TUESDAY) &#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周二&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.WEDNESDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周三&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.THURSDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周四&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.FRIDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周五&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.SATURDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周六&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.SUNDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周日&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>结果打印：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2020-08-03&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周一&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-04&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周二&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-05&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周三&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-06&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周四&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-07&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周五&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-08&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周六&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-09&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周日&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">记录代码，记录工作，记录自己。</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Calendar Calendar类计算日期 判断周一到周日</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ActiveMq学习</title>
     <url>/2021/01/07/ActiveMq/</url>
     <content><![CDATA[<h1 id="ActiveMq相关认识"><a href="#ActiveMq相关认识" class="headerlink" title="ActiveMq相关认识"></a>ActiveMq相关认识</h1><p>   ActiveMq是一个消息队列中间件，类似的还有RabbitMQ、Kafka等。</p>
@@ -39,6 +21,43 @@
       </categories>
       <tags>
         <tag>高并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JAVA判断某天是周几</title>
+    <url>/2020/07/31/JAVA%E5%88%A4%E6%96%AD%E6%9F%90%E5%A4%A9%E6%98%AF%E5%91%A8%E5%87%A0/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="java判断周六周日，周一到周五"><a href="#java判断周六周日，周一到周五" class="headerlink" title="java判断周六周日，周一到周五"></a>java判断周六周日，周一到周五</h2><p>这里利用到了Calendar类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DateFormat sdf &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span><br><span class="line">        String Date &#x3D; &quot;2020-08-03&quot;;  &#x2F;&#x2F;定义初始是周一</span><br><span class="line">        Date testdate &#x3D; sdf.parse(Date);</span><br><span class="line">        Calendar cal &#x3D; Calendar.getInstance();</span><br><span class="line">        cal.setTime(testdate); </span><br><span class="line">       if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.MONDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周一&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">        &#x2F;&#x2F;日期加一天</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.TUESDAY) &#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周二&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.WEDNESDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周三&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.THURSDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周四&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.FRIDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周五&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.SATURDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周六&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.SUNDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周日&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>结果打印：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2020-08-03&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周一&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-04&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周二&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-05&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周三&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-06&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周四&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-07&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周五&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-08&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周六&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-09&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周日&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">记录代码，记录工作，记录自己。</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Calendar Calendar类计算日期 判断周一到周日</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ping测试两个IP网络之间的连通性</title>
+    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
+<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
+<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
+<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
+<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
+<p><em>好记性不如烂笔头，多记录多学习</em></p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -69,25 +88,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Ping测试两个IP网络之间的连通性</title>
-    <url>/2020/09/27/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="使用ping或者telnet命令"><a href="#使用ping或者telnet命令" class="headerlink" title="使用ping或者telnet命令"></a>使用ping或者telnet命令</h2><p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
-<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，例如<a href="http://www.baidu.com/">www.baidu.com</a>)</p>
-<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
-<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
-<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
-<p><em>好记性不如烂笔头，多记录多学习</em></p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot项目整合Swagger-UI接口文档</title>
     <url>/2020/11/01/SpringBoot%E6%95%B4%E5%90%88Swagger-UI%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
     <content><![CDATA[<span id="more"></span>
@@ -109,6 +109,55 @@
       </tags>
   </entry>
   <entry>
+    <title>Java开发规范总结</title>
+    <url>/2021/02/06/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="Java开发规范总结"><a href="#Java开发规范总结" class="headerlink" title="Java开发规范总结"></a>Java开发规范总结</h1><h2 id="一些命名和定义规范"><a href="#一些命名和定义规范" class="headerlink" title="一些命名和定义规范"></a>一些命名和定义规范</h2><ul>
+<li>类名使用 UpperCamelCase 风格(单词首字母大写)，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO</li>
+<li>方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格(第一个单词小写，后面的都大写)</li>
+<li>常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。</li>
+<li>抽象类User命名AbstractUser，异常类UserException，测试类UserTest</li>
+<li>实体类Boolean类型的属性命名都不要加 is，例如Boolean isDeleted不推荐</li>
+<li>包名统一使用小写，com.公司名.项目名.模块名….或者cn.公司名.项目名.模块名….</li>
+<li> Long 初始赋值时，必须使用大写的 L，不能是小写的 l，小写容易跟数字 1 混淆，造成误解。正例：Long a=10000L<h2 id="代码格式相关"><a href="#代码格式相关" class="headerlink" title="代码格式相关"></a>代码格式相关</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 例1</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">    <span class="comment">// 缩进 4 个空格 </span></span><br><span class="line">    String say = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="comment">// 运算符的左右必须有一个空格 </span></span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line">    <span class="comment">// 关键词 if 与括号之间必须有一个空格，括号内的 f 与左括号，0 与右括号不需要空格 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">       System.out.println(say); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 左大括号前加空格且不换行；左大括号后换行 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">1</span>) &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;world&quot;</span>); </span><br><span class="line">        <span class="comment">// 右大括号前换行，右大括号后有 else，不用换行 </span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">       <span class="comment">// 在右大括号后直接结束，则必须换行 </span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></li>
+<li>Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals。 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例： </span></span><br><span class="line">  <span class="string">&quot;test&quot;</span>.equals(object); </span><br><span class="line"><span class="comment">// 反例： </span></span><br><span class="line">  object.equals(<span class="string">&quot;test&quot;</span>); </span><br><span class="line"><span class="comment">// 说明：推荐使用 java.util.Objects#equals （JDK7 引入的工具类）</span></span><br></pre></td></tr></table></figure></li>
+<li>单行字符数限制不超过 120 个，超出需要换行，第二行相对第一行缩进 4 个空格，从第三行开始，不再继续缩进</li>
+<li>方法参数在定义和传入时，多个参数逗号后边必须加空格。 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例：下例中实参的&quot;a&quot;,后边必须要有一个空格。 </span></span><br><span class="line">    method(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>类的静态变量或静态方法直接使用类名.来访问</li>
+<li>如果不允许外部直接通过 new 来创建对象，那么构造方法必须是 private。 </li>
+<li>工具类不允许有 public 或 default <font color="#FF0000">构造方法</font> </li>
+<li>工具类的方法常多用static修饰，使用的时候直接类名.方法（）</li>
+<li>工具类常量定义和普通类常量定义一样，都用public static final 修饰</li>
+<li>在一个 switch 块内，每个 case 要么通过 break/return 等来终止，要么注释说明程 序将继续执行到哪一个 case 为止；在一个 switch 块内，都必须包含一个 default 语句并且 放在最后，即使它什么代码也没有<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> value1:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> value2:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在 if/else/for/while/do 语句中必须使用大括号。即使只有一行代码，<font color="#ff0000">避免使用 单行的形式</font>：if (condition) statements;</li>
+<li>表达异常的分支时，少用 if-else 方式，这种方式可以改写成：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 接着写 else 的业务逻辑代码;</span></span><br></pre></td></tr></table></figure>
+如果非得使用 if()…else if()…else…方式表达逻辑，【强制】避免后续代码维 护困难，请勿超过 3 层。 正例：逻辑上超过 3 层的 if-else 代码可以使用卫语句，或者状态模式来实现。卫语句示例 如下：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">today</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isBusy()) &#123;</span><br><span class="line">        System.out.println(“change time.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isFree()) &#123;</span><br><span class="line">        System.out.println(“go to travel.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(“stay at home to learn Alibaba Java Coding Guideline.”);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>如果if的判断条件表达式很长，应该将复杂逻辑判断的结果赋值给一个有意义的布尔变量名，以提高可读性<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">boolean</span> existed = (file.open(fileName, <span class="string">&quot;w&quot;</span>) != <span class="keyword">null</span>) &amp;&amp; (...) || (...);</span><br><span class="line"><span class="keyword">if</span> (existed) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>不建议在循环中定义对象、变量、 获取数据库连接，以及进行不必要的 try-catch 操作，条件允许下尽可能在循环体外进行，不然会影响代码性能<h2 id="注释相关"><a href="#注释相关" class="headerlink" title="注释相关"></a>注释相关</h2></li>
+<li>类、类属性、类方法的注释必须使用 Javadoc 规范，使用/*<em>内容</em>/格式，不得使用 //xxx 方式。因为Javadoc格式鼠标移动会提示。//xxx格式却不能</li>
+<li>所有的枚举类型字段必须要有注释，说明每个数据项的用途。</li>
+<li>项目中注释掉的代码。说明：代码被注释掉有两种可能性：<br>1）后续会恢复此段代码逻辑。<br>2）如果永久不用。则删除（不用怕，代码仓库保存了历史代码）。<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2></li>
+<li>正则表达式不要在方法体内定义<h1 id="MySQL相关"><a href="#MySQL相关" class="headerlink" title="MySQL相关"></a>MySQL相关</h1></li>
+<li>表达是与否概念的字段，必须使用 is_xxx 的方式命名，数据类型是 unsigned tinyint。<br>例子：表达逻辑删除的字段名 is_deleted，1 表示删除，0 表示未删除。</li>
+<li>表名、字段名必须使用小写字母或数字。例子：getter_admin，task_config，level3_name</li>
+<li>主键索引名为 pk_字段名；唯一索引名为 uk_字段名；普通索引名则为 idx_字段名</li>
+<li>小数类型为 decimal，禁止使用 float 和 double（精度会丢失）</li>
+<li>char 类型的存放固定长度的数据  如：身份证号(18） 手机号电话号(11)  性别(1)等等，如果存储的数据的大小比定义时的小，会自动补全。存储固定的长度</li>
+<li>varchar类型长度可变。</li>
+<li>in 操作能避免则避免，若实在避免不了，需要仔细评估 in 后边的集合元素数量，控 制在 1000 个之内。</li>
+<li>TRUNCATE TABLE 比 DELETE 速度快，TRUNCATE 无事务且不触发 trigger，有可能造成事故，故不建议在开发代码中使用此语句。TRUNCATE TABLE 在功能上与不带 WHERE 子句的 DELETE 语句相同。</li>
+<li>在表查询中，一律不要使用 * 作为查询的字段列表，需要哪些字段必须明确写明。</li>
+</ul>
+<hr>
+<p>摘录自某阿里巴巴开发手册，哪个版本的忘记了:pig:。</p>
+]]></content>
+      <categories>
+        <category>规范</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java 日期往后加30天(非工作日)</title>
     <url>/2020/05/28/java%20%E6%97%A5%E6%9C%9F%E5%BE%80%E5%90%8E%E5%8A%A030%E5%A4%A9(%E9%9D%9E%E5%B7%A5%E4%BD%9C%E6%97%A5)/</url>
     <content><![CDATA[<span id="more"></span>
@@ -122,45 +171,6 @@
       </categories>
       <tags>
         <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot整合Redis(其实不难)</title>
-    <url>/2021/03/07/SpringBoot%E6%95%B4%E5%90%88redis/</url>
-    <content><![CDATA[<h1 id="两种整合方法"><a href="#两种整合方法" class="headerlink" title="两种整合方法"></a>两种整合方法</h1><blockquote>
-<p>一种是spring-boot-starter-data-redis<br>另一种是jedis</p>
-</blockquote>
-<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>1、添加依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--redis依赖配置--&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2、SpringBoot配置文件定义redis相关</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">spring</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span> <span class="comment"># Redis主机地址</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span> <span class="comment"># Redis数据库下标（从0开始，默认第一个库）</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span> <span class="comment"># Redis端口</span></span><br><span class="line">    <span class="attr">password:</span> <span class="comment"># Redis密码（默认为空）</span></span><br><span class="line">    <span class="attr">jedis:</span></span><br><span class="line">      <span class="attr">pool:</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">8</span> <span class="comment"># 连接池最大连接数（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-wait:</span> <span class="string">-1ms</span> <span class="comment"># 连接池最大阻塞等待时间（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">8</span> <span class="comment"># 连接池中的最大空闲连接</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 连接池中的最小空闲连接</span></span><br><span class="line">        <span class="attr">timeout:</span> <span class="string">3000ms</span> <span class="comment"># 连接超时时间（毫秒）</span></span><br><span class="line"><span class="comment"># 自定义redis的key的前缀和到期时间</span></span><br><span class="line"><span class="attr">redis:</span></span><br><span class="line">  <span class="attr">key:</span></span><br><span class="line">    <span class="attr">prefix:</span></span><br><span class="line">      <span class="attr">authCode:</span> <span class="string">&quot;portal:authCode:&quot;</span></span><br><span class="line">    <span class="attr">expire:</span></span><br><span class="line">      <span class="attr">authCode:</span> <span class="number">120</span> <span class="comment"># 验证码超期时间</span></span><br></pre></td></tr></table></figure>
-<p>3、定义一个redis的常用操作接口</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 存储数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function">String <span class="title">get</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设置超期时间</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">expire</span><span class="params">(String key, <span class="keyword">long</span> expire)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自增操作</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> delta 自增步长</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function">Long <span class="title">increment</span><span class="params">(String key, <span class="keyword">long</span> delta)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>4、创建RedisService接口的实现类RedisServiceImpl，并在实现类中导入第一步依赖中的StringRedisTemplate类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisServiceImpl</span> <span class="keyword">implements</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">expire</span><span class="params">(String key, <span class="keyword">long</span> expire)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.expire(key, expire, TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.delete(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Long <span class="title">increment</span><span class="params">(String key, <span class="keyword">long</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().increment(key,delta);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>RedisTemplate的以字符串为中心的扩展。 由于大多数针对Redis的操作都是基于String的，因此此类提供了一个专用类，该类可最大程度地减少其通用template配置，尤其是在序列化程序方面。</p>
-</blockquote>
-<p>5、使用方法<br>1.在要使用的类中，注入接口</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> RedisService redisService;</span><br></pre></td></tr></table></figure>
-
-<p>2.get set expire使用</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//取出配置文件中自定义的key的前缀和到期时间</span></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;redis.key.prefix.authCode&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String REDIS_KEY_PREFIX_AUTH_CODE;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;redis.key.expire.authCode&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Long AUTH_CODE_EXPIRE_SECONDS;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">//设置值</span></span><br><span class="line"> redisService.set(REDIS_KEY_PREFIX_AUTH_CODE+<span class="string">&quot;任一字符串&quot;</span>,value)  </span><br><span class="line"> <span class="comment">//获取值  </span></span><br><span class="line"> redisService.get(key)  </span><br><span class="line"> <span class="comment">//设置到期时间expirationdate</span></span><br><span class="line"> redisService.expire(key,AUTH_CODE_EXPIRE_SECONDS) </span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><blockquote>
-<p>配置文件和上面的一样，只是依赖和工具类不一样。个人觉得这种方法好点。这个能操作除了String类型外，还可以操作其它类型的数据。</p>
-</blockquote>
-<p>1.添加jedis依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>2.JedisUtil工具类编写</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.host&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String redis_host;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.port&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer redis_port;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.jedis.pool.max-idle&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer max_idle;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.jedis.pool.min-idle&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer min_idle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取redis操作对象</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Jedis <span class="title">getJedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = redis_host;</span><br><span class="line">        <span class="keyword">int</span> port = redis_port;</span><br><span class="line">        <span class="keyword">int</span> maxTotal = max_idle;</span><br><span class="line">        <span class="keyword">int</span> maxIdle = min_idle;</span><br><span class="line">        <span class="comment">//设置配置信息</span></span><br><span class="line">  JedisPoolConfig jedisPoolConfig = <span class="keyword">new</span> JedisPoolConfig();</span><br><span class="line">        jedisPoolConfig.setMaxIdle(maxIdle);</span><br><span class="line">        jedisPoolConfig.setMaxTotal(maxTotal);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//初始化</span></span><br><span class="line">  JedisPool jedisPool = <span class="keyword">new</span> JedisPool(jedisPoolConfig, host, port);</span><br><span class="line">        Jedis jedis=jedisPool.getResource();</span><br><span class="line">        <span class="keyword">return</span> jedis;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>3.使用方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注入工具类</span></span><br><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> JedisUtil jedisUtil;</span><br><span class="line"></span><br><span class="line">省略...</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取jedis对象，操作String类型，其它类型的省略。</span></span><br><span class="line">Jedis jedis = jedisUtil.getJedis();</span><br><span class="line">jedis.set(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;value&quot;</span>);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>SpringBoot</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -232,52 +242,42 @@
       </tags>
   </entry>
   <entry>
-    <title>Java开发规范总结</title>
-    <url>/2021/02/06/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="Java开发规范总结"><a href="#Java开发规范总结" class="headerlink" title="Java开发规范总结"></a>Java开发规范总结</h1><h2 id="一些命名和定义规范"><a href="#一些命名和定义规范" class="headerlink" title="一些命名和定义规范"></a>一些命名和定义规范</h2><ul>
-<li>类名使用 UpperCamelCase 风格(单词首字母大写)，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO</li>
-<li>方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格(第一个单词小写，后面的都大写)</li>
-<li>常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。</li>
-<li>抽象类User命名AbstractUser，异常类UserException，测试类UserTest</li>
-<li>实体类Boolean类型的属性命名都不要加 is，例如Boolean isDeleted不推荐</li>
-<li>包名统一使用小写，com.公司名.项目名.模块名….或者cn.公司名.项目名.模块名….</li>
-<li> Long 初始赋值时，必须使用大写的 L，不能是小写的 l，小写容易跟数字 1 混淆，造成误解。正例：Long a=10000L<h2 id="代码格式相关"><a href="#代码格式相关" class="headerlink" title="代码格式相关"></a>代码格式相关</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 例1</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">    <span class="comment">// 缩进 4 个空格 </span></span><br><span class="line">    String say = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="comment">// 运算符的左右必须有一个空格 </span></span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line">    <span class="comment">// 关键词 if 与括号之间必须有一个空格，括号内的 f 与左括号，0 与右括号不需要空格 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">       System.out.println(say); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 左大括号前加空格且不换行；左大括号后换行 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">1</span>) &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;world&quot;</span>); </span><br><span class="line">        <span class="comment">// 右大括号前换行，右大括号后有 else，不用换行 </span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">       <span class="comment">// 在右大括号后直接结束，则必须换行 </span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></li>
-<li>Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals。 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例： </span></span><br><span class="line">  <span class="string">&quot;test&quot;</span>.equals(object); </span><br><span class="line"><span class="comment">// 反例： </span></span><br><span class="line">  object.equals(<span class="string">&quot;test&quot;</span>); </span><br><span class="line"><span class="comment">// 说明：推荐使用 java.util.Objects#equals （JDK7 引入的工具类）</span></span><br></pre></td></tr></table></figure></li>
-<li>单行字符数限制不超过 120 个，超出需要换行，第二行相对第一行缩进 4 个空格，从第三行开始，不再继续缩进</li>
-<li>方法参数在定义和传入时，多个参数逗号后边必须加空格。 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例：下例中实参的&quot;a&quot;,后边必须要有一个空格。 </span></span><br><span class="line">    method(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>);</span><br></pre></td></tr></table></figure></li>
-<li>类的静态变量或静态方法直接使用类名.来访问</li>
-<li>如果不允许外部直接通过 new 来创建对象，那么构造方法必须是 private。 </li>
-<li>工具类不允许有 public 或 default <font color="#FF0000">构造方法</font> </li>
-<li>工具类的方法常多用static修饰，使用的时候直接类名.方法（）</li>
-<li>工具类常量定义和普通类常量定义一样，都用public static final 修饰</li>
-<li>在一个 switch 块内，每个 case 要么通过 break/return 等来终止，要么注释说明程 序将继续执行到哪一个 case 为止；在一个 switch 块内，都必须包含一个 default 语句并且 放在最后，即使它什么代码也没有<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> value1:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> value2:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>在 if/else/for/while/do 语句中必须使用大括号。即使只有一行代码，<font color="#ff0000">避免使用 单行的形式</font>：if (condition) statements;</li>
-<li>表达异常的分支时，少用 if-else 方式，这种方式可以改写成：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 接着写 else 的业务逻辑代码;</span></span><br></pre></td></tr></table></figure>
-如果非得使用 if()…else if()…else…方式表达逻辑，【强制】避免后续代码维 护困难，请勿超过 3 层。 正例：逻辑上超过 3 层的 if-else 代码可以使用卫语句，或者状态模式来实现。卫语句示例 如下：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">today</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isBusy()) &#123;</span><br><span class="line">        System.out.println(“change time.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isFree()) &#123;</span><br><span class="line">        System.out.println(“go to travel.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(“stay at home to learn Alibaba Java Coding Guideline.”);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>如果if的判断条件表达式很长，应该将复杂逻辑判断的结果赋值给一个有意义的布尔变量名，以提高可读性<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">boolean</span> existed = (file.open(fileName, <span class="string">&quot;w&quot;</span>) != <span class="keyword">null</span>) &amp;&amp; (...) || (...);</span><br><span class="line"><span class="keyword">if</span> (existed) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>不建议在循环中定义对象、变量、 获取数据库连接，以及进行不必要的 try-catch 操作，条件允许下尽可能在循环体外进行，不然会影响代码性能<h2 id="注释相关"><a href="#注释相关" class="headerlink" title="注释相关"></a>注释相关</h2></li>
-<li>类、类属性、类方法的注释必须使用 Javadoc 规范，使用/*<em>内容</em>/格式，不得使用 //xxx 方式。因为Javadoc格式鼠标移动会提示。//xxx格式却不能</li>
-<li>所有的枚举类型字段必须要有注释，说明每个数据项的用途。</li>
-<li>项目中注释掉的代码。说明：代码被注释掉有两种可能性：<br>1）后续会恢复此段代码逻辑。<br>2）如果永久不用。则删除（不用怕，代码仓库保存了历史代码）。<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2></li>
-<li>正则表达式不要在方法体内定义<h1 id="MySQL相关"><a href="#MySQL相关" class="headerlink" title="MySQL相关"></a>MySQL相关</h1></li>
-<li>表达是与否概念的字段，必须使用 is_xxx 的方式命名，数据类型是 unsigned tinyint。<br>例子：表达逻辑删除的字段名 is_deleted，1 表示删除，0 表示未删除。</li>
-<li>表名、字段名必须使用小写字母或数字。例子：getter_admin，task_config，level3_name</li>
-<li>主键索引名为 pk_字段名；唯一索引名为 uk_字段名；普通索引名则为 idx_字段名</li>
-<li>小数类型为 decimal，禁止使用 float 和 double（精度会丢失）</li>
-<li>char 类型的存放固定长度的数据  如：身份证号(18） 手机号电话号(11)  性别(1)等等，如果存储的数据的大小比定义时的小，会自动补全。存储固定的长度</li>
-<li>varchar类型长度可变。</li>
-<li>in 操作能避免则避免，若实在避免不了，需要仔细评估 in 后边的集合元素数量，控 制在 1000 个之内。</li>
-<li>TRUNCATE TABLE 比 DELETE 速度快，TRUNCATE 无事务且不触发 trigger，有可能造成事故，故不建议在开发代码中使用此语句。TRUNCATE TABLE 在功能上与不带 WHERE 子句的 DELETE 语句相同。</li>
-<li>在表查询中，一律不要使用 * 作为查询的字段列表，需要哪些字段必须明确写明。</li>
-</ul>
-<hr>
-<p>摘录自某阿里巴巴开发手册，哪个版本的忘记了:pig:。</p>
+    <title>SpringBoot整合Redis(其实不难)</title>
+    <url>/2021/03/07/SpringBoot%E6%95%B4%E5%90%88redis/</url>
+    <content><![CDATA[<h1 id="两种整合方法"><a href="#两种整合方法" class="headerlink" title="两种整合方法"></a>两种整合方法</h1><blockquote>
+<p>一种是spring-boot-starter-data-redis<br>另一种是jedis</p>
+</blockquote>
+<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>1、添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--redis依赖配置--&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2、SpringBoot配置文件定义redis相关</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">spring</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span> <span class="comment"># Redis主机地址</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span> <span class="comment"># Redis数据库下标（从0开始，默认第一个库）</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span> <span class="comment"># Redis端口</span></span><br><span class="line">    <span class="attr">password:</span> <span class="comment"># Redis密码（默认为空）</span></span><br><span class="line">    <span class="attr">jedis:</span></span><br><span class="line">      <span class="attr">pool:</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">8</span> <span class="comment"># 连接池最大连接数（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-wait:</span> <span class="string">-1ms</span> <span class="comment"># 连接池最大阻塞等待时间（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">8</span> <span class="comment"># 连接池中的最大空闲连接</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">0</span> <span class="comment"># 连接池中的最小空闲连接</span></span><br><span class="line">        <span class="attr">timeout:</span> <span class="string">3000ms</span> <span class="comment"># 连接超时时间（毫秒）</span></span><br><span class="line"><span class="comment"># 自定义redis的key的前缀和到期时间</span></span><br><span class="line"><span class="attr">redis:</span></span><br><span class="line">  <span class="attr">key:</span></span><br><span class="line">    <span class="attr">prefix:</span></span><br><span class="line">      <span class="attr">authCode:</span> <span class="string">&quot;portal:authCode:&quot;</span></span><br><span class="line">    <span class="attr">expire:</span></span><br><span class="line">      <span class="attr">authCode:</span> <span class="number">120</span> <span class="comment"># 验证码超期时间</span></span><br></pre></td></tr></table></figure>
+<p>3、定义一个redis的常用操作接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 存储数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function">String <span class="title">get</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设置超期时间</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">expire</span><span class="params">(String key, <span class="keyword">long</span> expire)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自增操作</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> delta 自增步长</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="function">Long <span class="title">increment</span><span class="params">(String key, <span class="keyword">long</span> delta)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、创建RedisService接口的实现类RedisServiceImpl，并在实现类中导入第一步依赖中的StringRedisTemplate类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisServiceImpl</span> <span class="keyword">implements</span> <span class="title">RedisService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String key, String value)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">expire</span><span class="params">(String key, <span class="keyword">long</span> expire)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.expire(key, expire, TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        stringRedisTemplate.delete(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Long <span class="title">increment</span><span class="params">(String key, <span class="keyword">long</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringRedisTemplate.opsForValue().increment(key,delta);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>RedisTemplate的以字符串为中心的扩展。 由于大多数针对Redis的操作都是基于String的，因此此类提供了一个专用类，该类可最大程度地减少其通用template配置，尤其是在序列化程序方面。</p>
+</blockquote>
+<p>5、使用方法<br>1.在要使用的类中，注入接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> RedisService redisService;</span><br></pre></td></tr></table></figure>
+
+<p>2.get set expire使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//取出配置文件中自定义的key的前缀和到期时间</span></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;redis.key.prefix.authCode&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String REDIS_KEY_PREFIX_AUTH_CODE;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;redis.key.expire.authCode&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Long AUTH_CODE_EXPIRE_SECONDS;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">//设置值</span></span><br><span class="line"> redisService.set(REDIS_KEY_PREFIX_AUTH_CODE+<span class="string">&quot;任一字符串&quot;</span>,value)  </span><br><span class="line"> <span class="comment">//获取值  </span></span><br><span class="line"> redisService.get(key)  </span><br><span class="line"> <span class="comment">//设置到期时间expirationdate</span></span><br><span class="line"> redisService.expire(key,AUTH_CODE_EXPIRE_SECONDS) </span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><blockquote>
+<p>配置文件和上面的一样，只是依赖和工具类不一样。个人觉得这种方法好点。这个能操作除了String类型外，还可以操作其它类型的数据。</p>
+</blockquote>
+<p>1.添加jedis依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.JedisUtil工具类编写</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.host&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String redis_host;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.port&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer redis_port;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.jedis.pool.max-idle&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer max_idle;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.redis.jedis.pool.min-idle&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer min_idle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取redis操作对象</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Jedis <span class="title">getJedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String host = redis_host;</span><br><span class="line">        <span class="keyword">int</span> port = redis_port;</span><br><span class="line">        <span class="keyword">int</span> maxTotal = max_idle;</span><br><span class="line">        <span class="keyword">int</span> maxIdle = min_idle;</span><br><span class="line">        <span class="comment">//设置配置信息</span></span><br><span class="line">  JedisPoolConfig jedisPoolConfig = <span class="keyword">new</span> JedisPoolConfig();</span><br><span class="line">        jedisPoolConfig.setMaxIdle(maxIdle);</span><br><span class="line">        jedisPoolConfig.setMaxTotal(maxTotal);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//初始化</span></span><br><span class="line">  JedisPool jedisPool = <span class="keyword">new</span> JedisPool(jedisPoolConfig, host, port);</span><br><span class="line">        Jedis jedis=jedisPool.getResource();</span><br><span class="line">        <span class="keyword">return</span> jedis;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.使用方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注入工具类</span></span><br><span class="line"><span class="meta">@Autowired</span> </span><br><span class="line"><span class="keyword">private</span> JedisUtil jedisUtil;</span><br><span class="line"></span><br><span class="line">省略...</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取jedis对象，操作String类型，其它类型的省略。</span></span><br><span class="line">Jedis jedis = jedisUtil.getJedis();</span><br><span class="line">jedis.set(<span class="string">&quot;key&quot;</span>,<span class="string">&quot;value&quot;</span>);</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>规范</category>
+        <category>SpringBoot</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -318,6 +318,20 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>postgres数据库备份和还原命令-亲测有效</title>
+    <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="cmd命令备份本地postgres数据库以及还原"><a href="#cmd命令备份本地postgres数据库以及还原" class="headerlink" title="cmd命令备份本地postgres数据库以及还原"></a>cmd命令备份本地postgres数据库以及还原</h2><p>ps:<br>1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>2、备份后的文件格式是.bak(其它格式我没有测试过)<br>3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>口令为你的数据库密码，回车。备份成功。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
+]]></content>
+      <categories>
+        <category>数据库 postgres</category>
+      </categories>
+      <tags>
+        <tag>postgresql 运维</tag>
       </tags>
   </entry>
   <entry>
@@ -387,20 +401,6 @@
       </tags>
   </entry>
   <entry>
-    <title>postgres数据库备份和还原命令-亲测有效</title>
-    <url>/2020/07/08/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="cmd命令备份本地postgres数据库以及还原"><a href="#cmd命令备份本地postgres数据库以及还原" class="headerlink" title="cmd命令备份本地postgres数据库以及还原"></a>cmd命令备份本地postgres数据库以及还原</h2><p>ps:<br>1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>2、备份后的文件格式是.bak(其它格式我没有测试过)<br>3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>口令为你的数据库密码，回车。备份成功。<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
-]]></content>
-      <categories>
-        <category>数据库 postgres</category>
-      </categories>
-      <tags>
-        <tag>postgresql 运维</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue element子组件中调用父组件数据</title>
     <url>/2020/07/03/vue%20element%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%B0%83%E7%94%A8%E7%88%B6%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<span id="more"></span>
@@ -412,6 +412,25 @@
       </categories>
       <tags>
         <tag>vue javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端js排序</title>
+    <url>/2020/07/13/%E5%89%8D%E7%AB%AFjs%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="前端在js中排序数据"><a href="#前端在js中排序数据" class="headerlink" title="前端在js中排序数据"></a>前端在js中排序数据</h2><p>和后端排序类似，this.sortdata为你要降序处理的数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">                return a.value-b.value;</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+<p> 如果要升序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">               return b.value-a.value;</span><br><span class="line">           &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>注：a.value中的value为sortdate中的值。即你要根据sortdata中的value值来排序。如果sortdata中你要根据其它值来排序(如：年龄、分数、数量等等)，则自行替换</p>
+]]></content>
+      <categories>
+        <category>排序 前端</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -441,25 +460,6 @@
       </categories>
       <tags>
         <tag>css</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端js排序</title>
-    <url>/2020/07/13/%E5%89%8D%E7%AB%AFjs%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="前端在js中排序数据"><a href="#前端在js中排序数据" class="headerlink" title="前端在js中排序数据"></a>前端在js中排序数据</h2><p>和后端排序类似，this.sortdata为你要降序处理的数据</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">                return a.value-b.value;</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-<p> 如果要升序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">               return b.value-a.value;</span><br><span class="line">           &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>注：a.value中的value为sortdate中的值。即你要根据sortdata中的value值来排序。如果sortdata中你要根据其它值来排序(如：年龄、分数、数量等等)，则自行替换</p>
-]]></content>
-      <categories>
-        <category>排序 前端</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -502,7 +502,16 @@
 
 <p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br><a href="http://baidu.com/">百度</a></p>
 <p><code>  技术这个东西。只能自己慢慢摸索</code></p>
-]]></content>
+<div id="tcomment"></div>
+<script src="https://cdn.jsdelivr.net/npm/twikoo@1.3.0/dist/twikoo.all.min.js"></script>
+<script>
+twikoo.init({
+  envId: 'twikoo-1gyp8tcf78717988',
+  el: '#tcomment',
+  // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，如果您的环境地域不是上海，需传此参数
+  // path: 'window.location.pathname', // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+})
+</script>]]></content>
       <categories>
         <category>Java</category>
         <category>List</category>
