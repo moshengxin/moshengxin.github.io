@@ -308,6 +308,142 @@ jsonp:“jsonpcallback”</p>
       </tags>
   </entry>
   <entry>
+    <title>妈妈我想学Sql性能优化</title>
+    <url>/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/</url>
+    <content><![CDATA[<ul>
+<li>==欢迎来访我的个人博客== ：<a href="http://14uy2u.coding-pages.com/">Mosey</a></li>
+</ul>
+<h1>Explain分析Sql性能</h1>
+<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>在我们平时开发中，因为系统可能属于初级阶段，数据库的数据还不是很多，所以自我感觉写的Sql语句上运行起来速度还不错，殊不知，随着时间推移，数据量日益增多，系统的查询效率会在打折扣，所以，Sql性能调优手段还得了解一下下。</p>
+<h2 id="Explain是什么？有什么用？"><a class="header-anchor" href="#Explain是什么？有什么用？">¶</a>Explain是什么？有什么用？</h2>
+<ul>
+<li>Explain可以用来分析一条Sql语句的运行效率。根据执行后的结果字段来判断查询有没有用“索引”、“全表扫描还是只扫描一些行”、“当前sql处于哪个性能级别”等等。</li>
+</ul>
+<h2 id="Explain怎么用？"><a class="header-anchor" href="#Explain怎么用？">¶</a>Explain怎么用？</h2>
+<ul>
+<li>用法：<code>explain 待分析的Sql语句</code></li>
+</ul>
+<h2 id="Explain返回字段了解一下"><a class="header-anchor" href="#Explain返回字段了解一下">¶</a>Explain返回字段了解一下</h2>
+<ul>
+<li><a><b>id</b></a></li>
+</ul>
+<blockquote>
+<p><code>id</code>越大，越先执行(单表Sql除外)，id相同，则执行顺序由上而下</p>
+</blockquote>
+<ul>
+<li><a><b>select_type(查询类型)
+<ul>
+<li>只列举其中几种</li>
+</ul>
+</b></a></li>
+</ul>
+<blockquote>
+<p><code>simple</code>： 简单select(无union或where子查询)<br>
+<code>primary</code>： 最外层select<br>
+<code>subquery</code>：子查询中中第一个select</p>
+</blockquote>
+<ul>
+<li><a><b>table</b></a></li>
+</ul>
+<blockquote>
+<p>Sql查询对应的数据库表名称</p>
+</blockquote>
+<ul>
+<li><a><b>partitions(分区)</b></a></li>
+<li><a><b>type(联接类型)
+<ul>
+<li>可根据type知道sql的性能级别，all性能最差(全表扫描)，</li>
+<li>我们平时开发写的Sql至少达到range性能级别，最好能达到ref，不然有可能出现性能问题</li>
+<li>性能级别天梯如下</li>
+</ul>
+</b></a></li>
+</ul>
+<blockquote>
+<p><code>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; all</code></p>
+</blockquote>
+<ul>
+<li><a><b>possible_keys</b></a></li>
+</ul>
+<blockquote>
+<p>查询时，<code>可能用到的索引</code></p>
+</blockquote>
+<ul>
+<li><a><b>key</b></a></li>
+</ul>
+<blockquote>
+<p>查询时，<code>真正用到的索引</code></p>
+</blockquote>
+<ul>
+<li><a><b>key_len</b></a></li>
+</ul>
+<blockquote>
+<p>可片面理解为索引长度，不过不是真正的长度，Sql自有一套计算长度规则</p>
+</blockquote>
+<ul>
+<li><a><b>rows</b></a></li>
+</ul>
+<blockquote>
+<p>扫描了多少行。</p>
+</blockquote>
+<ul>
+<li><a><b>extra(额外信息)</b></a></li>
+</ul>
+<blockquote>
+<p>是否使用索引 ，是否使用where，是否使用distinct等待<br>
+性能级别：useing index&gt;usinh where &gt; using temporary | using filesort</p>
+</blockquote>
+<h2 id="实战小例子"><a class="header-anchor" href="#实战小例子">¶</a>实战小例子</h2>
+<ul>
+<li>没加索引前<br>
+<a href="https://imgtu.com/i/cRzilD"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cRzilD.png" alt="cRzilD.png"></a></li>
+<li>在t_erchang_sanjian_user表的user_name字段加了索引后<br>
+<a href="https://imgtu.com/i/cWSVvF"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cWSVvF.png" alt="cWSVvF.png"></a></li>
+<li>又在t_erchang_sanjian_photo表中的create_by字段加了索引后<br>
+<a href="https://imgtu.com/i/cW9Z79"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cW9Z79.png" alt="cW9Z79.png"></a></li>
+</ul>
+<h2 id="写Sql时要注意点什么"><a class="header-anchor" href="#写Sql时要注意点什么">¶</a>写Sql时要注意点什么</h2>
+<ul>
+<li>where后面的字段的值要加单引号<code>‘’</code>不然如果该字段有索引，则索引失效</li>
+<li>join连接多表(两到三个表最优)查询时，每个表设置别名，字段也用别名.字段表示</li>
+<li>有大量重复数据的字段不适合创建索引，如性别(男，女)，是否删除(0,1)这类型字段。</li>
+<li>虽然索引能加快查询速度，但是建议单表最多设置5个索引，因为索引太多会影响插入和更新速度</li>
+<li>避免同时修改或删除大量数据，这样会造成cpu飙升，从而影响别人对数据库的访问</li>
+<li>删除重复索引，如果字段A和B创建了组合索引，那么就不必要单独为A再创建新的索引了（index_A_B相当于创建了A,AB索引，即最左匹配原则）。</li>
+<li>如果要插入大量数据，建议分批插入</li>
+<li>建议在where和order by涉及的列上建立组合索引</li>
+<li>连接查询相关：
+<ul>
+<li>
+<p>Inner join 只保留两张表中完全匹配的结果集</p>
+</li>
+<li>
+<p>left join 返回左表所有的行，即使在右表中没有匹配的记录。</p>
+</li>
+<li>
+<p>right join 返回右表所有的行，即使在左表中没有匹配的记录。</p>
+</li>
+</ul>
+</li>
+<li>避免在索引列上使用mysql的内置函数，如(时间类函数等)</li>
+<li>不寻底常用select *，应该要明确要查的具体字段</li>
+<li>平时开发中，可日志打印一下完整sql放到数据库客户端运行一下排错</li>
+<li>存储引擎中，
+<ul>
+<li>MyISAM支持表级锁，不支持事务和全文索引</li>
+<li>InnoDB支持行级锁、支持事务安全（ACID兼容）、支持外键</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>postgres数据库备份和还原命令-亲测有效</title>
     <url>/2020/07/08/DataBase/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
     <content><![CDATA[<span id="more"></span>
@@ -529,42 +665,227 @@ jsonp:“jsonpcallback”</p>
       </tags>
   </entry>
   <entry>
-    <title>JavaScript中Array的一些常用方法和操作</title>
-    <url>/2020/12/01/%E5%89%8D%E7%AB%AF/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<span id="more"></span>
-<h1>JavaScript中Array的一些常用方法和操作</h1>
-<p>JavaScript的 Array 对象是用于构造数组的全局对象，数组是类似于列表的高阶对象</p>
-<h2 id="示例"><a class="header-anchor" href="#示例">¶</a>示例</h2>
-<h3 id="数组创建"><a class="header-anchor" href="#数组创建">¶</a>数组创建</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组创建</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">&#x27;Apple&#x27;</span>, <span class="string">&#x27;Banana&#x27;</span>];</span><br></pre></td></tr></table></figure>
-<h3 id="数组长度"><a class="header-anchor" href="#数组长度">¶</a>数组长度</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组长度</span></span><br><span class="line"><span class="keyword">var</span> length=array.length();   <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组取值"><a class="header-anchor" href="#数组取值">¶</a>数组取值</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1、通过数组下标取值</span></span><br><span class="line"><span class="keyword">var</span> first = array[<span class="number">0</span>];   <span class="comment">//Apple</span></span><br><span class="line"><span class="comment">//2、for循环也可以取到想要的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> array)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;下标&quot;</span>+index)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;值&quot;</span>+array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="添加数据"><a class="header-anchor" href="#添加数据">¶</a>添加数据</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//向数组中添加数据(可在for循环中连续添加数据)</span></span><br><span class="line">array.push(obj)  <span class="comment">//obj为插入对象或者数据</span></span><br></pre></td></tr></table></figure>
-<h3 id="判断数据在数组中对下标"><a class="header-anchor" href="#判断数据在数组中对下标">¶</a>判断数据在数组中对下标</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//某个数据在数组中对下标</span></span><br><span class="line">array.indexOf(<span class="string">&#x27;Apple&#x27;</span>);  <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
-<h3 id="替换数组对应下标的数据"><a class="header-anchor" href="#替换数组对应下标的数据">¶</a>替换数组对应下标的数据</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//替换数组对应下标的元素，index为你要替换的下标位置，replaceData为替换数据。</span></span><br><span class="line">array.splice(index,<span class="number">1</span>,replaceData)</span><br></pre></td></tr></table></figure>
-<h3 id="数组连接或者合并"><a class="header-anchor" href="#数组连接或者合并">¶</a>数组连接或者合并</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并两个或多个数组(可为空数组)。此方法不会更改现有数组，而是返回一个新数组。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];   <span class="comment">//可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array2 = [<span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>];		<span class="comment">//也可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array3 = array1.concat(array2);  <span class="comment">//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span></span><br></pre></td></tr></table></figure>
-<h3 id="查找满足条件的第一个值"><a class="header-anchor" href="#查找满足条件的第一个值">¶</a>查找满足条件的第一个值</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回数组中满足条件的第一个元素的值。否则返回 undefined。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"><span class="keyword">const</span> found = array1.find(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">10</span>);  <span class="comment">//从左到右，大于10的第一个数是12。</span></span><br><span class="line"><span class="built_in">console</span>.log(found);  <span class="comment">//所以输出12</span></span><br></pre></td></tr></table></figure>
-<h3 id="判断数组是否包含某个值"><a class="header-anchor" href="#判断数组是否包含某个值">¶</a>判断数组是否包含某个值</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否包含某个值</span></span><br><span class="line"><span class="keyword">const</span> pets = [<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">&#x27;cat&#x27;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组转字符串，元素拼接成字符串"><a class="header-anchor" href="#数组转字符串，元素拼接成字符串">¶</a>数组转字符串，元素拼接成字符串</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组转字符串，元素拼接成字符串</span></span><br><span class="line"><span class="keyword">const</span> elements = [<span class="string">&#x27;Fire&#x27;</span>, <span class="string">&#x27;Air&#x27;</span>, <span class="string">&#x27;Water&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(elements.join());  <span class="comment">//&quot;Fire,Air,Water&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;&#x27;</span>)); <span class="comment">//&quot;FireAirWater&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;-&#x27;</span>)); <span class="comment">//&quot;Fire-Air-Water&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组倒置与排序"><a class="header-anchor" href="#数组倒置与排序">¶</a>数组倒置与排序</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组倒置</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(array1.reverse()) <span class="comment">//[&quot;3&quot;, &quot;2&quot;, &quot;1&quot;]</span></span><br><span class="line"><span class="comment">//数组排序方法1</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(numbers); <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">//数组排序方法2</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]; </span><br><span class="line">numbers.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b); </span><br><span class="line"><span class="built_in">console</span>.log(numbers);  <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<h3 id="清空数组"><a class="header-anchor" href="#清空数组">¶</a>清空数组</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line">array1= [];</span><br><span class="line"><span class="comment">//方法2 </span></span><br><span class="line">array2.splice(<span class="number">0</span>,array2.length);  </span><br><span class="line"><span class="comment">//方法3</span></span><br><span class="line">array3.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+    <title>Docker容器</title>
+    <url>/2021/05/05/container/docker%E5%AE%B9%E5%99%A8/</url>
+    <content><![CDATA[<ul>
+<li>==欢迎来访我的个人博客== ：<a href="http://14uy2u.coding-pages.com/">Mosey</a></li>
+</ul>
+<h1>Docker是什么</h1>
+<ul>
+<li>Docker 将应用程序与该程序的依赖(可理解为运行环境和软件支持，如mysql、redis、nginx、es、mq等等)，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 Docker，就不用担心环境问题。</li>
+<li>总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</li>
+</ul>
+<h1>Docker有什么用</h1>
+<ul>
+<li>Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</li>
+<li>容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</li>
+</ul>
+<h1>Docker优点</h1>
+<ul>
+<li><code>启动快</code>、<code>资源占用小</code>、<code>体积小</code></li>
+</ul>
+<h1>Docker应用场景(什么时候用)</h1>
+<ul>
+<li>Web 应用的自动化打包和发布
+<ul>
+<li>如果要发布应用到几十台甚至几百台服务器时，利用docker可大大提高效率。</li>
+</ul>
+</li>
+<li>自动化测试和持续集成、发布、快速交付软件给用户。
+<ul>
+<li>合作开发的时候，在本机可以跑，别人的电脑跑不起来，如果利用docker把应用依赖的所有环境(java、tomcat、redis等)都打成一个镜像，直接丢给别人的电脑上就能运行起来，很方便。</li>
+</ul>
+</li>
+<li>在服务型环境中部署和调整数据库或其他的后台应用。</li>
+</ul>
+<h1>Docker怎么用</h1>
+<h2 id="Docker三个概念"><a class="header-anchor" href="#Docker三个概念">¶</a>Docker三个概念</h2>
+<h3 id="镜像"><a class="header-anchor" href="#镜像">¶</a>镜像</h3>
+<ul>
+<li>镜像不包含任何动态数据，其内容在构建之后也不会改变(可理解为web应用运行时需要的环境)</li>
+<li>镜像有多个tag，也就是说多个版本，比如java有多个版本，redis也有多个版本这样，我们docker pull image时可以指定tag版本(docker pull java:8)，不指定则默认最新版本latest。</li>
+</ul>
+<h3 id="容器"><a class="header-anchor" href="#容器">¶</a>容器</h3>
+<ul>
+<li>容器是用镜像创建的运行实例，一个镜像可以创建多个容器。</li>
+<li>容器之间相互隔离，保证应用运行期间的安全。</li>
+</ul>
+<h3 id="仓库"><a class="header-anchor" href="#仓库">¶</a>仓库</h3>
+<ul>
+<li>仓库（Repository）是集中存放镜像文件的场所，类似github。</li>
+</ul>
+<h2 id="数据卷-volume"><a class="header-anchor" href="#数据卷-volume">¶</a>数据卷(volume)</h2>
+<ul>
+<li>卷就是目录或文件，存在于一个或多个容器中，由docker挂载到容器，但不属于联合文件系统</li>
+<li>卷的设计目的就是数据的持久化，完全独立于容器的生存周期，因此Docker不会在容器删除时删除其挂载的数据卷</li>
+<li><code>docker run -it -v /宿主机目录:/容器内目录</code>命令中的<code>-v</code>后面跟着的就是数据卷
+<ul>
+<li>特点：<br>
+1：数据卷可在容器之间共享或重用数据<br>
+2：卷中的更改可以直接生效<br>
+3：数据卷中的更改不会包含在镜像的更新中<br>
+4：数据卷的生命周期一直持续到没有容器使用它为止</li>
+</ul>
+</li>
+</ul>
+<h2 id="Docker目录简析"><a class="header-anchor" href="#Docker目录简析">¶</a>Docker目录简析</h2>
+<ul>
+<li>/var/lib/docker/image/overlay2/repositories.json里边存的是镜像，对应docker images命令结果</li>
+<li>/var/lib/docker/image/overlay2/imagedb/content/sha256里边存放的是历史镜像id文件(包括已删除的)，vi 镜像id 可查看相关信息</li>
+<li></li>
+</ul>
+<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
+<p><a><b> <a href="https://www.jianshu.com/p/80e3fd18a17e">ubuntu安装docker教程</a></b></a></p>
+<h2 id="常用命令"><a class="header-anchor" href="#常用命令">¶</a>常用命令</h2>
+<h3 id="Docker启动相关命令"><a class="header-anchor" href="#Docker启动相关命令">¶</a>Docker启动相关命令</h3>
+<p><a><b> docker启动</b></a></p>
+<blockquote>
+<p>systemctl start docker    # 方法一<br>
+docker         # 方法二<br>
+docker start $(docker ps -a | awk ‘{ print $1}’ | tail -n +2) #启动所有容器</p>
+</blockquote>
+<p><a><b> 查看docker是否正在运行【Active: <font color="green">active (running)</font>运行状态 】<br>
+【Active: inactive (dead) 停止状态】</b></a></p>
+<blockquote>
+<p>systemctl status docker</p>
+</blockquote>
+<p><a><b> 关闭docker</b></a></p>
+<blockquote>
+<p>systemctl stop docker</p>
+</blockquote>
+<p><a><b> 重启docker</b></a></p>
+<blockquote>
+<p>systemctl restart docker</p>
+</blockquote>
+<p><a><b> 查看Docker版本</b></a></p>
+<blockquote>
+<p>docker version   或者  docker info</p>
+</blockquote>
+<h3 id="镜像相关命令"><a class="header-anchor" href="#镜像相关命令">¶</a>镜像相关命令</h3>
+<p><a><b> 搜索仓库中的java镜像</b></a></p>
+<blockquote>
+<p>docker search java</p>
+</blockquote>
+<p><a><b> 从仓库中拉取java镜像到本地</b></a></p>
+<blockquote>
+<p>docker pull java     # 不指定java版本号<br>
+docker pull java:8   # 指定java8版本</p>
+</blockquote>
+<p><a><b> 查看所有镜像</b></a></p>
+<blockquote>
+<p>docker images</p>
+</blockquote>
+<p><a><b> 删除镜像</b></a></p>
+<blockquote>
+<p>docker rmi 镜像NAME</p>
+</blockquote>
+<p><a><b> 强制删除所有镜像</b></a></p>
+<blockquote>
+<p>docker rmi -f $(docker images)</p>
+</blockquote>
+<p><a><b> 镜像打包成tar包</b></a></p>
+<blockquote>
+<p>docker image save 镜像NAME/ID &gt; 镜像.tar</p>
+</blockquote>
+<p><a><b> tar包还原成镜像(导入镜像)</b></a></p>
+<blockquote>
+<p>docker image load &lt; 镜像.tar</p>
+</blockquote>
+<p><a><b> 项目打包成镜像(-t 表示指定镜像仓库名称/镜像名称:镜像标签版本 .表示使用当前目录下的Dockerfile文件)</b></a></p>
+<blockquote>
+<p>docker build -t mall/mall-admin:1.0-SNAPSHOT  .</p>
+</blockquote>
+<h3 id="容器相关命令"><a class="header-anchor" href="#容器相关命令">¶</a>容器相关命令</h3>
+<p><a><b> 利用tomcat镜像新建并启动容器</b></a></p>
+<ul>
+<li>-d：后台运行，格式：<code>-d 容器名:容器tag(版本)</code></li>
+<li>–name：指定运行后容器的名字为tomcat,之后可以通过名字来操作容器，格式：<code>--name 容器NAME</code></li>
+<li>-p：指定端口映射，格式为：<code>-p 宿主机端口:容器端口</code>，将容器端口映射到主机的端口</li>
+<li>后面的:8.0.52为tomcat版本号(tag)，不指定则默认latest最新版本</li>
+<li>下面的命令指：在后台启动运行一个名为“tomcat-name”的容器，访问localhost:1234可访问tomcat首页</li>
+</ul>
+<blockquote>
+<p>docker run --name tomcat-name -d -p 1234:8080 tomcat:8.0.52  #这里版本为8.0.52，8.5版本的貌似没有启动首页，所以不能访问tomcat首页<br>
+* 如果要挂载一个指定目录到宿主机上，则使用<code>-v</code> ，格式：<code>-v 宿主机目录:容器目录(也叫数据卷)</code><br>
+* 如果要连接到另一个容器相依赖，则使用<code>--link</code>(比如某个项目启动依赖mysql数据库)，格式：<code>--link 容器NAME:自定义容器别名</code></p>
+</blockquote>
+<p><a><b> 一键启动所有容器(无依赖项的容器)</b></a></p>
+<ul>
+<li>因有的容器启动需要依赖其它的容器服务(有先后顺序)，所以会启动失败。
+<ul>
+<li>解决办法：</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>docker start 失败容器NAME/ID</p>
+</blockquote>
+<p><a><b> 一键关闭所有容器</b></a></p>
+<blockquote>
+<p>docker stop $(docker ps -a | awk ‘{ print $1}’ | tail -n +2)</p>
+</blockquote>
+<p><a><b> 查看所有容器</b></a></p>
+<blockquote>
+<p>docker ps -a</p>
+</blockquote>
+<p><a><b> 进入正在运行的容器内部bash(执行下面命令后，再执行ls -l可看容器内的文件和文件夹)</b></a></p>
+<blockquote>
+<p>docker exec -it 容器NAME/ID /bin/bash #相当于进入对应的安装根目录</p>
+</blockquote>
+<p><a><b> 停止容器</b></a></p>
+<blockquote>
+<p>docker stop 容器NAME/ID</p>
+</blockquote>
+<p><a><b> 停止所有正在运行的容器</b></a></p>
+<blockquote>
+<p>docker stop $(docker ps -q)</p>
+</blockquote>
+<p><a><b> 删除容器(只能删除停止的容器，正在运行的容器会删除失败)</b></a></p>
+<blockquote>
+<p>docker rm 容器NAME/ID</p>
+</blockquote>
+<p><a><b> 删除所有容器</b></a></p>
+<blockquote>
+<p>docker rm $(docker ps -aq)</p>
+</blockquote>
+<p><a><b> 查看容器运行日志</b></a></p>
+<blockquote>
+<p>docker logs 容器NAME/ID</p>
+</blockquote>
+<p><a><b> 动态查看容器运行日志</b></a></p>
+<blockquote>
+<p>docker logs 容器NAME/ID -f</p>
+</blockquote>
+<p><a><b> 查看容器IP地址</b></a></p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">docker inspect --<span class="keyword">format</span> <span class="string">&#x27;&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;&#x27;</span> 容器NAME/ID</span><br></pre></td></tr></table></figure>
+<p><a><b> 监控容器资源消耗</b></a></p>
+<blockquote>
+<p>docker stats 容器NAME/ID</p>
+</blockquote>
+<p><a><b> 监控所有容器资源消耗(cpu、内存、io、网络等)</b></a></p>
+<blockquote>
+<p>docker stats 容器NAME/ID -a</p>
+</blockquote>
+<p><a><b> 查看docker占用磁盘大小(根据镜像、容器)</b></a></p>
+<blockquote>
+<p>docker system df</p>
+</blockquote>
+<p><a><b> 具体查看每个镜像和容器占用磁盘大小</b></a></p>
+<blockquote>
+<p>docker system df -v</p>
+</blockquote>
+<h1>Docker展现了什么效果</h1>
+<ul>
+<li>当把SpringBoot项目所有要的环境(redis、es、mongodb等，配置好相关的ip、端口、es账号等)和数据(.sql文件导入到mysql镜像中)准备好，就可以用maven插件(pom.xml中配置好Docker的ip和端口)打包成Docker镜像文件，在Docker那边就可以把image镜像文件运行为容器，这一系列操作下来，项目第一次升级成功，客户就可以远程访问了。</li>
+<li>可以把自己配置好的镜像打包成tar包，然后发给同事或者测试运维人员，他们再把tar解压到docker中去就能使用了。免去麻烦的配置过程。</li>
+<li>下载Pull镜像方便，容器启动也快速等等。</li>
+</ul>
 ]]></content>
       <categories>
-        <category>JavaScript</category>
+        <category>容器化</category>
       </categories>
       <tags>
-        <tag>JavaScript Array</tag>
+        <tag>虚拟化</tag>
       </tags>
   </entry>
   <entry>
@@ -704,21 +1025,88 @@ jsonp:“jsonpcallback”</p>
       </tags>
   </entry>
   <entry>
-    <title>前端js排序</title>
-    <url>/2020/07/13/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AFjs%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<span id="more"></span>
-<h2 id="前端在js中排序数据"><a class="header-anchor" href="#前端在js中排序数据">¶</a>前端在js中排序数据</h2>
-<p>和后端排序类似，this.sortdata为你要降序处理的数据</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">                return a.value-b.value;</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-<p>如果要升序：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">               return b.value-a.value;</span><br><span class="line">           &#125;)</span><br></pre></td></tr></table></figure>
-<p>注：a.value中的value为sortdate中的值。即你要根据sortdata中的value值来排序。如果sortdata中你要根据其它值来排序(如：年龄、分数、数量等等)，则自行替换</p>
+    <title>摊牌了！想做表情管理大师？</title>
+    <url>/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/</url>
+    <content><![CDATA[<h2 id="a-用法教程"><a class="header-anchor" href="#a-用法教程">¶</a><a>用法教程</a></h2>
+<p><strong>用MarkDown也可以添加好玩的表情，用法<code>:对应单词描述:</code></strong><br>
+⚠️⚠️⚠️<u>如果看到你博客的<code>表情不生效</code>那么就要卸载<code>hexo-renderer-marked</code>插件依赖后，再安装新的<code>hexo-renderer-markdown-it</code>和<code>markdown-it-emoji</code>插件，然后再在<code>站点配置文件末尾添加</code>以下代码</u></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Markdown-it config</span></span><br><span class="line"><span class="attr">markdown:</span></span><br><span class="line">  <span class="attr">render:</span></span><br><span class="line">    <span class="attr">html:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">xhtmlOut:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">breaks:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">linkify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">typographer:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">quotes:</span> <span class="string">&#x27;“”‘’&#x27;</span></span><br><span class="line">  <span class="attr">plugins:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-abbr</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-footnote</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-ins</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sub</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sup</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-emoji</span>  <span class="comment"># add emoji</span></span><br><span class="line">  <span class="attr">anchors:</span></span><br><span class="line">    <span class="attr">level:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">collisionSuffix:</span> <span class="string">&#x27;v&#x27;</span></span><br><span class="line">    <span class="attr">permalink:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">permalinkClass:</span> <span class="string">header-anchor</span></span><br><span class="line">    <span class="attr">permalinkSymbol:</span> <span class="string">¶</span></span><br></pre></td></tr></table></figure>
+<h2 id="a-表情效果展示"><a class="header-anchor" href="#a-表情效果展示">¶</a><a>表情效果展示</a></h2>
+<ul>
+<li>数字系列：1️⃣   2️⃣ 3️⃣ 4️⃣</li>
+<li>水果系列：🍎 🍐 🍉 🍊 🍌 🍋 🍑 🍓 🍇 🍍 🍒</li>
+<li>动物系列：🐶 🐱 🐷 🐯 🐻 🐦 🦁 🦌 🐒 🐺 🐴 🐮 🐭 🐟 🐛 🕷</li>
+<li>植物系列：🌹 🌿 🍄 🍅 🥔 🥕</li>
+<li>球类：🏈 🏀 ⚾️</li>
+<li>其它系列：🚲 👨 👩 ❤️ 😢 🔥 👦 👧 🐷 📱 ☎️ 🚗 ⛵️ 📖 📓 💻 👪 🏫 🏥 🔔 ⚠️ 🖊</li>
+</ul>
+<h2 id="a-表情对照单词如下"><a class="header-anchor" href="#a-表情对照单词如下">¶</a><a>表情对照单词如下</a></h2>
+<ul>
+<li>实力不允许我写出更多的单词😢</li>
+</ul>
+<blockquote>
+<p>数字系列：“one”   “two” “three” “four”</p>
+</blockquote>
+<blockquote>
+<p>水果系列：“apple” “pear” “watermelon” “orange” “banana” “lemon” “peach” “strawberry” “grapes” “pineapple” “cherries”</p>
+</blockquote>
+<blockquote>
+<p>动物系列：“dog” “cat” “pig” “tiger” “bear” “bird” “lion” “deer” “monkey” “wolf” “horse” “cow” “mouse” “fish” “bug” “spider”</p>
+</blockquote>
+<blockquote>
+<p>植物系列：“rose” “herb” “mushroom” “tomato” “potato” “carrot”</p>
+</blockquote>
+<blockquote>
+<p>球类：“football” “basketball” “baseball”</p>
+</blockquote>
+<blockquote>
+<p>其它系列：“bike” “man” “woman” “heart” “cry” “fire” “boy” “girl” “pig” “iphone” “phone” “car” “boat” “book” “notebook” “computer” “family” “school” “hospital” “bell” “warning” “pen”</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>排序 前端</category>
+        <category>表情管理</category>
       </categories>
       <tags>
-        <tag>JavaScript</tag>
+        <tag>emoji</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript中Array的一些常用方法和操作</title>
+    <url>/2020/12/01/%E5%89%8D%E7%AB%AF/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1>JavaScript中Array的一些常用方法和操作</h1>
+<p>JavaScript的 Array 对象是用于构造数组的全局对象，数组是类似于列表的高阶对象</p>
+<h2 id="示例"><a class="header-anchor" href="#示例">¶</a>示例</h2>
+<h3 id="数组创建"><a class="header-anchor" href="#数组创建">¶</a>数组创建</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组创建</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">&#x27;Apple&#x27;</span>, <span class="string">&#x27;Banana&#x27;</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="数组长度"><a class="header-anchor" href="#数组长度">¶</a>数组长度</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组长度</span></span><br><span class="line"><span class="keyword">var</span> length=array.length();   <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组取值"><a class="header-anchor" href="#数组取值">¶</a>数组取值</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1、通过数组下标取值</span></span><br><span class="line"><span class="keyword">var</span> first = array[<span class="number">0</span>];   <span class="comment">//Apple</span></span><br><span class="line"><span class="comment">//2、for循环也可以取到想要的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> array)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;下标&quot;</span>+index)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;值&quot;</span>+array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加数据"><a class="header-anchor" href="#添加数据">¶</a>添加数据</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//向数组中添加数据(可在for循环中连续添加数据)</span></span><br><span class="line">array.push(obj)  <span class="comment">//obj为插入对象或者数据</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断数据在数组中对下标"><a class="header-anchor" href="#判断数据在数组中对下标">¶</a>判断数据在数组中对下标</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//某个数据在数组中对下标</span></span><br><span class="line">array.indexOf(<span class="string">&#x27;Apple&#x27;</span>);  <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+<h3 id="替换数组对应下标的数据"><a class="header-anchor" href="#替换数组对应下标的数据">¶</a>替换数组对应下标的数据</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//替换数组对应下标的元素，index为你要替换的下标位置，replaceData为替换数据。</span></span><br><span class="line">array.splice(index,<span class="number">1</span>,replaceData)</span><br></pre></td></tr></table></figure>
+<h3 id="数组连接或者合并"><a class="header-anchor" href="#数组连接或者合并">¶</a>数组连接或者合并</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并两个或多个数组(可为空数组)。此方法不会更改现有数组，而是返回一个新数组。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];   <span class="comment">//可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array2 = [<span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>];		<span class="comment">//也可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array3 = array1.concat(array2);  <span class="comment">//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="查找满足条件的第一个值"><a class="header-anchor" href="#查找满足条件的第一个值">¶</a>查找满足条件的第一个值</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回数组中满足条件的第一个元素的值。否则返回 undefined。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"><span class="keyword">const</span> found = array1.find(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">10</span>);  <span class="comment">//从左到右，大于10的第一个数是12。</span></span><br><span class="line"><span class="built_in">console</span>.log(found);  <span class="comment">//所以输出12</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断数组是否包含某个值"><a class="header-anchor" href="#判断数组是否包含某个值">¶</a>判断数组是否包含某个值</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否包含某个值</span></span><br><span class="line"><span class="keyword">const</span> pets = [<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">&#x27;cat&#x27;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组转字符串，元素拼接成字符串"><a class="header-anchor" href="#数组转字符串，元素拼接成字符串">¶</a>数组转字符串，元素拼接成字符串</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组转字符串，元素拼接成字符串</span></span><br><span class="line"><span class="keyword">const</span> elements = [<span class="string">&#x27;Fire&#x27;</span>, <span class="string">&#x27;Air&#x27;</span>, <span class="string">&#x27;Water&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(elements.join());  <span class="comment">//&quot;Fire,Air,Water&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;&#x27;</span>)); <span class="comment">//&quot;FireAirWater&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;-&#x27;</span>)); <span class="comment">//&quot;Fire-Air-Water&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组倒置与排序"><a class="header-anchor" href="#数组倒置与排序">¶</a>数组倒置与排序</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组倒置</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(array1.reverse()) <span class="comment">//[&quot;3&quot;, &quot;2&quot;, &quot;1&quot;]</span></span><br><span class="line"><span class="comment">//数组排序方法1</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(numbers); <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">//数组排序方法2</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]; </span><br><span class="line">numbers.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b); </span><br><span class="line"><span class="built_in">console</span>.log(numbers);  <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+<h3 id="清空数组"><a class="header-anchor" href="#清空数组">¶</a>清空数组</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line">array1= [];</span><br><span class="line"><span class="comment">//方法2 </span></span><br><span class="line">array2.splice(<span class="number">0</span>,array2.length);  </span><br><span class="line"><span class="comment">//方法3</span></span><br><span class="line">array3.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript Array</tag>
       </tags>
   </entry>
   <entry>
@@ -742,6 +1130,24 @@ jsonp:“jsonpcallback”</p>
       </categories>
       <tags>
         <tag>vue javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端js排序</title>
+    <url>/2020/07/13/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AFjs%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<span id="more"></span>
+<h2 id="前端在js中排序数据"><a class="header-anchor" href="#前端在js中排序数据">¶</a>前端在js中排序数据</h2>
+<p>和后端排序类似，this.sortdata为你要降序处理的数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">                return a.value-b.value;</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+<p>如果要升序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.sortdata.sort(function (a,b) &#123;</span><br><span class="line">               return b.value-a.value;</span><br><span class="line">           &#125;)</span><br></pre></td></tr></table></figure>
+<p>注：a.value中的value为sortdate中的值。即你要根据sortdata中的value值来排序。如果sortdata中你要根据其它值来排序(如：年龄、分数、数量等等)，则自行替换</p>
+]]></content>
+      <categories>
+        <category>排序 前端</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -797,49 +1203,34 @@ PS：input-value-border是子组件中的class样式名，而不是组件名。<
       </tags>
   </entry>
   <entry>
-    <title>摊牌了！想做表情管理大师？</title>
-    <url>/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/</url>
-    <content><![CDATA[<h2 id="a-用法教程"><a class="header-anchor" href="#a-用法教程">¶</a><a>用法教程</a></h2>
-<p><strong>用MarkDown也可以添加好玩的表情，用法<code>:对应单词描述:</code></strong><br>
-⚠️⚠️⚠️<u>如果看到你博客的<code>表情不生效</code>那么就要卸载<code>hexo-renderer-marked</code>插件依赖后，再安装新的<code>hexo-renderer-markdown-it</code>和<code>markdown-it-emoji</code>插件，然后再在<code>站点配置文件末尾添加</code>以下代码</u></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Markdown-it config</span></span><br><span class="line"><span class="attr">markdown:</span></span><br><span class="line">  <span class="attr">render:</span></span><br><span class="line">    <span class="attr">html:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">xhtmlOut:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">breaks:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">linkify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">typographer:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">quotes:</span> <span class="string">&#x27;“”‘’&#x27;</span></span><br><span class="line">  <span class="attr">plugins:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-abbr</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-footnote</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-ins</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sub</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sup</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-emoji</span>  <span class="comment"># add emoji</span></span><br><span class="line">  <span class="attr">anchors:</span></span><br><span class="line">    <span class="attr">level:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">collisionSuffix:</span> <span class="string">&#x27;v&#x27;</span></span><br><span class="line">    <span class="attr">permalink:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">permalinkClass:</span> <span class="string">header-anchor</span></span><br><span class="line">    <span class="attr">permalinkSymbol:</span> <span class="string">¶</span></span><br></pre></td></tr></table></figure>
-<h2 id="a-表情效果展示"><a class="header-anchor" href="#a-表情效果展示">¶</a><a>表情效果展示</a></h2>
-<ul>
-<li>数字系列：1️⃣   2️⃣ 3️⃣ 4️⃣</li>
-<li>水果系列：🍎 🍐 🍉 🍊 🍌 🍋 🍑 🍓 🍇 🍍 🍒</li>
-<li>动物系列：🐶 🐱 🐷 🐯 🐻 🐦 🦁 🦌 🐒 🐺 🐴 🐮 🐭 🐟 🐛 🕷</li>
-<li>植物系列：🌹 🌿 🍄 🍅 🥔 🥕</li>
-<li>球类：🏈 🏀 ⚾️</li>
-<li>其它系列：🚲 👨 👩 ❤️ 😢 🔥 👦 👧 🐷 📱 ☎️ 🚗 ⛵️ 📖 📓 💻 👪 🏫 🏥 🔔 ⚠️ 🖊</li>
-</ul>
-<h2 id="a-表情对照单词如下"><a class="header-anchor" href="#a-表情对照单词如下">¶</a><a>表情对照单词如下</a></h2>
-<ul>
-<li>实力不允许我写出更多的单词😢</li>
-</ul>
-<blockquote>
-<p>数字系列：“one”   “two” “three” “four”</p>
-</blockquote>
-<blockquote>
-<p>水果系列：“apple” “pear” “watermelon” “orange” “banana” “lemon” “peach” “strawberry” “grapes” “pineapple” “cherries”</p>
-</blockquote>
-<blockquote>
-<p>动物系列：“dog” “cat” “pig” “tiger” “bear” “bird” “lion” “deer” “monkey” “wolf” “horse” “cow” “mouse” “fish” “bug” “spider”</p>
-</blockquote>
-<blockquote>
-<p>植物系列：“rose” “herb” “mushroom” “tomato” “potato” “carrot”</p>
-</blockquote>
-<blockquote>
-<p>球类：“football” “basketball” “baseball”</p>
-</blockquote>
-<blockquote>
-<p>其它系列：“bike” “man” “woman” “heart” “cry” “fire” “boy” “girl” “pig” “iphone” “phone” “car” “boat” “book” “notebook” “computer” “family” “school” “hospital” “bell” “warning” “pen”</p>
-</blockquote>
+    <title>我用命令创建的第一篇博客</title>
+    <url>/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1>记录和学习MarkDown语法</h1>
+<h2 id="上面的是一级标题。本标题是二级标题"><a class="header-anchor" href="#上面的是一级标题。本标题是二级标题">¶</a>上面的是一级标题。本标题是二级标题</h2>
+<h3 id="我是三级标题"><a class="header-anchor" href="#我是三级标题">¶</a>我是三级标题</h3>
+<h4 id="我是四级标题"><a class="header-anchor" href="#我是四级标题">¶</a>我是四级标题</h4>
+<h5 id="我是五级标题"><a class="header-anchor" href="#我是五级标题">¶</a>我是五级标题</h5>
+<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg" alt><br>
+一个井号加空格，表示一级标题，两个井号代表二级标题。依此类推</p>
+<p>要加粗的文字左右分别用两个*号包起来，比如：<strong>我是加粗的</strong></p>
+<p>要倾斜的文字左右分别用一个星号包起来 比如：<em>我怎么倾斜了</em></p>
+<p>要加删除线文字，左右分别加两个波浪线，比如：<s>这是加删除线的文字</s></p>
+<p>三个或者三个以上的 - 或者 * 都可以是分割线<br>
+分割线</p>
+<hr>
+<!---->
+<p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br>
+<a href="http://baidu.com">百度</a></p>
+<p><code>  技术这个东西。只能自己慢慢摸索</code></p>
 ]]></content>
       <categories>
-        <category>表情管理</category>
+        <category>Java</category>
+        <category>List</category>
+        <category>开发</category>
       </categories>
       <tags>
-        <tag>emoji</tag>
+        <tag>教程</tag>
+        <tag>语法</tag>
       </tags>
   </entry>
   <entry>
@@ -1425,46 +1816,6 @@ Robo 3T 1.4</p>
       </categories>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我用命令创建的第一篇博客</title>
-    <url>/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1>记录和学习MarkDown语法</h1>
-<h2 id="上面的是一级标题。本标题是二级标题"><a class="header-anchor" href="#上面的是一级标题。本标题是二级标题">¶</a>上面的是一级标题。本标题是二级标题</h2>
-<h3 id="我是三级标题"><a class="header-anchor" href="#我是三级标题">¶</a>我是三级标题</h3>
-<h4 id="我是四级标题"><a class="header-anchor" href="#我是四级标题">¶</a>我是四级标题</h4>
-<h5 id="我是五级标题"><a class="header-anchor" href="#我是五级标题">¶</a>我是五级标题</h5>
-<p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg" alt><br>
-一个井号加空格，表示一级标题，两个井号代表二级标题。依此类推</p>
-<p>要加粗的文字左右分别用两个*号包起来，比如：<strong>我是加粗的</strong></p>
-<p>要倾斜的文字左右分别用一个星号包起来 比如：<em>我怎么倾斜了</em></p>
-<p>要加删除线文字，左右分别加两个波浪线，比如：<s>这是加删除线的文字</s></p>
-<p>三个或者三个以上的 - 或者 * 都可以是分割线<br>
-分割线</p>
-<hr>
-<!---->
-<p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br>
-<a href="http://baidu.com">百度</a></p>
-<p><code>  技术这个东西。只能自己慢慢摸索</code></p>
-<div id="tcomment"></div>
-<script src="https://cdn.jsdelivr.net/npm/twikoo@1.3.0/dist/twikoo.all.min.js"></script>
-<script>
-twikoo.init({
-  envId: 'twikoo-1gyp8tcf78717988',
-  el: '#tcomment',
-  // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，如果您的环境地域不是上海，需传此参数
-  // path: 'window.location.pathname', // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
-})
-</script>]]></content>
-      <categories>
-        <category>Java</category>
-        <category>List</category>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>教程</tag>
-        <tag>语法</tag>
       </tags>
   </entry>
 </search>
