@@ -6,7 +6,7 @@
   <link href="http://14uy2u.coding-pages.com/atom.xml" rel="self"/>
   
   <link href="http://14uy2u.coding-pages.com/"/>
-  <updated>2021-05-10T03:25:03.000Z</updated>
+  <updated>2021-07-04T07:04:29.300Z</updated>
   <id>http://14uy2u.coding-pages.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx代理服务器</title>
+    <link href="http://14uy2u.coding-pages.com/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://14uy2u.coding-pages.com/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/</id>
+    <published>2021-05-09T10:30:18.000Z</published>
+    <updated>2021-07-04T07:04:29.300Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Nginx是什么"><a class="header-anchor" href="#Nginx是什么">¶</a>Nginx是什么</h2><ul><li>一个高性能的<code>web代理服务器</code></li><li>nginx占用内存少、支持高并发，最高可达 5w 个并发量</li><li>开源，可用于商业用途，使用配置简单，中文社区也比较活跃</li><li>支持热部署 ，在不打断用户请求的情况下更新版本(⚠️是nginx版本，不是应用版本)</li></ul><h2 id="正向和反向代理区别"><a class="header-anchor" href="#正向和反向代理区别">¶</a>正向和反向代理区别</h2><p><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E6%AD%A3%E5%8F%8D%E4%BB%A3%E7%90%86.6y2of3fqgts0.jpg" alt="区别"></p><h2 id="nginx配置文件理解"><a class="header-anchor" href="#nginx配置文件理解">¶</a>nginx配置文件理解</h2><ul><li>nginx默认的配置，也可以自行修改，换端口，换location的路径和index首页<br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE.3l3m5kj9x720.png" alt="默认配置"></li><li>再来一张菜鸟上面的截图，很详细<br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/config.3xzdplv40rq0.jpg" alt="config"></li></ul><h2 id="nginx实现负载均衡的几种策略"><a class="header-anchor" href="#nginx实现负载均衡的几种策略">¶</a>nginx实现负载均衡的几种策略</h2><p><em>负载均衡其实就是利用多个服务器集群，将客户端的高并发请求分发到不同的服务器来减轻压力</em></p><ul><li>简单的集群配置<ul><li><strong>轮询(AB…AB…交替处理请求，相当于列表循环)</strong><br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E9%9B%86%E7%BE%A41.386v5fvlw2w0.jpg" alt="简单集群"></li><li><strong>权重(weight)：</strong><br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/weight.761b1wuvit00.jpg" alt="权重"></li><li><strong>IP绑定(ip_hash)</strong><br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/ip_hash.4x58fei6mxe0.jpg" alt="IP绑定"></li><li><strong>服务响应时间最短(fair):</strong><br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/fair.2eh1xuxxi3fo.jpg" alt="fair"></li><li><strong>当前连接最少(least_conn)</strong><br><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/least_conn.5pjvq3tpbr00.jpg" alt="least_conn"></li></ul></li></ul><h2 id="session共享问题"><a class="header-anchor" href="#session共享问题">¶</a>session共享问题</h2><ul><li>当同一个用户第一次访问tomcat_8111 并且登录成功， 而第二次访问却被分配到了tomcat_8222， 这里并没有记录他的登陆状态，那么就会呈现未登录状态了，严重伤害了用户体验。</li><li>解决办法：<code>使用ip_hash绑定策略</code></li><li></li></ul><h2 id="高可用"><a class="header-anchor" href="#高可用">¶</a>高可用</h2><h3 id="反向代理服务器高可用"><a class="header-anchor" href="#反向代理服务器高可用">¶</a>反向代理服务器高可用</h3><ol><li>当某一台服务器出现问题了，变成了down状态，我们要选择第二台服务器，所以我们在<code>location节点</code>下添加<code>proxy_connect_timeout 1</code>，目的是在连接超过1秒后(防止请求握手服务器失败后处于一直等待状态)，请求自动轮询到下一台没有宕机的服务器去。</li></ol><h3 id="nginx高可用"><a class="header-anchor" href="#nginx高可用">¶</a>nginx高可用</h3><ol><li>使用keepalived来设置主从nginx，防止nginx宕机事故的发生，nginx宕机后启动第二个nginx<br><a href="https://www.cnblogs.com/920913cheng/p/10484786.html">教程参考</a></li></ol><h2 id="nginx解决跨域"><a class="header-anchor" href="#nginx解决跨域">¶</a>nginx解决跨域</h2><ul><li>解决办法：在相对应的<code>location节点</code>中添加以下内容</li></ul><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Origin</span> <span class="string">*;</span></span><br><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Methods</span> <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span><span class="string">;</span></span><br><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Headers</span> <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&#x27;</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line"><span class="string">if</span> <span class="string">($request_method</span> <span class="string">=</span> <span class="string">&#x27;OPTIONS&#x27;</span><span class="string">)</span> &#123;</span><br><span class="line">    <span class="string">return</span> <span class="number">204</span><span class="string">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="nginx开启https协议"><a class="header-anchor" href="#nginx开启https协议">¶</a>nginx开启https协议</h2><ul><li>需要ssh证书，<a href="https://www.cnblogs.com/wl416896401/p/13903496.html">教程参考</a></li></ul><h2 id="nginx静态资源部署-动静分离"><a class="header-anchor" href="#nginx静态资源部署-动静分离">¶</a>nginx静态资源部署(动静分离)</h2><ul><li>将静态资源部署在 <code>Nginx</code> 上(即：html页面放在nginx安装目录下的html文件夹中，图片等静态资源要在配置文件中的<code>server节点中的location节点中配置</code>)</li><li>动态资源请求(一般为需要查接口查数据库的资源)则利用nginx做反向代理去对应的服务器后台获取数据<br><em>使用前后端动静分离后，可提升静态资源的访问速度（因为不要查后台），即使动态服务不可用，静态资源的访问也不会受到影响。</em></li></ul><h2 id="补充"><a class="header-anchor" href="#补充">¶</a>补充</h2><p>linux系统中，http请求默认端口是80，而nginx配置文件中默认的端口也是80，所以没有改端口的情况下，访问linux的ip，默认也是80端口。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Nginx是什么&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Nginx是什么&quot;&gt;¶&lt;/a&gt;Nginx是什么&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;一个高性能的&lt;code&gt;web代理服务器&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;nginx占用内存少、支持高并</summary>
+      
+    
+    
+    
+    <category term="服务器" scheme="http://14uy2u.coding-pages.com/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    
+    <category term="nginx" scheme="http://14uy2u.coding-pages.com/tags/nginx/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker容器</title>
@@ -46,6 +73,62 @@
   </entry>
   
   <entry>
+    <title>部署mall项目爬坑日记</title>
+    <link href="http://14uy2u.coding-pages.com/2021/05/03/%E9%83%A8%E7%BD%B2mall%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://14uy2u.coding-pages.com/2021/05/03/%E9%83%A8%E7%BD%B2mall%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
+    <published>2021-05-03T06:45:23.000Z</published>
+    <updated>2021-07-04T07:05:00.258Z</updated>
+    
+    <content type="html"><![CDATA[<h1>部署mall项目爬坑日记</h1><p><a href="https://github.com/macrozheng/mall">原作者项目</a><br><em>环境：ubuntu20</em></p><h2 id="docker容器相关的坑"><a class="header-anchor" href="#docker容器相关的坑">¶</a>docker容器相关的坑</h2><h3 id="发现容器打印的日志和当前时间有出入，相差了8小时，后面得知容器和宿主机的时区不同导致"><a class="header-anchor" href="#发现容器打印的日志和当前时间有出入，相差了8小时，后面得知容器和宿主机的时区不同导致">¶</a>发现容器打印的日志和当前时间有出入，相差了8小时，后面得知容器和宿主机的时区不同导致</h3><ul><li>解决办法有如下几种：<ul><li>1.在刚开始创建容器的时候，docker run后面加上<code>-v /etc/localtime:/etc/localtime:ro</code></li><li>2.已创建的容器运行(没有/etc/localtime)，<code>docker cp /etc/localtime 容器NAME:/etc/</code></li><li>3.进入已创建的容器内(有/etc/localtime)，先删除容器内的localtime文件<code>rm /etc/localtime</code> 再关联运行<code>ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</code></li></ul></li></ul><h3 id="发现宿主机的端口和容器端口相同冲突"><a class="header-anchor" href="#发现宿主机的端口和容器端口相同冲突">¶</a>发现宿主机的端口和容器端口相同冲突</h3><ul><li>问题：因为宿主机之前有安装mysql和redis，并设置了开机自启，所以在启动mysql和redis容器时，会报错<code>Error starting userland proxy: listen tcp4 0.0.0.0:端口号: bind: address already in use</code></li><li>解决办法有两种：<ul><li>1.<code>systemctl stop 服务名</code>停止相关服务，再启动容器</li><li>2.docker run创建容器的时候，更换不同宿主机端口</li></ul></li></ul><h3 id="SpringBoot中mysql和redis的IP指向问题"><a class="header-anchor" href="#SpringBoot中mysql和redis的IP指向问题">¶</a>SpringBoot中mysql和redis的IP指向问题</h3><ul><li>问题：看到yml配置中的mysql和redis的IP地址分别是<code>db</code>和<code>redis</code>两个变量，全局搜索也找不到指定的是哪个IP</li><li>解决：<ul><li>是因为mall项目用maven打包成镜像后，docker run 启动的时候要<code>--link</code>关联mysql容器的redis容器，具体看下图可知指向的是linux服务器的IP 😂<br><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/7e05ffa716a8e6600c3dbda6a58a4169.png" alt="配置文件"></li></ul></li></ul><h2 id="数据库相关的坑"><a class="header-anchor" href="#数据库相关的坑">¶</a>数据库相关的坑</h2><h3 id="库中数据正常，但前端页面文字显示乱码"><a class="header-anchor" href="#库中数据正常，但前端页面文字显示乱码">¶</a>库中数据正常，但前端页面文字显示乱码</h3><ul><li>思路：<ul><li>1.status 命令查看数据库mall编码，发现编码是latinl并不是utf8，于是用<code>set xxx=utf8</code>逐个改成下面格式，并重启mysql服务，重启mysql容器重试后，再次查看数据库编码还原成原来的latinal编码了，治标不治本。前端还是乱码，失败。</li></ul></li></ul><table><thead><tr><th style="text-align:left">character_set_client</th><th style="text-align:left">utf8</th></tr></thead><tbody><tr><td style="text-align:left">character_set_client</td><td style="text-align:left">utf8</td></tr><tr><td style="text-align:left">character_set_connection</td><td style="text-align:left">utf8</td></tr><tr><td style="text-align:left">character_set_database</td><td style="text-align:left">utf8</td></tr><tr><td style="text-align:left">character_set_filesystem</td><td style="text-align:left">binary</td></tr><tr><td style="text-align:left">character_set_results</td><td style="text-align:left">utf8</td></tr><tr><td style="text-align:left">character_set_server</td><td style="text-align:left">utf8</td></tr><tr><td style="text-align:left">character_set_system</td><td style="text-align:left">utf8</td></tr><tr><td style="text-align:left">character_sets_dir</td><td style="text-align:left">/usr/share/mysql/charsets/</td></tr></tbody></table><ul><li>2.添加mysql配置文件my.cnf，并指定下面内容编码，重启后查看mysql编码已成功改为utf8，但是前端还是乱码。</li></ul><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[client]</span><br><span class="line"><span class="keyword">default</span>-character-set=utf8</span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8</span><br><span class="line">collation-server=utf8_general_ci</span><br></pre></td></tr></table></figure><ul><li>最终解决方法：<ul><li><p>1.删除mall数据库，重新创建mall数据库，创建时候使用命令<code>create  database mall character  set utf8</code>指定编码,并导入mall.sql数据。</p></li><li><p>2.停止并删除相关容器，删除相关镜像，再重新用idea生成镜像，重新创建容器。</p></li></ul></li><li><a>乱码原因：<ul><li><u>创建数据库时没有指定utf8编码</u></li></ul></a></li></ul><h2 id="防火墙相关坑"><a class="header-anchor" href="#防火墙相关坑">¶</a>防火墙相关坑</h2><h3 id="没有开放mall项目相关端口"><a class="header-anchor" href="#没有开放mall项目相关端口">¶</a>没有开放mall项目相关端口</h3><ul><li>没有开放mall项目相关端口，项目部署成功却不能访问</li><li>解决办法：<code>firewall-cmd --zone=public --add-port=端口号/tcp --permanent</code></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;部署mall项目爬坑日记&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/macrozheng/mall&quot;&gt;原作者项目&lt;/a&gt;&lt;br&gt;
+&lt;em&gt;环境：ubuntu20&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;docker容器相关的坑&quot;&gt;&lt;a class=</summary>
+      
+    
+    
+    
+    <category term="项目部署" scheme="http://14uy2u.coding-pages.com/categories/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2/"/>
+    
+    
+    <category term="linux" scheme="http://14uy2u.coding-pages.com/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jvm了解一下</title>
+    <link href="http://14uy2u.coding-pages.com/2021/05/01/java/jvm%E6%95%B4%E7%90%86/"/>
+    <id>http://14uy2u.coding-pages.com/2021/05/01/java/jvm%E6%95%B4%E7%90%86/</id>
+    <published>2021-05-01T04:34:22.000Z</published>
+    <updated>2021-07-04T06:55:18.569Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>==欢迎来访我的个人博客== ：<a href="https://moshengxin.github.io/">Mosey</a></li></ul><h1>jre jdk jvm三者区别</h1><ul><li>Jdk是Java 开发工具包，jdk文件夹下面的bin目录有提供一些工具程序，比如：<code>java.exe</code>、<code>javac.exe</code>、<code>javadoc.exe</code>等等</li><li>Jre是java运行时环境</li><li>Jvm是java虚拟机</li><li>Jdk包含Jre，Jre包含Jvm</li></ul><h1>.java后缀文件运行</h1><ul><li>1.<code>javac xxx.java</code>命令把.java文件编译成<code>.class字节码文件</code></li><li>2.<code>java xxx</code>命令把字节码文件放到Jvm中执行代码程序</li></ul><h2 id="java跨平台性"><a class="header-anchor" href="#java跨平台性">¶</a>java跨平台性</h2><p>JVM屏蔽了与具体操作系统平台相关的信息，使Java程序只需生成在Java虚拟机上运行的目标代码（字节码），就可以在多种平台上不加修改地运行。JVM在执行字节码时，实际上最终还是把字节码解释成具体平台上的机器指令执行。编译虚拟机的指令集与编译微处理器的指令集非常类似。<br>JVM是Java语言跨平台（这里的“平台”是指不同的操作系统）的基础，要想在不同的操作系统上运行Java程序，就需要在不同操作系统上安装对应的JVM。所以，JVM有Windows版本、MAC版本、Linux版本等。</p><h2 id="jvm一些理解"><a class="header-anchor" href="#jvm一些理解">¶</a>jvm一些理解</h2><p><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/jvm%E6%95%B4%E7%90%86/jvm.14kc2xhmlpy8.jpg" alt></p><ul><li><code>-Xmx(最大堆内存)</code>、<code>-Xms(最小堆内存)</code>这两个jvm调优参数，是对堆进行控制的，如果内存不足，就报<code>OutOfMemoryError:java heap space异常</code>。</li><li>堆和方法区是共享的，</li><li><code>jps命令</code>查看当前用户的Java进程，非系统中所有的进程。</li></ul><h2 id="队列和栈的区别"><a class="header-anchor" href="#队列和栈的区别">¶</a>队列和栈的区别</h2><ul><li>队列的插入叫入队，队列的删除叫出队。栈的插入叫进栈，栈的删除叫出栈。</li><li>队列在队尾入队，队头出队，即两边都可操作。而栈的进栈和出栈都是在栈顶进行的，无法对栈底直接进行操作。</li><li>队列是先进先出，栈为先进后出</li></ul><h2 id="双亲委派机制"><a class="header-anchor" href="#双亲委派机制">¶</a>双亲委派机制</h2><ul><li><strong>理解</strong>：在类加载的时候，类加载器要加载编译后的.class文件，这时，类编译器会首先向上级类加载器请求访问有没有加载过，有加载过就不用自己加载，如果都没有找到，就会报<code>ClassNotFoundException</code></li><li><strong>好处</strong>：保证类不被轻易纂改，数据安全</li><li><strong>各个类加载器级别</strong>：从小到大<ul><li>1、BootStrap ClassLoader：rt.jar</li><li>2、Extension ClassLoader: 加载扩展的jar包</li><li>3、App ClassLoader：指定的classpath下面的jar包</li><li>4、Custom ClassLoader：自定义的类加载器</li></ul></li></ul><h2 id="类加载顺序"><a class="header-anchor" href="#类加载顺序">¶</a>类加载顺序</h2><p>加载、连接(验证+准备+解析)、初始化、使用、卸载。</p><ul><li><p>加载：加载.class文件；</p></li><li><p>验证：检查.class文件是否正确；</p></li><li><p>准备：给类分配一定的内存空间；</p></li><li><p>解析：将常量池内的符号引用替换为直接引用；</p></li><li><p>初始化：执行 static 代码块进行初始化，如果存在父类，先对父类进行初始化；</p></li><li><p>使用：为对象分配内存空间和初始化；</p></li><li><p>卸载：GC回收类对象。</p></li></ul><h2 id="判断对象是否存活"><a class="header-anchor" href="#判断对象是否存活">¶</a>判断对象是否存活</h2><ol><li><strong>引用计数法</strong></li><li><strong>可达性分析</strong></li></ol><h2 id="垃圾回收算法"><a class="header-anchor" href="#垃圾回收算法">¶</a>垃圾回收算法</h2><ul><li><strong>标记清除、复制算法、标记整理</strong>三种算法</li></ul><h2 id="GC调优或Jvm调优"><a class="header-anchor" href="#GC调优或Jvm调优">¶</a>GC调优或Jvm调优</h2><ul><li>一般项目加个 <code>xms</code> 和 <code>xmx</code> 参数就够了。在没有全面监控、收集性能数据之前，调优就是瞎调。</li></ul><h2 id="调优工具"><a class="header-anchor" href="#调优工具">¶</a>调优工具</h2><ul><li>一些JDK自带命令<code>jps</code>、<code>jstat</code>、<code>jmap</code>、<code>jhat</code>等</li><li>有兴趣可以去了解一下阿里出品的java诊断调优神器<code>Arthas</code></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;==欢迎来访我的个人博客== ：&lt;a href=&quot;https://moshengxin.github.io/&quot;&gt;Mosey&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;jre jdk jvm三者区别&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Jdk是Java 开发工具包，jdk文件</summary>
+      
+    
+    
+    
+    <category term="Jvm" scheme="http://14uy2u.coding-pages.com/categories/Jvm/"/>
+    
+    
+    <category term="优化" scheme="http://14uy2u.coding-pages.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
     <title>妈妈我想学Sql性能优化</title>
     <link href="http://14uy2u.coding-pages.com/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/"/>
     <id>http://14uy2u.coding-pages.com/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/</id>
@@ -70,6 +153,32 @@
     
     
     <category term="优化" scheme="http://14uy2u.coding-pages.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高并发下如何保证接口的幂等性？</title>
+    <link href="http://14uy2u.coding-pages.com/2021/04/17/java/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/"/>
+    <id>http://14uy2u.coding-pages.com/2021/04/17/java/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/</id>
+    <published>2021-04-17T11:40:18.000Z</published>
+    <updated>2021-07-04T07:05:50.198Z</updated>
+    
+    <content type="html"><![CDATA[<p>好文章怕丢失?码起来!<br><a>本文转载自<a href="https://blog.csdn.net/lisu061714112/article/details/115313913">原文</a></a></p><h2 id="高并发下如何保证接口的幂等性？"><a class="header-anchor" href="#高并发下如何保证接口的幂等性？">¶</a>高并发下如何保证接口的幂等性？</h2><p><code>接口幂等性</code>问题，对于开发人员来说，是一个跟语言无关的公共问题。本文分享了一些解决这类问题非常实用的办法，绝大部分内容我在项目中实践过的，给有需要的小伙伴一个参考。</p><p>不知道你有没有遇到过这些场景：</p><ol><li><p>有时我们在填写某些<code>form表单</code>时，保存按钮不小心快速点了两次，表中竟然产生了两条重复的数据，只是id不一样。</p></li><li><p>我们在项目中为了解决<code>接口超时</code>问题，通常会引入了<code>重试机制</code>。第一次请求接口超时了，请求方没能及时获取返回结果（此时有可能已经成功了），为了避免返回错误的结果（这种情况不可能直接返回失败吧？），于是会对该请求重试几次，这样也会产生重复的数据。</p></li><li><p>mq消费者在读取消息时，有时候会读取到<code>重复消息</code>（至于什么原因这里先不说，有兴趣的小伙伴，可以找我私聊），如果处理不好，也会产生重复的数据。</p></li></ol><p>没错，这些都是幂等性问题。</p><p><code>接口幂等性</code>是指用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用。</p><p>这类问题多发于接口的：</p><ul><li><p><code>insert</code>操作，这种情况下多次请求，可能会产生重复数据。</p></li><li><p><code>update</code>操作，如果只是单纯的更新数据，比如：<code>update user set status=1 where id=1</code>，是没有问题的。如果还有计算，比如：<code>update user set status=status+1 where id=1</code>，这种情况下多次请求，可能会导致数据错误。</p></li></ul><p>那么我们要如何保证接口幂等性？本文将会告诉你答案。</p><h2 id="1、insert前先select"><a class="header-anchor" href="#1、insert前先select">¶</a>1、insert前先select</h2><p>通常情况下，在保存数据的接口中，我们为了防止产生重复数据，一般会在<code>insert</code>前，先根据<code>name</code>或<code>code</code>字段<code>select</code>一下数据。如果该数据已存在，则执行<code>update</code>操作，如果不存在，才执行  <code>insert</code>操作。</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/dc1073f79704c69321e9303187007c4d.png" alt="图片"></p><p>该方案可能是我们平时在防止产生重复数据时，使用最多的方案。但是该方案不适用于并发场景，在并发场景中，要配合其他方案一起使用，否则同样会产生重复数据。我在这里提一下，是为了避免大家踩坑。</p><h2 id="2、加悲观锁"><a class="header-anchor" href="#2、加悲观锁">¶</a>2、加悲观锁</h2><p>在支付场景中，用户A的账号余额有150元，想转出100元，正常情况下用户A的余额只剩50元。一般情况下，sql是这样的：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">update user amount &#x3D; amount-100 where id&#x3D;123;</span><br></pre></td></tr></table></figure><p>如果出现多次相同的请求，可能会导致用户A的余额变成负数。这种情况，用户A来可能要哭了。于此同时，系统开发人员可能也要哭了，因为这是很严重的系统bug。</p><p>为了解决这个问题，可以加悲观锁，将用户A的那行数据锁住，在同一时刻只允许一个请求获得锁，更新数据，其他的请求则等待。</p><p>通常情况下通过如下sql锁住单行数据：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from user id&#x3D;123 for update;</span><br></pre></td></tr></table></figure><p>具体流程如下：</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/4811d12fd82a483f05a2629dbd3be299.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>多个请求同时根据id查询用户信息。</p></li><li><p>判断余额是否不足100，如果余额不足，则直接返回余额不足。</p></li><li><p>如果余额充足，则通过for update再次查询用户信息，并且尝试获取锁。</p></li><li><p>只有第一个请求能获取到行锁，其余没有获取锁的请求，则等待下一次获取锁的机会。</p></li><li><p>第一个请求获取到锁之后，判断余额是否不足100，如果余额足够，则进行update操作。</p></li><li><p>如果余额不足，说明是重复请求，则直接返回成功。</p></li></ol><blockquote><p>需要特别注意的是：如果使用的是mysql数据库，存储引擎必须用innodb，因为它才支持事务。此外，这里id字段一定要是主键或者唯一索引，不然会锁住整张表。</p></blockquote><p>悲观锁需要在同一个事务操作过程中锁住一行数据，如果事务耗时比较长，会造成大量的请求等待，影响接口性能。</p><p>此外，每次请求接口很难保证都有相同的返回值，所以不适合幂等性设计场景，但是在防重场景中是可以的使用的。</p><p>在这里顺便说一下，<code>防重设计</code> 和 <code>幂等设计</code>，其实是有区别的。防重设计主要为了避免产生重复数据，对接口返回没有太多要求。而幂等设计除了避免产生重复数据之外，还要求每次请求都返回一样的结果。</p><h2 id="3、加乐观锁"><a class="header-anchor" href="#3、加乐观锁">¶</a>3、加乐观锁</h2><p>既然悲观锁有性能问题，为了提升接口性能，我们可以使用乐观锁。需要在表中增加一个<code>timestamp</code>或者<code>version</code>字段，这里以<code>version</code>字段为例。</p><p>在更新数据之前先查询一下数据：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,amount,version from user id&#x3D;123;</span><br></pre></td></tr></table></figure><p>如果数据存在，假设查到的<code>version</code>等于<code>1</code>，再使用<code>id</code>和<code>version</code>字段作为查询条件更新数据：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">update user set amount&#x3D;amount+100,version&#x3D;version+1</span><br></pre></td></tr></table></figure><p>更新数据的同时<code>version+1</code>，然后判断本次<code>update</code>操作的影响行数，如果大于0，则说明本次更新成功，如果等于0，则说明本次更新没有让数据变更。</p><p>由于第一次请求<code>version</code>等于<code>1</code>是可以成功的，操作成功后<code>version</code>变成<code>2</code>了。这时如果并发的请求过来，再执行相同的sql：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">update user set amount&#x3D;amount+100,version&#x3D;version+1</span><br></pre></td></tr></table></figure><p>该<code>update</code>操作不会真正更新数据，最终sql的执行结果影响行数是<code>0</code>，因为<code>version</code>已经变成<code>2</code>了，<code>where</code>中的<code>version=1</code>肯定无法满足条件。但为了保证接口幂等性，接口可以直接返回成功，因为<code>version</code>值已经修改了，那么前面必定已经成功过一次，后面都是重复的请求。</p><p>具体流程如下：<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/449f50a6da65b1cbab3485d19dbea558.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>先根据id查询用户信息，包含version字段</p></li><li><p>根据id和version字段值作为where条件的参数，更新用户信息，同时version+1</p></li><li><p>判断操作影响行数，如果影响1行，则说明是一次请求，可以做其他数据操作。</p></li><li><p>如果影响0行，说明是重复请求，则直接返回成功。</p></li></ol><h2 id="4、加唯一索引"><a class="header-anchor" href="#4、加唯一索引">¶</a>4、加唯一索引</h2><p>绝大数情况下，为了防止重复数据的产生，我们都会在表中加唯一索引，这是一个非常简单，并且有效的方案。</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alter table &#96;order&#96; add UNIQUE KEY &#96;un_code&#96; (&#96;code&#96;);</span><br></pre></td></tr></table></figure><p>加了唯一索引之后，第一次请求数据可以插入成功。但后面的相同请求，插入数据时会报<code>Duplicate entry '002' for key 'order.un_code</code>异常，表示唯一索引有冲突。</p><p>虽说抛异常对数据来说没有影响，不会造成错误数据。但是为了保证接口幂等性，我们需要对该异常进行捕获，然后返回成功。</p><p>如果是<code>java</code>程序需要捕获：<code>DuplicateKeyException</code>异常，如果使用了<code>spring</code>框架还需要捕获：<code>MySQLIntegrityConstraintViolationException</code>异常。</p><p>具体流程图如下：</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/23d6d3dd1d70f740aea444f4eafbda0d.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>用户通过浏览器发起请求，服务端收集数据。</p></li><li><p>将该数据插入mysql</p></li><li><p>判断是否执行成功，如果成功，则操作其他数据（可能还有其他的业务逻辑）。</p></li><li><p>如果执行失败，捕获唯一索引冲突异常，直接返回成功。</p></li></ol><h2 id="5、建防重表"><a class="header-anchor" href="#5、建防重表">¶</a>5、建防重表</h2><p>有时候表中并非所有的场景都不允许产生重复的数据，只有某些特定场景才不允许。这时候，直接在表中加唯一索引，显然是不太合适的。</p><p>针对这种情况，我们可以通过<code>建防重表</code>来解决问题。</p><p>该表可以只包含两个字段：<code>id</code> 和 <code>唯一索引</code>，唯一索引可以是多个字段比如：name、code等组合起来的唯一标识，例如：susan_0001。</p><p>具体流程图如下：</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/8acdef56527f31d47eaa2741cb6c032d.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>用户通过浏览器发起请求，服务端收集数据。</p></li><li><p>将该数据插入mysql防重表</p></li><li><p>判断是否执行成功，如果成功，则做mysql其他的数据操作（可能还有其他的业务逻辑）。</p></li><li><p>如果执行失败，捕获唯一索引冲突异常，直接返回成功。</p></li></ol><blockquote><p>需要特别注意的是：防重表和业务表必须在同一个数据库中，并且操作要在同一个事务中。</p></blockquote><h2 id="6、根据状态机"><a class="header-anchor" href="#6、根据状态机">¶</a>6、根据状态机</h2><p>很多时候业务表是有状态的，比如订单表中有：1-下单、2-已支付、3-完成、4-撤销等状态。如果这些状态的值是有规律的，按照业务节点正好是从小到大，我们就能通过它来保证接口的幂等性。</p><p>假如id=123的订单状态是<code>已支付</code>，现在要变成<code>完成</code>状态。</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">update &#96;order&#96; set status&#x3D;3 where id&#x3D;123 and status&#x3D;2;</span><br></pre></td></tr></table></figure><p>第一次请求时，该订单的状态是<code>已支付</code>，值是<code>2</code>，所以该<code>update</code>语句可以正常更新数据，sql执行结果的影响行数是<code>1</code>，订单状态变成了<code>3</code>。</p><p>后面有相同的请求过来，再执行相同的sql时，由于订单状态变成了<code>3</code>，再用<code>status=2</code>作为条件，无法查询出需要更新的数据，所以最终sql执行结果的影响行数是<code>0</code>，即不会真正的更新数据。但为了保证接口幂等性，影响行数是<code>0</code>时，接口也可以直接返回成功。</p><p>具体流程图如下：</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/3d545175a9b4f58abcc3a12d5e310e9b.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>用户通过浏览器发起请求，服务端收集数据。</p></li><li><p>根据id和当前状态作为条件，更新成下一个状态</p></li><li><p>判断操作影响行数，如果影响了1行，说明当前操作成功，可以进行其他数据操作。</p></li><li><p>如果影响了0行，说明是重复请求，直接返回成功。</p></li></ol><blockquote><p>主要特别注意的是，该方案仅限于要更新的<code>表有状态字段</code>，并且刚好要更新<code>状态字段</code>的这种特殊情况，并非所有场景都适用。</p></blockquote><h2 id="7、加分布式锁"><a class="header-anchor" href="#7、加分布式锁">¶</a>7、加分布式锁</h2><p>其实前面介绍过的<code>加唯一索引</code>或者<code>加防重表</code>，本质是使用了<code>数据库</code>的<code>分布式锁</code>，也属于分布式锁的一种。但由于<code>数据库分布式锁</code>的性能不太好，我们可以改用：<code>redis</code>或<code>zookeeper</code>。</p><p>鉴于现在很多公司分布式配置中心改用<code>apollo</code>或<code>nacos</code>，已经很少用<code>zookeeper</code>了，我们以<code>redis</code>为例介绍分布式锁。</p><p>目前主要有三种方式实现redis的分布式锁：</p><ol><li><p>setNx命令</p></li><li><p>set命令</p></li><li><p>Redission框架</p></li></ol><p>每种方案各有利弊，具体实现细节我就不说了，有兴趣的朋友可以加我微信找我私聊。</p><p>具体流程图如下：</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/c27c7288f30cb160945a85c53446c94c.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>用户通过浏览器发起请求，服务端会收集数据，并且生成订单号code作为唯一业务字段。</p></li><li><p>使用redis的set命令，将该订单code设置到redis中，同时设置超时时间。</p></li><li><p>判断是否设置成功，如果设置成功，说明是第一次请求，则进行数据操作。</p></li><li><p>如果设置失败，说明是重复请求，则直接返回成功。</p></li></ol><blockquote><p>需要特别注意的是：分布式锁一定要设置一个合理的过期时间，如果设置过短，无法有效的防止重复请求。如果设置过长，可能会浪费<code>redis</code>的存储空间，需要根据实际业务情况而定。</p></blockquote><h2 id="8、获取token"><a class="header-anchor" href="#8、获取token">¶</a>8、获取token</h2><p>除了上述方案之外，还有最后一种使用<code>token</code>的方案。该方案跟之前的所有方案都有点不一样，需要两次请求才能完成一次业务操作。</p><ol><li><p>第一次请求获取<code>token</code></p></li><li><p>第二次请求带着这个<code>token</code>，完成业务操作。</p></li></ol><p>具体流程图如下：</p><p>第一步，先获取token。</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/f17e295a4527953ccb487ca2b0651a9d.png" alt="图片"></p><p>第二步，做具体业务操作。</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/3cfc0dd93be88c99821181a47df2c63e.png" alt="图片"></p><p>具体步骤：</p><ol><li><p>用户访问页面时，浏览器自动发起获取token请求。</p></li><li><p>服务端生成token，保存到redis中，然后返回给浏览器。</p></li><li><p>用户通过浏览器发起请求时，携带该token。</p></li><li><p>在redis中查询该token是否存在，如果不存在，说明是第一次请求，做则后续的数据操作。</p></li><li><p>如果存在，说明是重复请求，则直接返回成功。</p></li><li><p>在redis中token会在过期时间之后，被自动删除。</p></li></ol><p>以上方案是针对幂等设计的。</p><p>如果是防重设计，流程图要改改：</p><p><img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/img_convert/fc939c51e9ef8d555bc10483e157e38b.png" alt="图片"></p><blockquote><p>需要特别注意的是：token必须是全局唯一的。</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;好文章怕丢失?码起来!&lt;br&gt;
+&lt;a&gt;本文转载自&lt;a href=&quot;https://blog.csdn.net/lisu061714112/article/details/115313913&quot;&gt;原文&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;高并发下如何保证接口的幂等性？&quot;&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="高并发" scheme="http://14uy2u.coding-pages.com/categories/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
+    
+    <category term="幂等性" scheme="http://14uy2u.coding-pages.com/tags/%E5%B9%82%E7%AD%89%E6%80%A7/"/>
     
   </entry>
   
@@ -270,8 +379,8 @@
   
   <entry>
     <title>Java开发规范总结</title>
-    <link href="http://14uy2u.coding-pages.com/2021/02/06/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/"/>
-    <id>http://14uy2u.coding-pages.com/2021/02/06/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</id>
+    <link href="http://14uy2u.coding-pages.com/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/"/>
+    <id>http://14uy2u.coding-pages.com/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</id>
     <published>2021-02-06T09:57:15.000Z</published>
     <updated>2021-02-23T09:16:24.756Z</updated>
     
@@ -297,8 +406,8 @@
   
   <entry>
     <title>List去重</title>
-    <link href="http://14uy2u.coding-pages.com/2021/01/17/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/"/>
-    <id>http://14uy2u.coding-pages.com/2021/01/17/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/</id>
+    <link href="http://14uy2u.coding-pages.com/2021/01/17/java/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/"/>
+    <id>http://14uy2u.coding-pages.com/2021/01/17/java/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/</id>
     <published>2021-01-17T09:57:15.000Z</published>
     <updated>2021-03-18T02:08:36.598Z</updated>
     
@@ -451,118 +560,6 @@
     
     
     <category term="计算机网络" scheme="http://14uy2u.coding-pages.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端样式篇</title>
-    <link href="http://14uy2u.coding-pages.com/2020/09/24/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E4%B8%80%E4%BA%9B%E6%A0%B7%E5%BC%8F%E8%AE%B0%E5%BD%95/"/>
-    <id>http://14uy2u.coding-pages.com/2020/09/24/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AF%E4%B8%80%E4%BA%9B%E6%A0%B7%E5%BC%8F%E8%AE%B0%E5%BD%95/</id>
-    <published>2020-09-24T02:05:18.000Z</published>
-    <updated>2021-06-19T07:51:33.594Z</updated>
-    
-    <content type="html"><![CDATA[<h1>前端一些样式记录</h1><p>由于工作中除了后端开发，有时候还会要做前端的工作。所以记录一下，有空的时候回看一下也好。</p><h2 id="view的内容居中样式-div"><a class="header-anchor" href="#view的内容居中样式-div">¶</a>view的内容居中样式(div)</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">display</span>: flex;</span><br><span class="line"><span class="attribute">flex-direction</span>: column;</span><br><span class="line"><span class="attribute">align-items</span>: center;</span><br></pre></td></tr></table></figure><h2 id="字体加粗"><a class="header-anchor" href="#字体加粗">¶</a>字体加粗</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">font-weight</span>:bold;</span><br></pre></td></tr></table></figure><h2 id="按钮圆角、变圆"><a class="header-anchor" href="#按钮圆角、变圆">¶</a>按钮圆角、变圆</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">border-radius</span>:<span class="number">15px</span>;</span><br></pre></td></tr></table></figure><h2 id="更换按钮背景色为红色"><a class="header-anchor" href="#更换按钮背景色为红色">¶</a>更换按钮背景色为红色</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">background-color</span>: <span class="number">#FF0000</span>;   <span class="comment">//背景色</span></span><br><span class="line"><span class="attribute">color</span>: <span class="number">#ffffff</span>;<span class="comment">//可理解为按钮上文字的颜色</span></span><br></pre></td></tr></table></figure><h2 id="背景透明"><a class="header-anchor" href="#背景透明">¶</a>背景透明</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">background-color</span>:transparent;</span><br></pre></td></tr></table></figure><h2 id="背景图片采用渐变色"><a class="header-anchor" href="#背景图片采用渐变色">¶</a>背景图片采用渐变色</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="comment">//百分比调整两个颜色区域占比，90deg代表渐变轴为90度</span></span><br><span class="line"><span class="attribute">background-image</span>: linear-gradient(<span class="number">90deg</span>,<span class="number">#ca5924</span> <span class="number">10%</span>,<span class="number">#ffff00</span> <span class="number">90%</span>);</span><br></pre></td></tr></table></figure><ul><li>以下实例演示了从头部开始(自上而下)的线性渐变，从红色开始，转为黄色，再到蓝色:</li></ul><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">background-image</span>:  linear-gradient(red, yellow, blue); </span><br></pre></td></tr></table></figure><ul><li><a href="https://www.runoob.com/cssref/pr-background-image.html">菜鸟教程</a>上图文教程很生动，可以去看下。</li></ul><h2 id="在父组件中改变子组件的样式"><a class="header-anchor" href="#在父组件中改变子组件的样式">¶</a>在父组件中改变子组件的样式</h2><ul><li>在vue中引入了作用域，其中scoped规定css样式只在本页面中生效，不会影响其它页面</li></ul><figure class="highlight xhtml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure><ul><li>由于scoped作用域是影响，如果要临时改变子组件的样式，可以用/deep/来实现scoped穿透，例子：<br>PS：input-value-border是子组件中的class样式名，而不是组件名。</li></ul><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">/deep/ .input-value-border&#123;</span><br><span class="line">    <span class="attribute">color</span>:<span class="number">#ff0000</span>  //这里写你要改的样式</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="层叠元素置顶-置于最前-，防止点击不到"><a class="header-anchor" href="#层叠元素置顶-置于最前-，防止点击不到">¶</a>层叠元素置顶(置于最前)，防止点击不到</h2><ul><li>z-index 属性指定一个元素的堆叠顺序。</li></ul><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">z-index</span>: <span class="number">999</span>;  </span><br></pre></td></tr></table></figure><h2 id="设置元素的四个边距"><a class="header-anchor" href="#设置元素的四个边距">¶</a>设置元素的四个边距</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">margin</span>:<span class="number">2px</span> <span class="number">4px</span> <span class="number">3px</span> <span class="number">4px</span>;  <span class="comment">/*分别是上、右、下、左边距*/</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">margin</span>:<span class="number">10cm</span>;   <span class="comment">/*如果只有一个值，代表4个边距都是10cm*/</span></span><br></pre></td></tr></table></figure><h2 id="为段落设置字体"><a class="header-anchor" href="#为段落设置字体">¶</a>为段落设置字体</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">font-family</span>:<span class="string">&quot;Microsoft YaHei&quot;</span>；/*微软雅黑字体*/</span><br></pre></td></tr></table></figure><h2 id="鼠标移动到元素上样式"><a class="header-anchor" href="#鼠标移动到元素上样式">¶</a>鼠标移动到元素上样式</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">span</span><span class="selector-pseudo">:hover</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="attribute">background-color</span>: red;  <span class="comment">/*span标签背景色变红*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="盒子四周加黑色边框"><a class="header-anchor" href="#盒子四周加黑色边框">¶</a>盒子四周加黑色边框</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#000</span>;</span><br></pre></td></tr></table></figure><h2 id="div中按钮浮动在最右边-注：如需要多个按钮一起居右，则看下一条"><a class="header-anchor" href="#div中按钮浮动在最右边-注：如需要多个按钮一起居右，则看下一条">¶</a>div中按钮浮动在最右边(注：如需要多个按钮一起居右，则看下一条)</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">float</span>: right;</span><br></pre></td></tr></table></figure><h2 id="div中多个按钮浮动在最右边"><a class="header-anchor" href="#div中多个按钮浮动在最右边">¶</a>div中多个按钮浮动在最右边</h2><p>按钮的样式依然使用<code>float:right</code>,只是原来按钮1、按钮2、按钮3的顺序会变成按钮3、按钮2、按钮1的顺序;<br>所以我们在html中要反过来定义按钮的顺序，再使用<code>float:right</code>浮动在最右边，超过3个按钮的依此类推。</p><h2 id="按钮代替a标签跳转链接"><a class="header-anchor" href="#按钮代替a标签跳转链接">¶</a>按钮代替a标签跳转链接</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;window.location.href = &#x27;https://www.qq.com/&#x27;&quot;</span>&gt;</span>腾讯网<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="输入框圆角样式"><a class="header-anchor" href="#输入框圆角样式">¶</a>输入框圆角样式</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">border-radius</span>: <span class="number">12px</span>;</span><br></pre></td></tr></table></figure><h2 id="控制鼠标点击列表闪烁一下-点击效果"><a class="header-anchor" href="#控制鼠标点击列表闪烁一下-点击效果">¶</a>控制鼠标点击列表闪烁一下(点击效果)</h2><p>思路：</p><ul><li>使用<code>hover-class=&quot;click_effect&quot;</code>控制鼠标点击下去列表中一条数据的时候的样式<br>例如；控制点击时候，背景颜色为<code>#f1f1f1</code>,可让用户感受到是鼠标点击了该条数据。</li></ul><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.click_effect</span>&#123;</span><br><span class="line"><span class="attribute">background-color</span>: <span class="number">#f1f1f1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="禁止H5页面左右方向拖动"><a class="header-anchor" href="#禁止H5页面左右方向拖动">¶</a>禁止H5页面左右方向拖动</h2><p>页面出现左右可拖动的原因是，div或者其它元素溢出了内容区，所以采用<code>overflow-x: hidden;</code>来裁剪 div 元素中内容的左/右边缘</p><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.no_moving</span>&#123;</span><br><span class="line">  <span class="attribute">overflow-x</span>: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="图片或者其它对象位于div中间"><a class="header-anchor" href="#图片或者其它对象位于div中间">¶</a>图片或者其它对象位于div中间</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.div_center</span>&#123;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="数字和字母也换行，不单单只有中文"><a class="header-anchor" href="#数字和字母也换行，不单单只有中文">¶</a>数字和字母也换行，不单单只有中文</h2><figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">word-break</span>:break-all;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;前端一些样式记录&lt;/h1&gt;
-&lt;p&gt;由于工作中除了后端开发，有时候还会要做前端的工作。所以记录一下，有空的时候回看一下也好。&lt;/p&gt;
-&lt;h2 id=&quot;view的内容居中样式-div&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#view的内容居中样式-d</summary>
-      
-    
-    
-    
-    <category term="前端" scheme="http://14uy2u.coding-pages.com/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-    <category term="css" scheme="http://14uy2u.coding-pages.com/tags/css/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>我用命令创建的第一篇博客</title>
-    <link href="http://14uy2u.coding-pages.com/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://14uy2u.coding-pages.com/2020/09/03/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/%E6%88%91%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</id>
-    <published>2020-09-03T06:45:10.000Z</published>
-    <updated>2021-06-12T06:52:29.482Z</updated>
-    
-    <content type="html"><![CDATA[<h1>记录和学习MarkDown语法</h1><h2 id="上面的是一级标题。本标题是二级标题"><a class="header-anchor" href="#上面的是一级标题。本标题是二级标题">¶</a>上面的是一级标题。本标题是二级标题</h2><h3 id="我是三级标题"><a class="header-anchor" href="#我是三级标题">¶</a>我是三级标题</h3><h4 id="我是四级标题"><a class="header-anchor" href="#我是四级标题">¶</a>我是四级标题</h4><h5 id="我是五级标题"><a class="header-anchor" href="#我是五级标题">¶</a>我是五级标题</h5><p><img src= "/img/loading.gif" data-lazy-src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg" alt><br>一个井号加空格，表示一级标题，两个井号代表二级标题。依此类推</p><p>要加粗的文字左右分别用两个*号包起来，比如：<strong>我是加粗的</strong></p><p>要倾斜的文字左右分别用一个星号包起来 比如：<em>我怎么倾斜了</em></p><p>要加删除线文字，左右分别加两个波浪线，比如：<s>这是加删除线的文字</s></p><p>三个或者三个以上的 - 或者 * 都可以是分割线<br>分割线</p><hr><!----><p><strong>中括号里写超链接百度，后面跟的括号里边写url.如下</strong><br><a href="http://baidu.com">百度</a></p><p><code>  技术这个东西。只能自己慢慢摸索</code></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;记录和学习MarkDown语法&lt;/h1&gt;
-&lt;h2 id=&quot;上面的是一级标题。本标题是二级标题&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#上面的是一级标题。本标题是二级标题&quot;&gt;¶&lt;/a&gt;上面的是一级标题。本标题是二级标题&lt;/h2&gt;
-&lt;h3 id=&quot;我</summary>
-      
-    
-    
-    
-    <category term="Java" scheme="http://14uy2u.coding-pages.com/categories/Java/"/>
-    
-    <category term="List" scheme="http://14uy2u.coding-pages.com/categories/Java/List/"/>
-    
-    <category term="开发" scheme="http://14uy2u.coding-pages.com/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="教程" scheme="http://14uy2u.coding-pages.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-    <category term="语法" scheme="http://14uy2u.coding-pages.com/tags/%E8%AF%AD%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>什么？你要配置多数据源</title>
-    <link href="http://14uy2u.coding-pages.com/2020/09/01/DataBase/%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/"/>
-    <id>http://14uy2u.coding-pages.com/2020/09/01/DataBase/%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/</id>
-    <published>2020-09-01T09:05:18.000Z</published>
-    <updated>2021-05-10T03:00:58.622Z</updated>
-    
-    <content type="html"><![CDATA[<h1>SSM项目配置多数据源</h1><ul><li>在spring-mybatis.xml中配置两个bean，jdbc.properties文件配置两个数据库连接</li></ul><h2 id="步骤一"><a class="header-anchor" href="#步骤一">¶</a>步骤一</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置数据源1  primary=&quot;true&quot;代表主数据源，默认数据源，--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span>   //这里是配置数据库url</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span> //这里是配置数据库username</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span> //这里是配置数据库password</span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //其它的property</span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> //其它的property</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置数据源2  primary=&quot;true&quot;代表次数据源，切换数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;aicScrDataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span>   //这里是配置数据库url</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span>  //这里是配置数据库username</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span>  //这里是配置数据库password</span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> //其它的property</span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>  //其它的property</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="步骤二"><a class="header-anchor" href="#步骤二">¶</a>步骤二</h2><ul><li>再配置两个sqlSessionFactory和数据源对应。primary也要相对应</li></ul><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactoryOne&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //第一个数据源指定对应的第一个数据源对应的Mapper.xml</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactoryTwo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //第二个数据源指定对应的第二个数据源对应的Mapper.xml</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="步骤三："><a class="header-anchor" href="#步骤三：">¶</a>步骤三：</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- MapperScan扫描配置  primary也要相对应 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerOne&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>    //配置对应的数据源1的mapper层</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerTwo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //配置对应的数据源2的mapper层</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure><ul><li>只要修改两个文件，就能启动项目了。</li><li>数据源配置好了，新建的实体类就会对应相关的数据源了，就能开心的CRUD了。</li></ul><h1>SpringBoot项目配置多数据源</h1><ul><li>springboot项目可以参考<a href="https://baomidou.com/guide/dynamic-datasource.html">官网demo</a>中的简便方法，有demo，容易上手(<font color="red">其实是不想码字</font>)。</li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;SSM项目配置多数据源&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;在spring-mybatis.xml中配置两个bean，jdbc.properties文件配置两个数据库连接&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;步骤一&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=</summary>
-      
-    
-    
-    
-    <category term="SSM" scheme="http://14uy2u.coding-pages.com/categories/SSM/"/>
-    
-    
-    <category term="数据库" scheme="http://14uy2u.coding-pages.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA判断某天是周几</title>
-    <link href="http://14uy2u.coding-pages.com/2020/07/31/JAVA%E5%88%A4%E6%96%AD%E6%9F%90%E5%A4%A9%E6%98%AF%E5%91%A8%E5%87%A0/"/>
-    <id>http://14uy2u.coding-pages.com/2020/07/31/JAVA%E5%88%A4%E6%96%AD%E6%9F%90%E5%A4%A9%E6%98%AF%E5%91%A8%E5%87%A0/</id>
-    <published>2020-07-31T09:57:15.000Z</published>
-    <updated>2021-06-12T07:03:35.822Z</updated>
-    
-    <content type="html"><![CDATA[<span id="more"></span><h2 id="java判断周六周日，周一到周五"><a class="header-anchor" href="#java判断周六周日，周一到周五">¶</a>java判断周六周日，周一到周五</h2><p>这里利用到了Calendar类</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DateFormat sdf &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span><br><span class="line">        String Date &#x3D; &quot;2020-08-03&quot;;  &#x2F;&#x2F;定义初始是周一</span><br><span class="line">        Date testdate &#x3D; sdf.parse(Date);</span><br><span class="line">        Calendar cal &#x3D; Calendar.getInstance();</span><br><span class="line">        cal.setTime(testdate); </span><br><span class="line">       if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.MONDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周一&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">        &#x2F;&#x2F;日期加一天</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.TUESDAY) &#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周二&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.WEDNESDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周三&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.THURSDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周四&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.FRIDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周五&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.SATURDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周六&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.DATE,1);</span><br><span class="line">        if(cal.get(Calendar.DAY_OF_WEEK)&#x3D;&#x3D;Calendar.SUNDAY)&#123;</span><br><span class="line">            System.out.println(sdf.format(cal.getTime())+&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;+&quot;是周日&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><p>结果打印：</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2020-08-03&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周一&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-04&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周二&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-05&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周三&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-06&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周四&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-07&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周五&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-08&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周六&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">2020-08-09&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;是周日&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">记录代码，记录工作，记录自己。</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
-&lt;h2 id=&quot;java判断周六周日，周一到周五&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#java判断周六周日，周一到周五&quot;&gt;¶&lt;/a&gt;java判断周六周日，周一到周五&lt;/h2&gt;
-&lt;p&gt;这里利用到了Cale</summary>
-      
-    
-    
-    
-    <category term="Calendar Calendar类计算日期 判断周一到周日" scheme="http://14uy2u.coding-pages.com/categories/Calendar-Calendar%E7%B1%BB%E8%AE%A1%E7%AE%97%E6%97%A5%E6%9C%9F-%E5%88%A4%E6%96%AD%E5%91%A8%E4%B8%80%E5%88%B0%E5%91%A8%E6%97%A5/"/>
-    
-    
-    <category term="java" scheme="http://14uy2u.coding-pages.com/tags/java/"/>
     
   </entry>
   
