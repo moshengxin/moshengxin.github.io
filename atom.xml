@@ -3,11 +3,11 @@
   <title>mosey</title>
   <icon>https://www.gravatar.com/avatar/c4b707b3a5ffcad5b13b78c8da672952</icon>
   <subtitle>初见乍欢,久处仍怦然</subtitle>
-  <link href="http://14uy2u.coding-pages.com/atom.xml" rel="self"/>
+  <link href="https://www.mosey.top/atom.xml" rel="self"/>
   
-  <link href="http://14uy2u.coding-pages.com/"/>
+  <link href="https://www.mosey.top/"/>
   <updated>2021-07-19T08:50:55.330Z</updated>
-  <id>http://14uy2u.coding-pages.com/</id>
+  <id>https://www.mosey.top/</id>
   
   <author>
     <name>Mosey</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>JavaScript开发常用</title>
-    <link href="http://14uy2u.coding-pages.com/2021/07/13/%E5%89%8D%E7%AB%AF/JavaScript%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
-    <id>http://14uy2u.coding-pages.com/2021/07/13/%E5%89%8D%E7%AB%AF/JavaScript%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</id>
+    <link href="https://www.mosey.top/2021/07/13/%E5%89%8D%E7%AB%AF/JavaScript%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
+    <id>https://www.mosey.top/2021/07/13/%E5%89%8D%E7%AB%AF/JavaScript%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</id>
     <published>2021-07-13T10:35:12.000Z</published>
     <updated>2021-07-19T08:50:55.330Z</updated>
     
@@ -37,17 +37,17 @@
     
     
     
-    <category term="前端" scheme="http://14uy2u.coding-pages.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="前端" scheme="https://www.mosey.top/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-    <category term="前端" scheme="http://14uy2u.coding-pages.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    <category term="前端" scheme="https://www.mosey.top/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
   <entry>
     <title>flex布局</title>
-    <link href="http://14uy2u.coding-pages.com/2021/07/11/%E5%89%8D%E7%AB%AF/flex%E5%B8%83%E5%B1%80/"/>
-    <id>http://14uy2u.coding-pages.com/2021/07/11/%E5%89%8D%E7%AB%AF/flex%E5%B8%83%E5%B1%80/</id>
+    <link href="https://www.mosey.top/2021/07/11/%E5%89%8D%E7%AB%AF/flex%E5%B8%83%E5%B1%80/"/>
+    <id>https://www.mosey.top/2021/07/11/%E5%89%8D%E7%AB%AF/flex%E5%B8%83%E5%B1%80/</id>
     <published>2021-07-11T11:05:18.000Z</published>
     <updated>2021-07-30T04:27:09.289Z</updated>
     
@@ -67,17 +67,17 @@
     
     
     
-    <category term="前端" scheme="http://14uy2u.coding-pages.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="前端" scheme="https://www.mosey.top/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-    <category term="前端" scheme="http://14uy2u.coding-pages.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    <category term="前端" scheme="https://www.mosey.top/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
   <entry>
     <title>微信公众号推送消息给指定用户</title>
-    <link href="http://14uy2u.coding-pages.com/2021/06/12/%E5%BE%AE%E4%BF%A1/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7H5%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD/"/>
-    <id>http://14uy2u.coding-pages.com/2021/06/12/%E5%BE%AE%E4%BF%A1/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7H5%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD/</id>
+    <link href="https://www.mosey.top/2021/06/12/%E5%BE%AE%E4%BF%A1/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7H5%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD/"/>
+    <id>https://www.mosey.top/2021/06/12/%E5%BE%AE%E4%BF%A1/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7H5%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E5%8A%9F%E8%83%BD/</id>
     <published>2021-06-12T05:55:18.000Z</published>
     <updated>2021-07-19T06:06:07.523Z</updated>
     
@@ -95,17 +95,17 @@
     
     
     
-    <category term="微信公众号" scheme="http://14uy2u.coding-pages.com/categories/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
+    <category term="微信公众号" scheme="https://www.mosey.top/categories/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
     
     
-    <category term="微信公众号" scheme="http://14uy2u.coding-pages.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
+    <category term="微信公众号" scheme="https://www.mosey.top/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
     
   </entry>
   
   <entry>
     <title>面试官老问我设计模式</title>
-    <link href="http://14uy2u.coding-pages.com/2021/05/16/java/%E9%9D%A2%E8%AF%95%E5%AE%98%E8%80%81%E9%97%AE%E6%88%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://14uy2u.coding-pages.com/2021/05/16/java/%E9%9D%A2%E8%AF%95%E5%AE%98%E8%80%81%E9%97%AE%E6%88%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://www.mosey.top/2021/05/16/java/%E9%9D%A2%E8%AF%95%E5%AE%98%E8%80%81%E9%97%AE%E6%88%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://www.mosey.top/2021/05/16/java/%E9%9D%A2%E8%AF%95%E5%AE%98%E8%80%81%E9%97%AE%E6%88%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
     <published>2021-05-16T08:15:18.000Z</published>
     <updated>2021-07-19T09:52:06.607Z</updated>
     
@@ -122,17 +122,17 @@
     
     
     
-    <category term="设计模式" scheme="http://14uy2u.coding-pages.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://www.mosey.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
-    <category term="java" scheme="http://14uy2u.coding-pages.com/tags/java/"/>
+    <category term="java" scheme="https://www.mosey.top/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>Nginx代理服务器</title>
-    <link href="http://14uy2u.coding-pages.com/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    <id>http://14uy2u.coding-pages.com/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/</id>
+    <link href="https://www.mosey.top/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>https://www.mosey.top/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/</id>
     <published>2021-05-09T10:30:18.000Z</published>
     <updated>2021-07-04T07:04:29.300Z</updated>
     
@@ -149,17 +149,17 @@
     
     
     
-    <category term="服务器" scheme="http://14uy2u.coding-pages.com/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <category term="服务器" scheme="https://www.mosey.top/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
     
-    <category term="nginx" scheme="http://14uy2u.coding-pages.com/tags/nginx/"/>
+    <category term="nginx" scheme="https://www.mosey.top/tags/nginx/"/>
     
   </entry>
   
   <entry>
     <title>Docker容器</title>
-    <link href="http://14uy2u.coding-pages.com/2021/05/05/container/docker%E5%AE%B9%E5%99%A8/"/>
-    <id>http://14uy2u.coding-pages.com/2021/05/05/container/docker%E5%AE%B9%E5%99%A8/</id>
+    <link href="https://www.mosey.top/2021/05/05/container/docker%E5%AE%B9%E5%99%A8/"/>
+    <id>https://www.mosey.top/2021/05/05/container/docker%E5%AE%B9%E5%99%A8/</id>
     <published>2021-05-05T14:55:23.000Z</published>
     <updated>2021-05-10T03:25:03.000Z</updated>
     
@@ -178,17 +178,17 @@
     
     
     
-    <category term="容器化" scheme="http://14uy2u.coding-pages.com/categories/%E5%AE%B9%E5%99%A8%E5%8C%96/"/>
+    <category term="容器化" scheme="https://www.mosey.top/categories/%E5%AE%B9%E5%99%A8%E5%8C%96/"/>
     
     
-    <category term="虚拟化" scheme="http://14uy2u.coding-pages.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    <category term="虚拟化" scheme="https://www.mosey.top/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>部署mall项目爬坑日记</title>
-    <link href="http://14uy2u.coding-pages.com/2021/05/03/%E9%83%A8%E7%BD%B2mall%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>http://14uy2u.coding-pages.com/2021/05/03/%E9%83%A8%E7%BD%B2mall%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
+    <link href="https://www.mosey.top/2021/05/03/%E9%83%A8%E7%BD%B2mall%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>https://www.mosey.top/2021/05/03/%E9%83%A8%E7%BD%B2mall%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
     <published>2021-05-03T06:45:23.000Z</published>
     <updated>2021-07-04T07:05:00.258Z</updated>
     
@@ -205,17 +205,17 @@
     
     
     
-    <category term="项目部署" scheme="http://14uy2u.coding-pages.com/categories/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2/"/>
+    <category term="项目部署" scheme="https://www.mosey.top/categories/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2/"/>
     
     
-    <category term="linux" scheme="http://14uy2u.coding-pages.com/tags/linux/"/>
+    <category term="linux" scheme="https://www.mosey.top/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>Jvm了解一下</title>
-    <link href="http://14uy2u.coding-pages.com/2021/05/01/java/jvm%E6%95%B4%E7%90%86/"/>
-    <id>http://14uy2u.coding-pages.com/2021/05/01/java/jvm%E6%95%B4%E7%90%86/</id>
+    <link href="https://www.mosey.top/2021/05/01/java/jvm%E6%95%B4%E7%90%86/"/>
+    <id>https://www.mosey.top/2021/05/01/java/jvm%E6%95%B4%E7%90%86/</id>
     <published>2021-05-01T04:34:22.000Z</published>
     <updated>2021-07-04T06:55:18.569Z</updated>
     
@@ -234,17 +234,17 @@
     
     
     
-    <category term="Jvm" scheme="http://14uy2u.coding-pages.com/categories/Jvm/"/>
+    <category term="Jvm" scheme="https://www.mosey.top/categories/Jvm/"/>
     
     
-    <category term="优化" scheme="http://14uy2u.coding-pages.com/tags/%E4%BC%98%E5%8C%96/"/>
+    <category term="优化" scheme="https://www.mosey.top/tags/%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>妈妈我想学Sql性能优化</title>
-    <link href="http://14uy2u.coding-pages.com/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/"/>
-    <id>http://14uy2u.coding-pages.com/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/</id>
+    <link href="https://www.mosey.top/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/"/>
+    <id>https://www.mosey.top/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/</id>
     <published>2021-04-21T14:12:20.000Z</published>
     <updated>2021-05-10T03:35:36.505Z</updated>
     
@@ -262,17 +262,17 @@
     
     
     
-    <category term="数据库" scheme="http://14uy2u.coding-pages.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://www.mosey.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="优化" scheme="http://14uy2u.coding-pages.com/tags/%E4%BC%98%E5%8C%96/"/>
+    <category term="优化" scheme="https://www.mosey.top/tags/%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>高并发下如何保证接口的幂等性？</title>
-    <link href="http://14uy2u.coding-pages.com/2021/04/17/java/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/"/>
-    <id>http://14uy2u.coding-pages.com/2021/04/17/java/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/</id>
+    <link href="https://www.mosey.top/2021/04/17/java/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/"/>
+    <id>https://www.mosey.top/2021/04/17/java/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E5%B9%82%E7%AD%89%E6%80%A7/</id>
     <published>2021-04-17T11:40:18.000Z</published>
     <updated>2021-07-04T07:05:50.198Z</updated>
     
@@ -288,17 +288,17 @@
     
     
     
-    <category term="高并发" scheme="http://14uy2u.coding-pages.com/categories/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    <category term="高并发" scheme="https://www.mosey.top/categories/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
     
-    <category term="幂等性" scheme="http://14uy2u.coding-pages.com/tags/%E5%B9%82%E7%AD%89%E6%80%A7/"/>
+    <category term="幂等性" scheme="https://www.mosey.top/tags/%E5%B9%82%E7%AD%89%E6%80%A7/"/>
     
   </entry>
   
   <entry>
     <title>摊牌了！想做表情管理大师？</title>
-    <link href="http://14uy2u.coding-pages.com/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/"/>
-    <id>http://14uy2u.coding-pages.com/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/</id>
+    <link href="https://www.mosey.top/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/"/>
+    <id>https://www.mosey.top/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/</id>
     <published>2021-04-15T11:55:23.000Z</published>
     <updated>2021-04-14T01:37:34.812Z</updated>
     
@@ -313,17 +313,17 @@
     
     
     
-    <category term="表情管理" scheme="http://14uy2u.coding-pages.com/categories/%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86/"/>
+    <category term="表情管理" scheme="https://www.mosey.top/categories/%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86/"/>
     
     
-    <category term="emoji" scheme="http://14uy2u.coding-pages.com/tags/emoji/"/>
+    <category term="emoji" scheme="https://www.mosey.top/tags/emoji/"/>
     
   </entry>
   
   <entry>
     <title>我试过的几种CORS跨域解决方法</title>
-    <link href="http://14uy2u.coding-pages.com/2021/04/11/CORS%E8%B7%A8%E5%9F%9F/"/>
-    <id>http://14uy2u.coding-pages.com/2021/04/11/CORS%E8%B7%A8%E5%9F%9F/</id>
+    <link href="https://www.mosey.top/2021/04/11/CORS%E8%B7%A8%E5%9F%9F/"/>
+    <id>https://www.mosey.top/2021/04/11/CORS%E8%B7%A8%E5%9F%9F/</id>
     <published>2021-04-11T12:10:44.000Z</published>
     <updated>2021-04-23T06:49:52.648Z</updated>
     
@@ -341,17 +341,17 @@
     
     
     
-    <category term="跨域" scheme="http://14uy2u.coding-pages.com/categories/%E8%B7%A8%E5%9F%9F/"/>
+    <category term="跨域" scheme="https://www.mosey.top/categories/%E8%B7%A8%E5%9F%9F/"/>
     
     
-    <category term="跨域" scheme="http://14uy2u.coding-pages.com/tags/%E8%B7%A8%E5%9F%9F/"/>
+    <category term="跨域" scheme="https://www.mosey.top/tags/%E8%B7%A8%E5%9F%9F/"/>
     
   </entry>
   
   <entry>
     <title>MongoDB记录用户浏览商品记录</title>
-    <link href="http://14uy2u.coding-pages.com/2021/03/27/%E6%95%B4%E5%90%88/Mongodb%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E6%B5%8F%E8%A7%88%E5%95%86%E5%93%81%E8%AE%B0%E5%BD%95/"/>
-    <id>http://14uy2u.coding-pages.com/2021/03/27/%E6%95%B4%E5%90%88/Mongodb%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E6%B5%8F%E8%A7%88%E5%95%86%E5%93%81%E8%AE%B0%E5%BD%95/</id>
+    <link href="https://www.mosey.top/2021/03/27/%E6%95%B4%E5%90%88/Mongodb%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E6%B5%8F%E8%A7%88%E5%95%86%E5%93%81%E8%AE%B0%E5%BD%95/"/>
+    <id>https://www.mosey.top/2021/03/27/%E6%95%B4%E5%90%88/Mongodb%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E6%B5%8F%E8%A7%88%E5%95%86%E5%93%81%E8%AE%B0%E5%BD%95/</id>
     <published>2021-03-27T07:25:45.000Z</published>
     <updated>2021-04-23T06:19:54.069Z</updated>
     
@@ -368,17 +368,17 @@
     
     
     
-    <category term="数据库" scheme="http://14uy2u.coding-pages.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://www.mosey.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="MongoDB" scheme="http://14uy2u.coding-pages.com/tags/MongoDB/"/>
+    <category term="MongoDB" scheme="https://www.mosey.top/tags/MongoDB/"/>
     
   </entry>
   
   <entry>
     <title>SpringBoot整合ElastitcSearch中文分词</title>
-    <link href="http://14uy2u.coding-pages.com/2021/03/14/es/SpringBoot%E6%95%B4%E5%90%88ElastitcSearch%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/"/>
-    <id>http://14uy2u.coding-pages.com/2021/03/14/es/SpringBoot%E6%95%B4%E5%90%88ElastitcSearch%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/</id>
+    <link href="https://www.mosey.top/2021/03/14/es/SpringBoot%E6%95%B4%E5%90%88ElastitcSearch%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/"/>
+    <id>https://www.mosey.top/2021/03/14/es/SpringBoot%E6%95%B4%E5%90%88ElastitcSearch%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/</id>
     <published>2021-03-14T12:57:15.000Z</published>
     <updated>2021-04-23T06:16:39.713Z</updated>
     
@@ -395,17 +395,17 @@
     
     
     
-    <category term="SpringBoot" scheme="http://14uy2u.coding-pages.com/categories/SpringBoot/"/>
+    <category term="SpringBoot" scheme="https://www.mosey.top/categories/SpringBoot/"/>
     
     
-    <category term="ElasticSearch" scheme="http://14uy2u.coding-pages.com/tags/ElasticSearch/"/>
+    <category term="ElasticSearch" scheme="https://www.mosey.top/tags/ElasticSearch/"/>
     
   </entry>
   
   <entry>
     <title>SpringBoot整合Redis(其实不难)</title>
-    <link href="http://14uy2u.coding-pages.com/2021/03/07/%E6%95%B4%E5%90%88/SpringBoot%E6%95%B4%E5%90%88redis/"/>
-    <id>http://14uy2u.coding-pages.com/2021/03/07/%E6%95%B4%E5%90%88/SpringBoot%E6%95%B4%E5%90%88redis/</id>
+    <link href="https://www.mosey.top/2021/03/07/%E6%95%B4%E5%90%88/SpringBoot%E6%95%B4%E5%90%88redis/"/>
+    <id>https://www.mosey.top/2021/03/07/%E6%95%B4%E5%90%88/SpringBoot%E6%95%B4%E5%90%88redis/</id>
     <published>2021-03-07T09:05:18.000Z</published>
     <updated>2021-05-22T03:26:07.745Z</updated>
     
@@ -424,17 +424,17 @@
     
     
     
-    <category term="SpringBoot" scheme="http://14uy2u.coding-pages.com/categories/SpringBoot/"/>
+    <category term="SpringBoot" scheme="https://www.mosey.top/categories/SpringBoot/"/>
     
     
-    <category term="redis" scheme="http://14uy2u.coding-pages.com/tags/redis/"/>
+    <category term="redis" scheme="https://www.mosey.top/tags/redis/"/>
     
   </entry>
   
   <entry>
     <title>Spring实现Aop切面编程(日志记录)</title>
-    <link href="http://14uy2u.coding-pages.com/2021/03/07/%E6%95%B4%E5%90%88/spring%E5%AE%9E%E7%8E%B0%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/"/>
-    <id>http://14uy2u.coding-pages.com/2021/03/07/%E6%95%B4%E5%90%88/spring%E5%AE%9E%E7%8E%B0%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/</id>
+    <link href="https://www.mosey.top/2021/03/07/%E6%95%B4%E5%90%88/spring%E5%AE%9E%E7%8E%B0%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/"/>
+    <id>https://www.mosey.top/2021/03/07/%E6%95%B4%E5%90%88/spring%E5%AE%9E%E7%8E%B0%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/</id>
     <published>2021-03-07T02:05:18.000Z</published>
     <updated>2021-05-22T03:31:39.859Z</updated>
     
@@ -456,17 +456,17 @@
     
     
     
-    <category term="spring" scheme="http://14uy2u.coding-pages.com/categories/spring/"/>
+    <category term="spring" scheme="https://www.mosey.top/categories/spring/"/>
     
     
-    <category term="Aop" scheme="http://14uy2u.coding-pages.com/tags/Aop/"/>
+    <category term="Aop" scheme="https://www.mosey.top/tags/Aop/"/>
     
   </entry>
   
   <entry>
     <title>小撸redis</title>
-    <link href="http://14uy2u.coding-pages.com/2021/02/21/DataBase/%E6%92%B8%E4%BA%86%E5%A5%BD%E4%B9%85%E7%9A%84redis/"/>
-    <id>http://14uy2u.coding-pages.com/2021/02/21/DataBase/%E6%92%B8%E4%BA%86%E5%A5%BD%E4%B9%85%E7%9A%84redis/</id>
+    <link href="https://www.mosey.top/2021/02/21/DataBase/%E6%92%B8%E4%BA%86%E5%A5%BD%E4%B9%85%E7%9A%84redis/"/>
+    <id>https://www.mosey.top/2021/02/21/DataBase/%E6%92%B8%E4%BA%86%E5%A5%BD%E4%B9%85%E7%9A%84redis/</id>
     <published>2021-02-21T08:00:15.000Z</published>
     <updated>2021-06-02T08:47:29.494Z</updated>
     
@@ -483,17 +483,17 @@
     
     
     
-    <category term="数据库" scheme="http://14uy2u.coding-pages.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://www.mosey.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="redis" scheme="http://14uy2u.coding-pages.com/tags/redis/"/>
+    <category term="redis" scheme="https://www.mosey.top/tags/redis/"/>
     
   </entry>
   
   <entry>
     <title>Java开发规范总结</title>
-    <link href="http://14uy2u.coding-pages.com/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/"/>
-    <id>http://14uy2u.coding-pages.com/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</id>
+    <link href="https://www.mosey.top/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/"/>
+    <id>https://www.mosey.top/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</id>
     <published>2021-02-06T09:57:15.000Z</published>
     <updated>2021-02-23T09:16:24.756Z</updated>
     
@@ -510,17 +510,17 @@
     
     
     
-    <category term="规范" scheme="http://14uy2u.coding-pages.com/categories/%E8%A7%84%E8%8C%83/"/>
+    <category term="规范" scheme="https://www.mosey.top/categories/%E8%A7%84%E8%8C%83/"/>
     
     
-    <category term="java" scheme="http://14uy2u.coding-pages.com/tags/java/"/>
+    <category term="java" scheme="https://www.mosey.top/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>List去重</title>
-    <link href="http://14uy2u.coding-pages.com/2021/01/17/java/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/"/>
-    <id>http://14uy2u.coding-pages.com/2021/01/17/java/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/</id>
+    <link href="https://www.mosey.top/2021/01/17/java/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/"/>
+    <id>https://www.mosey.top/2021/01/17/java/list%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95/</id>
     <published>2021-01-17T09:57:15.000Z</published>
     <updated>2021-03-18T02:08:36.598Z</updated>
     
@@ -536,17 +536,17 @@
     
     
     
-    <category term="List 集合" scheme="http://14uy2u.coding-pages.com/categories/List-%E9%9B%86%E5%90%88/"/>
+    <category term="List 集合" scheme="https://www.mosey.top/categories/List-%E9%9B%86%E5%90%88/"/>
     
     
-    <category term="java" scheme="http://14uy2u.coding-pages.com/tags/java/"/>
+    <category term="java" scheme="https://www.mosey.top/tags/java/"/>
     
   </entry>
   
   <entry>
     <title>ActiveMq学习</title>
-    <link href="http://14uy2u.coding-pages.com/2021/01/07/ActiveMq/"/>
-    <id>http://14uy2u.coding-pages.com/2021/01/07/ActiveMq/</id>
+    <link href="https://www.mosey.top/2021/01/07/ActiveMq/"/>
+    <id>https://www.mosey.top/2021/01/07/ActiveMq/</id>
     <published>2021-01-07T08:19:18.000Z</published>
     <updated>2021-01-07T08:51:21.351Z</updated>
     
@@ -562,10 +562,10 @@
     
     
     
-    <category term="消息中间件" scheme="http://14uy2u.coding-pages.com/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    <category term="消息中间件" scheme="https://www.mosey.top/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
     
     
-    <category term="高并发" scheme="http://14uy2u.coding-pages.com/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    <category term="高并发" scheme="https://www.mosey.top/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
