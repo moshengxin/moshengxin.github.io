@@ -1,53 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ActiveMq学习</title>
-    <url>/2021/01/07/ActiveMq/</url>
-    <content><![CDATA[<h1>ActiveMq相关认识</h1>
-<p>ActiveMq是一个消息队列中间件，类似的还有RabbitMQ、Kafka等。</p>
-<h2 id="ActiveMq的优点或者作用"><a class="header-anchor" href="#ActiveMq的优点或者作用">¶</a>ActiveMq的优点或者作用</h2>
-<h3 id="解耦"><a class="header-anchor" href="#解耦">¶</a>解耦</h3>
-<ul>
-<li>在大型网站中最常见使用消息中间件，能降低应用的耦合度。<br>
-比如：在订单系统和库存系统中引入消息中间件，如果用户下单成功后，库存系统刚好发生宕机故障，也不会影响数据，因为下单成功后，已经把减库存的操作持久化告诉ActiveMq，ActiveMq会在库存系统恢复正常的时候提醒写入数据到库存系统。</li>
-</ul>
-<h3 id="流量消峰-解决高并发场景"><a class="header-anchor" href="#流量消峰-解决高并发场景">¶</a>流量消峰(解决高并发场景)</h3>
-<ul>
-<li>没有中间件的之前，在整点秒杀和抢购活动中，大量的同一请求会同时对数据库进行CRUD操作。因为ActiveMq是先进先出，所以当有大量同求时，先经过ActiveMq把请求集中起来统一管理，采用定义好的规则把请求分批处理。这样就能直到保护数据库的作用。<br>
-上面所说规则可理解为，500个商品，100000个抢购请求，那么ActiveMq就会把所有的请求先集中处理，前500个先进先出，500之后的就抢购失败，不经过数据库处理，直接抛弃用户请求或跳转到抢购失败页面提示用户抢购失败。<br>
-ps:解耦这个特定业务环境下是使用<strong>发布-订阅模式</strong>的</li>
-</ul>
-<h3 id="异步处理"><a class="header-anchor" href="#异步处理">¶</a>异步处理</h3>
-<ul>
-<li>将不是很重要的业务逻辑进行异步处理，比如注册功能，传统的注册功能要在完成发送注册邮件和注册短信后才响应给前端，这样显得有点慢，因为邮件和短信提示不算是很重要，可以在响应给用户后慢一点点发邮件和短信提示，所以我们可以把这两个部分都交给ActiveMq来异步处理。<br>
-具体可以看这篇博客<a href="https://www.cnblogs.com/cxyyh/p/10700437.html">戳这里</a>有图文，更易理解</li>
-</ul>
-<h2 id="ActiveMq的两种消息模型"><a class="header-anchor" href="#ActiveMq的两种消息模型">¶</a>ActiveMq的两种消息模型</h2>
-<h3 id="ptp-点到点模型"><a class="header-anchor" href="#ptp-点到点模型">¶</a>ptp(点到点模型)</h3>
-<ul>
-<li>生产者和消费者一对一关系，消息保证送达，离线消费者可以在下次上线后收到之前积压的消息。</li>
-</ul>
-<h3 id="p-s-发布-订阅模型"><a class="header-anchor" href="#p-s-发布-订阅模型">¶</a>p/s(发布/订阅模型)</h3>
-<ul>
-<li>生产者和消费者一对多关系，一个消息生产者可以被多个消费者订阅消费。类似关注微信公众号一样，在你关注公众号前，公众号发布的文章，你是不能接收到推送的。只有你订阅后，公众号推送的文章你才能收到提醒。</li>
-</ul>
-<h4 id="p-s普通订阅"><a class="header-anchor" href="#p-s普通订阅">¶</a>p/s普通订阅</h4>
-<ul>
-<li>当没有持久订阅者和在线的普通订阅者，消息不会保存，普通订阅者上线后也收不到该消息。</li>
-</ul>
-<h4 id="p-s持久订阅"><a class="header-anchor" href="#p-s持久订阅">¶</a>p/s持久订阅</h4>
-<ul>
-<li>如果有离线的持久订阅者，ActiveMq会为该持久订阅者保存消息，当该持久订阅者上线后，会收到消息。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>消息中间件</category>
-      </categories>
-      <tags>
-        <tag>高并发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>我试过的几种CORS跨域解决方法</title>
     <url>/2021/04/11/CORS%E8%B7%A8%E5%9F%9F/</url>
     <content><![CDATA[<h1>URL的几个组成部分</h1>
@@ -128,6 +81,53 @@ jsonp:“jsonpcallback”</p>
       </categories>
       <tags>
         <tag>跨域</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ActiveMq学习</title>
+    <url>/2021/01/07/ActiveMq/</url>
+    <content><![CDATA[<h1>ActiveMq相关认识</h1>
+<p>ActiveMq是一个消息队列中间件，类似的还有RabbitMQ、Kafka等。</p>
+<h2 id="ActiveMq的优点或者作用"><a class="header-anchor" href="#ActiveMq的优点或者作用">¶</a>ActiveMq的优点或者作用</h2>
+<h3 id="解耦"><a class="header-anchor" href="#解耦">¶</a>解耦</h3>
+<ul>
+<li>在大型网站中最常见使用消息中间件，能降低应用的耦合度。<br>
+比如：在订单系统和库存系统中引入消息中间件，如果用户下单成功后，库存系统刚好发生宕机故障，也不会影响数据，因为下单成功后，已经把减库存的操作持久化告诉ActiveMq，ActiveMq会在库存系统恢复正常的时候提醒写入数据到库存系统。</li>
+</ul>
+<h3 id="流量消峰-解决高并发场景"><a class="header-anchor" href="#流量消峰-解决高并发场景">¶</a>流量消峰(解决高并发场景)</h3>
+<ul>
+<li>没有中间件的之前，在整点秒杀和抢购活动中，大量的同一请求会同时对数据库进行CRUD操作。因为ActiveMq是先进先出，所以当有大量同求时，先经过ActiveMq把请求集中起来统一管理，采用定义好的规则把请求分批处理。这样就能直到保护数据库的作用。<br>
+上面所说规则可理解为，500个商品，100000个抢购请求，那么ActiveMq就会把所有的请求先集中处理，前500个先进先出，500之后的就抢购失败，不经过数据库处理，直接抛弃用户请求或跳转到抢购失败页面提示用户抢购失败。<br>
+ps:解耦这个特定业务环境下是使用<strong>发布-订阅模式</strong>的</li>
+</ul>
+<h3 id="异步处理"><a class="header-anchor" href="#异步处理">¶</a>异步处理</h3>
+<ul>
+<li>将不是很重要的业务逻辑进行异步处理，比如注册功能，传统的注册功能要在完成发送注册邮件和注册短信后才响应给前端，这样显得有点慢，因为邮件和短信提示不算是很重要，可以在响应给用户后慢一点点发邮件和短信提示，所以我们可以把这两个部分都交给ActiveMq来异步处理。<br>
+具体可以看这篇博客<a href="https://www.cnblogs.com/cxyyh/p/10700437.html">戳这里</a>有图文，更易理解</li>
+</ul>
+<h2 id="ActiveMq的两种消息模型"><a class="header-anchor" href="#ActiveMq的两种消息模型">¶</a>ActiveMq的两种消息模型</h2>
+<h3 id="ptp-点到点模型"><a class="header-anchor" href="#ptp-点到点模型">¶</a>ptp(点到点模型)</h3>
+<ul>
+<li>生产者和消费者一对一关系，消息保证送达，离线消费者可以在下次上线后收到之前积压的消息。</li>
+</ul>
+<h3 id="p-s-发布-订阅模型"><a class="header-anchor" href="#p-s-发布-订阅模型">¶</a>p/s(发布/订阅模型)</h3>
+<ul>
+<li>生产者和消费者一对多关系，一个消息生产者可以被多个消费者订阅消费。类似关注微信公众号一样，在你关注公众号前，公众号发布的文章，你是不能接收到推送的。只有你订阅后，公众号推送的文章你才能收到提醒。</li>
+</ul>
+<h4 id="p-s普通订阅"><a class="header-anchor" href="#p-s普通订阅">¶</a>p/s普通订阅</h4>
+<ul>
+<li>当没有持久订阅者和在线的普通订阅者，消息不会保存，普通订阅者上线后也收不到该消息。</li>
+</ul>
+<h4 id="p-s持久订阅"><a class="header-anchor" href="#p-s持久订阅">¶</a>p/s持久订阅</h4>
+<ul>
+<li>如果有离线的持久订阅者，ActiveMq会为该持久订阅者保存消息，当该持久订阅者上线后，会收到消息。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>消息中间件</category>
+      </categories>
+      <tags>
+        <tag>高并发</tag>
       </tags>
   </entry>
   <entry>
@@ -251,368 +251,6 @@ jsonp:“jsonpcallback”</p>
       </categories>
       <tags>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>妈妈我想学Sql性能优化</title>
-    <url>/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/</url>
-    <content><![CDATA[<ul>
-<li>==欢迎来访我的个人博客== ：<a href="http://14uy2u.coding-pages.com/">Mosey</a></li>
-</ul>
-<h1>Explain分析Sql性能</h1>
-<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>在我们平时开发中，因为系统可能属于初级阶段，数据库的数据还不是很多，所以自我感觉写的Sql语句上运行起来速度还不错，殊不知，随着时间推移，数据量日益增多，系统的查询效率会在打折扣，所以，Sql性能调优手段还得了解一下下。</p>
-<h2 id="Explain是什么？有什么用？"><a class="header-anchor" href="#Explain是什么？有什么用？">¶</a>Explain是什么？有什么用？</h2>
-<ul>
-<li>Explain可以用来分析一条Sql语句的运行效率。根据执行后的结果字段来判断查询有没有用“索引”、“全表扫描还是只扫描一些行”、“当前sql处于哪个性能级别”等等。</li>
-</ul>
-<h2 id="Explain怎么用？"><a class="header-anchor" href="#Explain怎么用？">¶</a>Explain怎么用？</h2>
-<ul>
-<li>用法：<code>explain 待分析的Sql语句</code></li>
-</ul>
-<h2 id="Explain返回字段了解一下"><a class="header-anchor" href="#Explain返回字段了解一下">¶</a>Explain返回字段了解一下</h2>
-<ul>
-<li><a><b>id</b></a></li>
-</ul>
-<blockquote>
-<p><code>id</code>越大，越先执行(单表Sql除外)，id相同，则执行顺序由上而下</p>
-</blockquote>
-<ul>
-<li><a><b>select_type(查询类型)
-<ul>
-<li>只列举其中几种</li>
-</ul>
-</b></a></li>
-</ul>
-<blockquote>
-<p><code>simple</code>： 简单select(无union或where子查询)<br>
-<code>primary</code>： 最外层select<br>
-<code>subquery</code>：子查询中中第一个select</p>
-</blockquote>
-<ul>
-<li><a><b>table</b></a></li>
-</ul>
-<blockquote>
-<p>Sql查询对应的数据库表名称</p>
-</blockquote>
-<ul>
-<li><a><b>partitions(分区)</b></a></li>
-<li><a><b>type(联接类型)
-<ul>
-<li>可根据type知道sql的性能级别，all性能最差(全表扫描)，</li>
-<li>我们平时开发写的Sql至少达到range性能级别，最好能达到ref，不然有可能出现性能问题</li>
-<li>性能级别天梯如下</li>
-</ul>
-</b></a></li>
-</ul>
-<blockquote>
-<p><code>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; all</code></p>
-</blockquote>
-<ul>
-<li><a><b>possible_keys</b></a></li>
-</ul>
-<blockquote>
-<p>查询时，<code>可能用到的索引</code></p>
-</blockquote>
-<ul>
-<li><a><b>key</b></a></li>
-</ul>
-<blockquote>
-<p>查询时，<code>真正用到的索引</code></p>
-</blockquote>
-<ul>
-<li><a><b>key_len</b></a></li>
-</ul>
-<blockquote>
-<p>可片面理解为索引长度，不过不是真正的长度，Sql自有一套计算长度规则</p>
-</blockquote>
-<ul>
-<li><a><b>rows</b></a></li>
-</ul>
-<blockquote>
-<p>扫描了多少行。</p>
-</blockquote>
-<ul>
-<li><a><b>extra(额外信息)</b></a></li>
-</ul>
-<blockquote>
-<p>是否使用索引 ，是否使用where，是否使用distinct等待<br>
-性能级别：useing index&gt;usinh where &gt; using temporary | using filesort</p>
-</blockquote>
-<h2 id="实战小例子"><a class="header-anchor" href="#实战小例子">¶</a>实战小例子</h2>
-<ul>
-<li>没加索引前<br>
-<a href="https://imgtu.com/i/cRzilD"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cRzilD.png" alt="cRzilD.png"></a></li>
-<li>在t_erchang_sanjian_user表的user_name字段加了索引后<br>
-<a href="https://imgtu.com/i/cWSVvF"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cWSVvF.png" alt="cWSVvF.png"></a></li>
-<li>又在t_erchang_sanjian_photo表中的create_by字段加了索引后<br>
-<a href="https://imgtu.com/i/cW9Z79"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cW9Z79.png" alt="cW9Z79.png"></a></li>
-</ul>
-<h2 id="写Sql时要注意点什么"><a class="header-anchor" href="#写Sql时要注意点什么">¶</a>写Sql时要注意点什么</h2>
-<ul>
-<li>where后面的字段的值要加单引号<code>‘’</code>不然如果该字段有索引，则索引失效</li>
-<li>join连接多表(两到三个表最优)查询时，每个表设置别名，字段也用别名.字段表示</li>
-<li>有大量重复数据的字段不适合创建索引，如性别(男，女)，是否删除(0,1)这类型字段。</li>
-<li>虽然索引能加快查询速度，但是建议单表最多设置5个索引，因为索引太多会影响插入和更新速度</li>
-<li>避免同时修改或删除大量数据，这样会造成cpu飙升，从而影响别人对数据库的访问</li>
-<li>删除重复索引，如果字段A和B创建了组合索引，那么就不必要单独为A再创建新的索引了（index_A_B相当于创建了A,AB索引，即最左匹配原则）。</li>
-<li>如果要插入大量数据，建议分批插入</li>
-<li>建议在where和order by涉及的列上建立组合索引</li>
-<li>连接查询相关：
-<ul>
-<li>
-<p>Inner join 只保留两张表中完全匹配的结果集</p>
-</li>
-<li>
-<p>left join 返回左表所有的行，即使在右表中没有匹配的记录。</p>
-</li>
-<li>
-<p>right join 返回右表所有的行，即使在左表中没有匹配的记录。</p>
-</li>
-</ul>
-</li>
-<li>避免在索引列上使用mysql的内置函数，如(时间类函数等)</li>
-<li>不寻底常用select *，应该要明确要查的具体字段</li>
-<li>平时开发中，可日志打印一下完整sql放到数据库客户端运行一下排错</li>
-<li>存储引擎中，
-<ul>
-<li>MyISAM支持表级锁，不支持事务和全文索引</li>
-<li>InnoDB支持行级锁、支持事务安全（ACID兼容）、支持外键</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>优化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>postgres数据库备份和还原命令-亲测有效</title>
-    <url>/2020/07/08/DataBase/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
-    <content><![CDATA[<span id="more"></span>
-<h2 id="cmd命令备份本地postgres数据库以及还原"><a class="header-anchor" href="#cmd命令备份本地postgres数据库以及还原">¶</a>cmd命令备份本地postgres数据库以及还原</h2>
-<p>ps:<br>
-1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>
-2、备份后的文件格式是.bak(其它格式我没有测试过)<br>
-3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
-备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>
-口令为你的数据库密码，回车。备份成功。<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
-还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
-结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
-]]></content>
-      <categories>
-        <category>数据库 postgres</category>
-      </categories>
-      <tags>
-        <tag>postgresql 运维</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么？你要配置多数据源</title>
-    <url>/2020/09/01/DataBase/%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h1>SSM项目配置多数据源</h1>
-<ul>
-<li>在spring-mybatis.xml中配置两个bean，jdbc.properties文件配置两个数据库连接</li>
-</ul>
-<h2 id="步骤一"><a class="header-anchor" href="#步骤一">¶</a>步骤一</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置数据源1  primary=&quot;true&quot;代表主数据源，默认数据源，--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span>   //这里是配置数据库url</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span> //这里是配置数据库username</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span> //这里是配置数据库password</span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //其它的property</span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> //其它的property</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置数据源2  primary=&quot;true&quot;代表次数据源，切换数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;aicScrDataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span>   //这里是配置数据库url</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span>  //这里是配置数据库username</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span>  //这里是配置数据库password</span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> //其它的property</span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>  //其它的property</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="步骤二"><a class="header-anchor" href="#步骤二">¶</a>步骤二</h2>
-<ul>
-<li>再配置两个sqlSessionFactory和数据源对应。primary也要相对应</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactoryOne&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //第一个数据源指定对应的第一个数据源对应的Mapper.xml</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactoryTwo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //第二个数据源指定对应的第二个数据源对应的Mapper.xml</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="步骤三："><a class="header-anchor" href="#步骤三：">¶</a>步骤三：</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- MapperScan扫描配置  primary也要相对应 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerOne&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>    //配置对应的数据源1的mapper层</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerTwo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //配置对应的数据源2的mapper层</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>只要修改两个文件，就能启动项目了。</li>
-<li>数据源配置好了，新建的实体类就会对应相关的数据源了，就能开心的CRUD了。</li>
-</ul>
-<h1>SpringBoot项目配置多数据源</h1>
-<ul>
-<li>springboot项目可以参考<a href="https://baomidou.com/guide/dynamic-datasource.html">官网demo</a>中的简便方法，有demo，容易上手(<font color="red">其实是不想码字</font>)。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>SSM</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>小撸redis</title>
-    <url>/2021/02/21/DataBase/%E6%92%B8%E4%BA%86%E5%A5%BD%E4%B9%85%E7%9A%84redis/</url>
-    <content><![CDATA[<h1>redis还是要会的</h1>
-<h2 id="redis是什么"><a class="header-anchor" href="#redis是什么">¶</a>redis是什么</h2>
-<ul>
-<li>redis是一个高性能的非关系型数据库，相对于普通的关系型数据库，redis的数据储存在缓存中，<br>
-读(110000次/s)写(81000次/s )数据非常快，Redis也支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
-</ul>
-<h2 id="redis数据类型了解一下"><a class="header-anchor" href="#redis数据类型了解一下">¶</a>redis数据类型了解一下</h2>
-<ul>
-<li>String: 字符串</li>
-<li>Hash: 散列</li>
-<li>List: 列表</li>
-<li>Set: 集合</li>
-<li>Sorted Set: 有序集合</li>
-</ul>
-<h2 id="redis的安装和简单使用-windows环境下"><a class="header-anchor" href="#redis的安装和简单使用-windows环境下">¶</a>redis的安装和简单使用(windows环境下)</h2>
-<h3 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h3>
-<ol>
-<li>下载地址：<a href="https://github.com/tporadowski/redis/releases%E3%80%82">https://github.com/tporadowski/redis/releases。</a></li>
-<li>下载 Redis-x64-xxx.zip压缩包并解压到D:\redis</li>
-</ol>
-<h3 id="windows启动（两种方式）"><a class="header-anchor" href="#windows启动（两种方式）">¶</a>windows启动（两种方式）</h3>
-<ul>
-<li>启动方法有cmd命令启动和exe文件启动。其实他们都一样，命令只是暗地里操作exe文件启动而已。</li>
-<li>启动成功标志，出现6379</li>
-</ul>
-<h4 id="方式一"><a class="header-anchor" href="#方式一">¶</a>方式一</h4>
-<ul>
-<li>因没有配置redis的环境变量，所以使用cmd命令启动时要注意切换到redis的安装目录(解压目录)D:\redis,</li>
-<li>输入redis-server.exe redis.windows.conf回车，会生成一个窗口，注意不要关闭这个服务端窗口。<br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/test0423/redis-server.exe.3etu5brf2sa0.jpg" alt="yqOlvV.png"></li>
-<li>然后再重新打开一个cmd窗口，输入redis-cli.exe -h 127.0.0.1 -p 6379，用于打开redis客户端，可查看redis相关信息和命令练习<br>
-<img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqOsbD.png" alt="yqOsbD.png"></li>
-</ul>
-<h4 id="方式二"><a class="header-anchor" href="#方式二">¶</a>方式二</h4>
-<ul>
-<li>exe文件启动，按照下图顺序启动服务端和客户端<br>
-<img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqLSS0.png" alt="yqLSS0.png"></li>
-</ul>
-<h3 id="linux启动"><a class="header-anchor" href="#linux启动">¶</a>linux启动</h3>
-<ul>
-<li>cd到redis安装的<code>bin</code>目录中，启动<code>redis-server</code>服务，启动完成了就运行<code>./redis-cli</code>打开客户端，然后就可以增删改了。</li>
-<li>如果要远程连接linux下的redis，首先要确保redis-server服务要启动成功，并且6379端口要开放。然后在cmd中通过命令<code>redis-cli -h 10.106.252.131 -p 6379</code>连接，如果提示<code>(error) NOAUTH Authentication required.</code>错误，则使用命令<code>auth redis密码</code>来授权即可。</li>
-</ul>
-<h2 id="redis常用命令学习总结"><a class="header-anchor" href="#redis常用命令学习总结">¶</a>redis常用命令学习总结</h2>
-<ul>
-<li>redis共有16个库，顺序从下标0开始。默认是第一个库，如要切换库，则要使用命令select index    例如：select 1代表切换到第二个库。</li>
-<li>查看库中所有的键：    keys *</li>
-<li>命令太多要清屏：   clear</li>
-</ul>
-<h3 id="老老实实做一个redis练习生"><a class="header-anchor" href="#老老实实做一个redis练习生">¶</a>老老实实做一个redis练习生</h3>
-<p>会唱、跳、rap、篮球还不够，还要会redis基础命令，下面是每个类型相关。</p>
-<h4 id="String相关"><a class="header-anchor" href="#String相关">¶</a>String相关</h4>
-<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqv0vq.png" alt="yqv0vq.png"><br>
-<img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvrrV.png" alt="yqvrrV.png"></p>
-<h4 id="Hash相关"><a class="header-anchor" href="#Hash相关">¶</a>Hash相关</h4>
-<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvhx1.png" alt="yqvhx1.png"></p>
-<h4 id="List相关"><a class="header-anchor" href="#List相关">¶</a>List相关</h4>
-<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvbIe.png" alt="yqvbIe.png"></p>
-<h4 id="Set相关"><a class="header-anchor" href="#Set相关">¶</a>Set相关</h4>
-<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvXRA.png" alt="yqvXRA.png"></p>
-<h4 id="Sorted-Set相关"><a class="header-anchor" href="#Sorted-Set相关">¶</a>Sorted Set相关</h4>
-<p>偷一下懒，移步去看<a href="https://www.runoob.com/redis/redis-sorted-sets.html">菜鸟教程对应版块</a></p>
-<h2 id="redis的几个特性理解"><a class="header-anchor" href="#redis的几个特性理解">¶</a>redis的几个特性理解</h2>
-<ol>
-<li>缓存穿透 、
-<ul>
-<li>是指当Redis缓存中的key不存在value值时，就会请求到后台去查询数据库，如果并发量很高，就会造成数据库宕机</li>
-<li>解决办法：法1：查到空数据也进行缓存，但要求设置很短的过期时间，一般为几分钟。法二：布隆过滤器</li>
-</ul>
-</li>
-<li>缓存击穿
-<ul>
-<li>是指Redis缓存中的key存在value值，但是过期了，该请求还是会去后台请求查询数据库，如果并发量很高同时查询同一条数据，也会造成数据库宕机。</li>
-<li>解决办法：法一：直接设为永不过期就。法二：加互斥锁</li>
-</ul>
-</li>
-<li>缓存雪崩 、
-<ul>
-<li>是指多条或者无数条数据过期了，造成系统崩溃（例如：热点商品秒杀）</li>
-<li>解决办法：
-<ul>
-<li>法一：直接设为永不过期就。</li>
-<li>法二：随机过期(过期一部分，目的防止同一时间大量数据过期现象发生。)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="Redis持久化的rdb方式和aof方式备份的区别"><a class="header-anchor" href="#Redis持久化的rdb方式和aof方式备份的区别">¶</a>Redis持久化的rdb方式和aof方式备份的区别</h2>
-<ul>
-<li>RDB每隔一段时间进行备份，AOF每时每刻在写操作时进行备份，所以AOF备份出来的文件比RDB的要大，数据完整性也比RDB的要好。不过官方建议同时开启这两种持久化</li>
-<li>Redis 默认的持久化方式是 RDB ，并且默认是打开的</li>
-<li>在配置文件中满足这些条件就会触发RDB备份操作</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果要开启AOF备份，则要在配置文件中把 appendonly 改为 yes开启</li>
-<li>AOF备份有三种方式，在配置文件中选择其中一种即可</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># appendfsync always       //实时，每个操作都会备份(IO开销大)    </span><br><span class="line">appendfsync everysec      //每秒，redis宕机会丢失一秒的数据(建议使用)</span><br><span class="line"># appendfsync no	          </span><br></pre></td></tr></table></figure>
-<h2 id="Redis数据恢复"><a class="header-anchor" href="#Redis数据恢复">¶</a>Redis数据恢复</h2>
-<ul>
-<li>如果有AOF文件,优先恢复AOF，没有则恢复RDB文件</li>
-</ul>
-<h2 id="Redis集群"><a class="header-anchor" href="#Redis集群">¶</a>Redis集群</h2>
-<h3 id="集群定义"><a class="header-anchor" href="#集群定义">¶</a>集群定义</h3>
-<ul>
-<li>所谓的集群，就是通过添加多个相同的服务器，防止某台服务器发生事故，导致系统不能正常运行，从而让服务器达到一个稳定、高效的状态。
-<ul>
-<li>主从复制、
-<ul>
-<li>主库可读、可写。从库只读不写，所以可以把查询统统交给从库，增删改就交给主库。</li>
-<li>ps：Master主库有且仅有一个，建议从库最少设置两个</li>
-</ul>
-</li>
-<li>哨兵模式、
-<ul>
-<li>因为主从复制集群有一个致命的缺点，那就是主库发生故障，就不能进行增删改了，所以就产生了哨兵模式，<br>
-* 所谓的哨兵模式，就是当主库发生故障后，哨兵会在所有的从库中，自动选举一个新的库作为主库来进行增删改操作。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="集群搭建"><a class="header-anchor" href="#集群搭建">¶</a>集群搭建</h3>
-<ul>
-<li><a href="https://blog.csdn.net/qq_42815754/article/details/82912130">手把手教程</a></li>
-</ul>
-<h3 id="Redis事务"><a class="header-anchor" href="#Redis事务">¶</a>Redis事务</h3>
-<ul>
-<li>相关命令：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">multi               <span class="comment">//开启事务</span></span><br><span class="line">set .......        <span class="comment">//数据库操作入队</span></span><br><span class="line">exec/discard      <span class="comment">//执行或取消队列</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>PS:Redis不支持事务回滚，队列中的某一个操作失败，其它的剩余操作照样执行，因为Redis认为这种错误应该发生在开发环境中，不应该出现在正式环境中，Redis并不帮程序员解决他造成的错误</li>
-</ul>
-<h2 id="linux中-ubuntu-设置redis可远程访问"><a class="header-anchor" href="#linux中-ubuntu-设置redis可远程访问">¶</a>linux中(ubuntu)设置redis可远程访问</h2>
-<ul>
-<li>1️⃣ 找到redis的配置文件redis.conf,该文件位于/etc/redis文件夹下</li>
-</ul>
-<blockquote>
-<p>cd /etc/redis</p>
-</blockquote>
-<ul>
-<li>2️⃣ vi编辑redis.conf,把<code>bind 127.0.0.1 ::1</code>注释掉,并关闭保护模式，即把<code>protected-mode no</code>改为<code>yes</code></li>
-<li>3️⃣ 防火墙开放redis的6379端口,</li>
-</ul>
-<blockquote>
-<p>firewall-cmd --zone=public --add-port=6379/tcp --permanent</p>
-</blockquote>
-<ul>
-<li>4️⃣ 重启防火墙配置</li>
-</ul>
-<blockquote>
-<p>firewall-cmd --reload</p>
-</blockquote>
-<ul>
-<li>5️⃣ 重启redis服务就可以远程访问了</li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -840,6 +478,367 @@ docker pull java:8   # 指定java8版本</p>
       </tags>
   </entry>
   <entry>
+    <title>小撸redis</title>
+    <url>/2021/02/21/DataBase/%E6%92%B8%E4%BA%86%E5%A5%BD%E4%B9%85%E7%9A%84redis/</url>
+    <content><![CDATA[<h1>redis 还是要会的</h1>
+<h2 id="redis-是什么"><a class="header-anchor" href="#redis-是什么">¶</a>redis 是什么</h2>
+<ul>
+<li>redis 是一个高性能的非关系型数据库，相对于普通的关系型数据库，redis 的数据储存在缓存中，<br>
+读(110000 次/s)写(81000 次/s )数据非常快，Redis 也支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
+</ul>
+<h2 id="redis-数据类型了解一下"><a class="header-anchor" href="#redis-数据类型了解一下">¶</a>redis 数据类型了解一下</h2>
+<ul>
+<li>String: 字符串</li>
+<li>Hash: 散列</li>
+<li>List: 列表</li>
+<li>Set: 集合</li>
+<li>Sorted Set: 有序集合</li>
+</ul>
+<h2 id="redis-数据类型常见应用场景"><a class="header-anchor" href="#redis-数据类型常见应用场景">¶</a>redis 数据类型常见应用场景</h2>
+<ol>
+<li>String：缓存字符串(如 token，验证码，json 字符串，等)， 计数器、Session 共享、分布式 ID、分布式锁等。</li>
+<li>Hash：可以用来存储一些 key-value 对，更适合用来存储对象</li>
+<li>List 表：做栈或者队列，可以用来缓存类似微信公众号、微博等消息流数据</li>
+<li>Set：不可重复性，Set 可以进行交集、并集、差集操作，从而可以实现类似，我和某人共同关注的人、朋友圈点赞等功能</li>
+<li>Sorted Set 有序集合：排行榜功能</li>
+</ol>
+<h2 id="redis-的安装和简单使用-windows-环境下"><a class="header-anchor" href="#redis-的安装和简单使用-windows-环境下">¶</a>redis 的安装和简单使用(windows 环境下)</h2>
+<h3 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h3>
+<ol>
+<li>下载地址：<a href="https://github.com/tporadowski/redis/releases%E3%80%82">https://github.com/tporadowski/redis/releases。</a></li>
+<li>下载 Redis-x64-xxx.zip 压缩包并解压到 D:\redis</li>
+</ol>
+<h3 id="windows-启动（两种方式）"><a class="header-anchor" href="#windows-启动（两种方式）">¶</a>windows 启动（两种方式）</h3>
+<ul>
+<li>启动方法有 cmd 命令启动和 exe 文件启动。其实他们都一样，命令只是暗地里操作 exe 文件启动而已。</li>
+<li>启动成功标志，出现 6379</li>
+</ul>
+<h4 id="方式一"><a class="header-anchor" href="#方式一">¶</a>方式一</h4>
+<ul>
+<li>因没有配置 redis 的环境变量，所以使用 cmd 命令启动时要注意切换到 redis 的安装目录(解压目录)D:\redis,</li>
+<li>输入 redis-server.exe redis.windows.conf 回车，会生成一个窗口，注意不要关闭这个服务端窗口。<br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/test0423/redis-server.exe.3etu5brf2sa0.jpg" alt="yqOlvV.png"></li>
+<li>然后再重新打开一个 cmd 窗口，输入 redis-cli.exe -h 127.0.0.1 -p 6379，用于打开 redis 客户端，可查看 redis 相关信息和命令练习<br>
+<img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqOsbD.png" alt="yqOsbD.png"></li>
+</ul>
+<h4 id="方式二"><a class="header-anchor" href="#方式二">¶</a>方式二</h4>
+<ul>
+<li>exe 文件启动，按照下图顺序启动服务端和客户端<br>
+<img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqLSS0.png" alt="yqLSS0.png"></li>
+</ul>
+<h3 id="linux-启动"><a class="header-anchor" href="#linux-启动">¶</a>linux 启动</h3>
+<ul>
+<li>cd 到 redis 安装的<code>bin</code>目录中，启动<code>redis-server</code>服务，启动完成了就运行<code>./redis-cli</code>打开客户端，然后就可以增删改了。</li>
+<li>如果要远程连接 linux 下的 redis，首先要确保 redis-server 服务要启动成功，并且 6379 端口要开放。然后在 cmd 中通过命令<code>redis-cli -h 10.106.252.131 -p 6379</code>连接，如果提示<code>(error) NOAUTH Authentication required.</code>错误，则使用命令<code>auth redis密码</code>来授权即可。</li>
+</ul>
+<h2 id="redis-常用命令学习总结"><a class="header-anchor" href="#redis-常用命令学习总结">¶</a>redis 常用命令学习总结</h2>
+<ul>
+<li>redis 共有 16 个库，顺序从下标 0 开始。默认是第一个库，如要切换库，则要使用命令 select index 例如：select 1 代表切换到第二个库。</li>
+<li>查看库中所有的键： keys *</li>
+<li>命令太多要清屏： clear</li>
+</ul>
+<h3 id="老老实实做一个-redis-练习生"><a class="header-anchor" href="#老老实实做一个-redis-练习生">¶</a>老老实实做一个 redis 练习生</h3>
+<p>会唱、跳、rap、篮球还不够，还要会 redis 基础命令，下面是每个类型相关。</p>
+<h4 id="String-相关"><a class="header-anchor" href="#String-相关">¶</a>String 相关</h4>
+<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqv0vq.png" alt="yqv0vq.png"><br>
+<img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvrrV.png" alt="yqvrrV.png"></p>
+<h4 id="Hash-相关"><a class="header-anchor" href="#Hash-相关">¶</a>Hash 相关</h4>
+<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvhx1.png" alt="yqvhx1.png"></p>
+<h4 id="List-相关"><a class="header-anchor" href="#List-相关">¶</a>List 相关</h4>
+<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvbIe.png" alt="yqvbIe.png"></p>
+<h4 id="Set-相关"><a class="header-anchor" href="#Set-相关">¶</a>Set 相关</h4>
+<p><img src= "/img/loading.gif" data-lazy-src="https://s3.ax1x.com/2021/02/23/yqvXRA.png" alt="yqvXRA.png"></p>
+<h4 id="Sorted-Set-相关"><a class="header-anchor" href="#Sorted-Set-相关">¶</a>Sorted Set 相关</h4>
+<p>偷一下懒，移步去看<a href="https://www.runoob.com/redis/redis-sorted-sets.html">菜鸟教程对应版块</a></p>
+<h2 id="redis-的几个特性理解"><a class="header-anchor" href="#redis-的几个特性理解">¶</a>redis 的几个特性理解</h2>
+<ol>
+<li>缓存穿透 、
+<ul>
+<li>是指当 Redis 缓存中的 key 不存在 value 值时，就会请求到后台去查询数据库，如果并发量很高，就会造成数据库宕机</li>
+<li>解决办法：法 1：查到空数据也进行缓存，但要求设置很短的过期时间，一般为几分钟。法二：布隆过滤器</li>
+</ul>
+</li>
+<li>缓存击穿
+<ul>
+<li>是指 Redis 缓存中的 key 存在 value 值，但是过期了，该请求还是会去后台请求查询数据库，如果并发量很高同时查询同一条数据，也会造成数据库宕机。</li>
+<li>解决办法：法一：直接设为永不过期就。法二：加互斥锁</li>
+</ul>
+</li>
+<li>缓存雪崩 、
+<ul>
+<li>是指多条或者无数条数据过期了，造成系统崩溃（例如：热点商品秒杀）</li>
+<li>解决办法：
+<ul>
+<li>法一：直接设为永不过期就。</li>
+<li>法二：随机过期(过期一部分，目的防止同一时间大量数据过期现象发生。)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Redis-持久化的-rdb-方式和-aof-方式备份的区别"><a class="header-anchor" href="#Redis-持久化的-rdb-方式和-aof-方式备份的区别">¶</a>Redis 持久化的 rdb 方式和 aof 方式备份的区别</h2>
+<ul>
+<li>RDB 每隔一段时间进行备份，AOF 每时每刻在写操作时进行备份，所以 AOF 备份出来的文件比 RDB 的要大，数据完整性也比 RDB 的要好。不过官方建议同时开启这两种持久化</li>
+<li>Redis 默认的持久化方式是 RDB ，并且默认是打开的</li>
+<li>在配置文件中满足这些条件就会触发 RDB 备份操作</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果要开启 AOF 备份，则要在配置文件中把 appendonly 改为 yes 开启</li>
+<li>AOF 备份有三种方式，在配置文件中选择其中一种即可</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># appendfsync always       //实时，每个操作都会备份(IO开销大)</span><br><span class="line">appendfsync everysec      //每秒，redis宕机会丢失一秒的数据(建议使用)</span><br><span class="line"># appendfsync no</span><br></pre></td></tr></table></figure>
+<h2 id="Redis-数据恢复"><a class="header-anchor" href="#Redis-数据恢复">¶</a>Redis 数据恢复</h2>
+<ul>
+<li>如果有 AOF 文件,优先恢复 AOF，没有则恢复 RDB 文件</li>
+</ul>
+<h2 id="Redis-集群"><a class="header-anchor" href="#Redis-集群">¶</a>Redis 集群</h2>
+<h3 id="集群定义"><a class="header-anchor" href="#集群定义">¶</a>集群定义</h3>
+<ul>
+<li>所谓的集群，就是通过添加多个相同的服务器，防止某台服务器发生事故，导致系统不能正常运行，从而让服务器达到一个稳定、高效的状态。
+<ul>
+<li>主从复制、<br>
+_ 主库可读、可写。从库只读不写，所以可以把查询统统交给从库，增删改就交给主库。<br>
+_ ps：Master 主库有且仅有一个，建议从库最少设置两个</li>
+<li>哨兵模式、<br>
+_ 因为主从复制集群有一个致命的缺点，那就是主库发生故障，就不能进行增删改了，所以就产生了哨兵模式，<br>
+_ 所谓的哨兵模式，就是当主库发生故障后，哨兵会在所有的从库中，自动选举一个新的库作为主库来进行增删改操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="集群搭建"><a class="header-anchor" href="#集群搭建">¶</a>集群搭建</h3>
+<ul>
+<li><a href="https://blog.csdn.net/qq_42815754/article/details/82912130">手把手教程</a></li>
+</ul>
+<h3 id="Redis-事务"><a class="header-anchor" href="#Redis-事务">¶</a>Redis 事务</h3>
+<ul>
+<li>相关命令：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">multi               <span class="comment">//开启事务</span></span><br><span class="line">set .......        <span class="comment">//数据库操作入队</span></span><br><span class="line">exec/discard      <span class="comment">//执行或取消队列</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>PS:Redis 不支持事务回滚，队列中的某一个操作失败，其它的剩余操作照样执行，因为 Redis 认为这种错误应该发生在开发环境中，不应该出现在正式环境中，Redis 并不帮程序员解决他造成的错误</li>
+</ul>
+<h2 id="linux-中-ubuntu-设置-redis-可远程访问"><a class="header-anchor" href="#linux-中-ubuntu-设置-redis-可远程访问">¶</a>linux 中(ubuntu)设置 redis 可远程访问</h2>
+<ul>
+<li>1️⃣ 找到 redis 的配置文件 redis.conf,该文件位于/etc/redis 文件夹下
+<blockquote>
+<p>cd /etc/redis</p>
+</blockquote>
+</li>
+<li>2️⃣ vi 编辑 redis.conf,把<code>bind 127.0.0.1 ::1</code>注释掉,并关闭保护模式，即把<code>protected-mode no</code>改为<code>yes</code></li>
+<li>3️⃣ 防火墙开放 redis 的 6379 端口,
+<blockquote>
+<p>firewall-cmd --zone=public --add-port=6379/tcp --permanent</p>
+</blockquote>
+</li>
+<li>4️⃣ 重启防火墙配置
+<blockquote>
+<p>firewall-cmd --reload</p>
+</blockquote>
+</li>
+<li>5️⃣ 重启 redis 服务就可以远程访问了</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>postgres数据库备份和还原命令-亲测有效</title>
+    <url>/2020/07/08/DataBase/postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E5%92%8C%E8%BF%98%E5%8E%9F%E5%91%BD%E4%BB%A4-%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88/</url>
+    <content><![CDATA[<span id="more"></span>
+<h2 id="cmd命令备份本地postgres数据库以及还原"><a class="header-anchor" href="#cmd命令备份本地postgres数据库以及还原">¶</a>cmd命令备份本地postgres数据库以及还原</h2>
+<p>ps:<br>
+1、postgres数据库的备份和还原，前提是都要进来pgadmin安装目录的bin文件夹<br>
+2、备份后的文件格式是.bak(其它格式我没有测试过)<br>
+3、本命令备份后，也只能用命令的方式还原，其它还原方式测试没有通过。<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160233915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+备份命令：pg_dump -h localhost -p 5432 -U postgres -d crcslocalhost&gt; D:\testbackup.bak<br>
+口令为你的数据库密码，回车。备份成功。<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708160708497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+还原命令：psql -h localhost -p 5432 -U postgres -d test02 -f “D:\testbackup.bak”<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200708161459480.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>
+结语：如果有什么错误和不当之处，麻烦指出。感谢x3！</p>
+]]></content>
+      <categories>
+        <category>数据库 postgres</category>
+      </categories>
+      <tags>
+        <tag>postgresql 运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么？你要配置多数据源</title>
+    <url>/2020/09/01/DataBase/%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1>SSM项目配置多数据源</h1>
+<ul>
+<li>在spring-mybatis.xml中配置两个bean，jdbc.properties文件配置两个数据库连接</li>
+</ul>
+<h2 id="步骤一"><a class="header-anchor" href="#步骤一">¶</a>步骤一</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置数据源1  primary=&quot;true&quot;代表主数据源，默认数据源，--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span>   //这里是配置数据库url</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span> //这里是配置数据库username</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span> //这里是配置数据库password</span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //其它的property</span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> //其它的property</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置数据源2  primary=&quot;true&quot;代表次数据源，切换数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;aicScrDataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span>   //这里是配置数据库url</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span>  //这里是配置数据库username</span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span>  //这里是配置数据库password</span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> //其它的property</span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>  //其它的property</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="步骤二"><a class="header-anchor" href="#步骤二">¶</a>步骤二</h2>
+<ul>
+<li>再配置两个sqlSessionFactory和数据源对应。primary也要相对应</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactoryOne&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //第一个数据源指定对应的第一个数据源对应的Mapper.xml</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactoryTwo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //第二个数据源指定对应的第二个数据源对应的Mapper.xml</span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="步骤三："><a class="header-anchor" href="#步骤三：">¶</a>步骤三：</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- MapperScan扫描配置  primary也要相对应 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerOne&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>    //配置对应的数据源1的mapper层</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerTwo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span>   //配置对应的数据源2的mapper层</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> 省略<span class="attr">.......</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>只要修改两个文件，就能启动项目了。</li>
+<li>数据源配置好了，新建的实体类就会对应相关的数据源了，就能开心的CRUD了。</li>
+</ul>
+<h1>SpringBoot项目配置多数据源</h1>
+<ul>
+<li>springboot项目可以参考<a href="https://baomidou.com/guide/dynamic-datasource.html">官网demo</a>中的简便方法，有demo，容易上手(<font color="red">其实是不想码字</font>)。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>妈妈我想学Sql性能优化</title>
+    <url>/2021/04/21/DataBase/Explain%E6%9F%A5%E8%AF%A2Sql%E6%95%88%E7%8E%87/</url>
+    <content><![CDATA[<ul>
+<li>==欢迎来访我的个人博客== ：<a href="http://14uy2u.coding-pages.com/">Mosey</a></li>
+</ul>
+<h1>Explain分析Sql性能</h1>
+<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>在我们平时开发中，因为系统可能属于初级阶段，数据库的数据还不是很多，所以自我感觉写的Sql语句上运行起来速度还不错，殊不知，随着时间推移，数据量日益增多，系统的查询效率会在打折扣，所以，Sql性能调优手段还得了解一下下。</p>
+<h2 id="Explain是什么？有什么用？"><a class="header-anchor" href="#Explain是什么？有什么用？">¶</a>Explain是什么？有什么用？</h2>
+<ul>
+<li>Explain可以用来分析一条Sql语句的运行效率。根据执行后的结果字段来判断查询有没有用“索引”、“全表扫描还是只扫描一些行”、“当前sql处于哪个性能级别”等等。</li>
+</ul>
+<h2 id="Explain怎么用？"><a class="header-anchor" href="#Explain怎么用？">¶</a>Explain怎么用？</h2>
+<ul>
+<li>用法：<code>explain 待分析的Sql语句</code></li>
+</ul>
+<h2 id="Explain返回字段了解一下"><a class="header-anchor" href="#Explain返回字段了解一下">¶</a>Explain返回字段了解一下</h2>
+<ul>
+<li><a><b>id</b></a></li>
+</ul>
+<blockquote>
+<p><code>id</code>越大，越先执行(单表Sql除外)，id相同，则执行顺序由上而下</p>
+</blockquote>
+<ul>
+<li><a><b>select_type(查询类型)
+<ul>
+<li>只列举其中几种</li>
+</ul>
+</b></a></li>
+</ul>
+<blockquote>
+<p><code>simple</code>： 简单select(无union或where子查询)<br>
+<code>primary</code>： 最外层select<br>
+<code>subquery</code>：子查询中中第一个select</p>
+</blockquote>
+<ul>
+<li><a><b>table</b></a></li>
+</ul>
+<blockquote>
+<p>Sql查询对应的数据库表名称</p>
+</blockquote>
+<ul>
+<li><a><b>partitions(分区)</b></a></li>
+<li><a><b>type(联接类型)
+<ul>
+<li>可根据type知道sql的性能级别，all性能最差(全表扫描)，</li>
+<li>我们平时开发写的Sql至少达到range性能级别，最好能达到ref，不然有可能出现性能问题</li>
+<li>性能级别天梯如下</li>
+</ul>
+</b></a></li>
+</ul>
+<blockquote>
+<p><code>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; all</code></p>
+</blockquote>
+<ul>
+<li><a><b>possible_keys</b></a></li>
+</ul>
+<blockquote>
+<p>查询时，<code>可能用到的索引</code></p>
+</blockquote>
+<ul>
+<li><a><b>key</b></a></li>
+</ul>
+<blockquote>
+<p>查询时，<code>真正用到的索引</code></p>
+</blockquote>
+<ul>
+<li><a><b>key_len</b></a></li>
+</ul>
+<blockquote>
+<p>可片面理解为索引长度，不过不是真正的长度，Sql自有一套计算长度规则</p>
+</blockquote>
+<ul>
+<li><a><b>rows</b></a></li>
+</ul>
+<blockquote>
+<p>扫描了多少行。</p>
+</blockquote>
+<ul>
+<li><a><b>extra(额外信息)</b></a></li>
+</ul>
+<blockquote>
+<p>是否使用索引 ，是否使用where，是否使用distinct等待<br>
+性能级别：useing index&gt;usinh where &gt; using temporary | using filesort</p>
+</blockquote>
+<h2 id="实战小例子"><a class="header-anchor" href="#实战小例子">¶</a>实战小例子</h2>
+<ul>
+<li>没加索引前<br>
+<a href="https://imgtu.com/i/cRzilD"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cRzilD.png" alt="cRzilD.png"></a></li>
+<li>在t_erchang_sanjian_user表的user_name字段加了索引后<br>
+<a href="https://imgtu.com/i/cWSVvF"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cWSVvF.png" alt="cWSVvF.png"></a></li>
+<li>又在t_erchang_sanjian_photo表中的create_by字段加了索引后<br>
+<a href="https://imgtu.com/i/cW9Z79"><img src= "/img/loading.gif" data-lazy-src="https://z3.ax1x.com/2021/04/16/cW9Z79.png" alt="cW9Z79.png"></a></li>
+</ul>
+<h2 id="写Sql时要注意点什么"><a class="header-anchor" href="#写Sql时要注意点什么">¶</a>写Sql时要注意点什么</h2>
+<ul>
+<li>where后面的字段的值要加单引号<code>‘’</code>不然如果该字段有索引，则索引失效</li>
+<li>join连接多表(两到三个表最优)查询时，每个表设置别名，字段也用别名.字段表示</li>
+<li>有大量重复数据的字段不适合创建索引，如性别(男，女)，是否删除(0,1)这类型字段。</li>
+<li>虽然索引能加快查询速度，但是建议单表最多设置5个索引，因为索引太多会影响插入和更新速度</li>
+<li>避免同时修改或删除大量数据，这样会造成cpu飙升，从而影响别人对数据库的访问</li>
+<li>删除重复索引，如果字段A和B创建了组合索引，那么就不必要单独为A再创建新的索引了（index_A_B相当于创建了A,AB索引，即最左匹配原则）。</li>
+<li>如果要插入大量数据，建议分批插入</li>
+<li>建议在where和order by涉及的列上建立组合索引</li>
+<li>连接查询相关：
+<ul>
+<li>
+<p>Inner join 只保留两张表中完全匹配的结果集</p>
+</li>
+<li>
+<p>left join 返回左表所有的行，即使在右表中没有匹配的记录。</p>
+</li>
+<li>
+<p>right join 返回右表所有的行，即使在左表中没有匹配的记录。</p>
+</li>
+</ul>
+</li>
+<li>避免在索引列上使用mysql的内置函数，如(时间类函数等)</li>
+<li>不寻底常用select *，应该要明确要查的具体字段</li>
+<li>平时开发中，可日志打印一下完整sql放到数据库客户端运行一下排错</li>
+<li>存储引擎中，
+<ul>
+<li>MyISAM支持表级锁，不支持事务和全文索引</li>
+<li>InnoDB支持行级锁、支持事务安全（ACID兼容）、支持外键</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot整合ElastitcSearch中文分词</title>
     <url>/2021/03/14/es/SpringBoot%E6%95%B4%E5%90%88ElastitcSearch%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D/</url>
     <content><![CDATA[<h1>ElasticSearch</h1>
@@ -976,6 +975,52 @@ docker pull java:8   # 指定java8版本</p>
       </tags>
   </entry>
   <entry>
+    <title>摊牌了！想做表情管理大师？</title>
+    <url>/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/</url>
+    <content><![CDATA[<h2 id="a-用法教程"><a class="header-anchor" href="#a-用法教程">¶</a><a>用法教程</a></h2>
+<p><strong>用MarkDown也可以添加好玩的表情，用法<code>:对应单词描述:</code></strong><br>
+⚠️⚠️⚠️<u>如果看到你博客的<code>表情不生效</code>那么就要卸载<code>hexo-renderer-marked</code>插件依赖后，再安装新的<code>hexo-renderer-markdown-it</code>和<code>markdown-it-emoji</code>插件，然后再在<code>站点配置文件末尾添加</code>以下代码</u></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Markdown-it config</span></span><br><span class="line"><span class="attr">markdown:</span></span><br><span class="line">  <span class="attr">render:</span></span><br><span class="line">    <span class="attr">html:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">xhtmlOut:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">breaks:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">linkify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">typographer:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">quotes:</span> <span class="string">&#x27;“”‘’&#x27;</span></span><br><span class="line">  <span class="attr">plugins:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-abbr</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-footnote</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-ins</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sub</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sup</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-emoji</span>  <span class="comment"># add emoji</span></span><br><span class="line">  <span class="attr">anchors:</span></span><br><span class="line">    <span class="attr">level:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">collisionSuffix:</span> <span class="string">&#x27;v&#x27;</span></span><br><span class="line">    <span class="attr">permalink:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">permalinkClass:</span> <span class="string">header-anchor</span></span><br><span class="line">    <span class="attr">permalinkSymbol:</span> <span class="string">¶</span></span><br></pre></td></tr></table></figure>
+<h2 id="a-表情效果展示"><a class="header-anchor" href="#a-表情效果展示">¶</a><a>表情效果展示</a></h2>
+<ul>
+<li>数字系列：1️⃣   2️⃣ 3️⃣ 4️⃣</li>
+<li>水果系列：🍎 🍐 🍉 🍊 🍌 🍋 🍑 🍓 🍇 🍍 🍒</li>
+<li>动物系列：🐶 🐱 🐷 🐯 🐻 🐦 🦁 🦌 🐒 🐺 🐴 🐮 🐭 🐟 🐛 🕷</li>
+<li>植物系列：🌹 🌿 🍄 🍅 🥔 🥕</li>
+<li>球类：🏈 🏀 ⚾️</li>
+<li>其它系列：🚲 👨 👩 ❤️ 😢 🔥 👦 👧 🐷 📱 ☎️ 🚗 ⛵️ 📖 📓 💻 👪 🏫 🏥 🔔 ⚠️ 🖊</li>
+</ul>
+<h2 id="a-表情对照单词如下"><a class="header-anchor" href="#a-表情对照单词如下">¶</a><a>表情对照单词如下</a></h2>
+<ul>
+<li>实力不允许我写出更多的单词😢</li>
+</ul>
+<blockquote>
+<p>数字系列：“one”   “two” “three” “four”</p>
+</blockquote>
+<blockquote>
+<p>水果系列：“apple” “pear” “watermelon” “orange” “banana” “lemon” “peach” “strawberry” “grapes” “pineapple” “cherries”</p>
+</blockquote>
+<blockquote>
+<p>动物系列：“dog” “cat” “pig” “tiger” “bear” “bird” “lion” “deer” “monkey” “wolf” “horse” “cow” “mouse” “fish” “bug” “spider”</p>
+</blockquote>
+<blockquote>
+<p>植物系列：“rose” “herb” “mushroom” “tomato” “potato” “carrot”</p>
+</blockquote>
+<blockquote>
+<p>球类：“football” “basketball” “baseball”</p>
+</blockquote>
+<blockquote>
+<p>其它系列：“bike” “man” “woman” “heart” “cry” “fire” “boy” “girl” “pig” “iphone” “phone” “car” “boat” “book” “notebook” “computer” “family” “school” “hospital” “bell” “warning” “pen”</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>表情管理</category>
+      </categories>
+      <tags>
+        <tag>emoji</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JAVA判断某天是周几</title>
     <url>/2020/07/31/java/JAVA%E5%88%A4%E6%96%AD%E6%9F%90%E5%A4%A9%E6%98%AF%E5%91%A8%E5%87%A0/</url>
     <content><![CDATA[<span id="more"></span>
@@ -1007,89 +1052,6 @@ docker pull java:8   # 指定java8版本</p>
 ]]></content>
       <categories>
         <category>日期加30天 Calendar类计算日期</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java开发规范总结</title>
-    <url>/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1>Java开发规范总结</h1>
-<h2 id="一些命名和定义规范"><a class="header-anchor" href="#一些命名和定义规范">¶</a>一些命名和定义规范</h2>
-<ul>
-<li>类名使用 UpperCamelCase 风格(单词首字母大写)，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO</li>
-<li>方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格(第一个单词小写，后面的都大写)</li>
-<li>常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。</li>
-<li>抽象类User命名AbstractUser，异常类UserException，测试类UserTest</li>
-<li>实体类Boolean类型的属性命名都不要加 is，例如Boolean isDeleted不推荐</li>
-<li>包名统一使用小写，com.公司名.项目名.模块名…或者cn.公司名.项目名.模块名…</li>
-<li>Long 初始赋值时，必须使用大写的 L，不能是小写的 l，小写容易跟数字 1 混淆，造成误解。正例：Long a=10000L</li>
-</ul>
-<h2 id="代码格式相关"><a class="header-anchor" href="#代码格式相关">¶</a>代码格式相关</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 例1</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">    <span class="comment">// 缩进 4 个空格 </span></span><br><span class="line">    String say = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="comment">// 运算符的左右必须有一个空格 </span></span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line">    <span class="comment">// 关键词 if 与括号之间必须有一个空格，括号内的 f 与左括号，0 与右括号不需要空格 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">       System.out.println(say); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 左大括号前加空格且不换行；左大括号后换行 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">1</span>) &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;world&quot;</span>); </span><br><span class="line">        <span class="comment">// 右大括号前换行，右大括号后有 else，不用换行 </span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">       <span class="comment">// 在右大括号后直接结束，则必须换行 </span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-<ul>
-<li>Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例： </span></span><br><span class="line">  <span class="string">&quot;test&quot;</span>.equals(object); </span><br><span class="line"><span class="comment">// 反例： </span></span><br><span class="line">  object.equals(<span class="string">&quot;test&quot;</span>); </span><br><span class="line"><span class="comment">// 说明：推荐使用 java.util.Objects#equals （JDK7 引入的工具类）</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>单行字符数限制不超过 120 个，超出需要换行，第二行相对第一行缩进 4 个空格，从第三行开始，不再继续缩进</li>
-<li>方法参数在定义和传入时，多个参数逗号后边必须加空格。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例：下例中实参的&quot;a&quot;,后边必须要有一个空格。 </span></span><br><span class="line">    method(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>类的静态变量或静态方法直接使用类名.来访问</li>
-<li>如果不允许外部直接通过 new 来创建对象，那么构造方法必须是 private。</li>
-<li>工具类不允许有 public 或 default <font color="#FF0000">构造方法</font></li>
-<li>工具类的方法常多用static修饰，使用的时候直接类名.方法（）</li>
-<li>工具类常量定义和普通类常量定义一样，都用public static final 修饰</li>
-<li>在一个 switch 块内，每个 case 要么通过 break/return 等来终止，要么注释说明程 序将继续执行到哪一个 case 为止；在一个 switch 块内，都必须包含一个 default 语句并且 放在最后，即使它什么代码也没有</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> value1:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> value2:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在 if/else/for/while/do 语句中必须使用大括号。即使只有一行代码，<font color="#ff0000">避免使用 单行的形式</font>：if (condition) statements;</li>
-<li>表达异常的分支时，少用 if-else 方式，这种方式可以改写成：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 接着写 else 的业务逻辑代码;</span></span><br></pre></td></tr></table></figure>
-<p>如果非得使用 if()…else if()…else…方式表达逻辑，【强制】避免后续代码维 护困难，请勿超过 3 层。 正例：逻辑上超过 3 层的 if-else 代码可以使用卫语句，或者状态模式来实现。卫语句示例 如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">today</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isBusy()) &#123;</span><br><span class="line">        System.out.println(“change time.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isFree()) &#123;</span><br><span class="line">        System.out.println(“go to travel.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(“stay at home to learn Alibaba Java Coding Guideline.”);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果if的判断条件表达式很长，应该将复杂逻辑判断的结果赋值给一个有意义的布尔变量名，以提高可读性</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">boolean</span> existed = (file.open(fileName, <span class="string">&quot;w&quot;</span>) != <span class="keyword">null</span>) &amp;&amp; (...) || (...);</span><br><span class="line"><span class="keyword">if</span> (existed) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>不建议在循环中定义对象、变量、 获取数据库连接，以及进行不必要的 try-catch 操作，条件允许下尽可能在循环体外进行，不然会影响代码性能</li>
-</ul>
-<h2 id="注释相关"><a class="header-anchor" href="#注释相关">¶</a>注释相关</h2>
-<ul>
-<li>类、类属性、类方法的注释必须使用 Javadoc 规范，使用/*<em>内容</em>/格式，不得使用 //xxx 方式。因为Javadoc格式鼠标移动会提示。//xxx格式却不能</li>
-<li>所有的枚举类型字段必须要有注释，说明每个数据项的用途。</li>
-<li>项目中注释掉的代码。说明：代码被注释掉有两种可能性：<br>
-1）后续会恢复此段代码逻辑。<br>
-2）如果永久不用。则删除（不用怕，代码仓库保存了历史代码）。</li>
-</ul>
-<h2 id="其它"><a class="header-anchor" href="#其它">¶</a>其它</h2>
-<ul>
-<li>正则表达式不要在方法体内定义</li>
-</ul>
-<h1>MySQL相关</h1>
-<ul>
-<li>表达是与否概念的字段，必须使用 is_xxx 的方式命名，数据类型是 unsigned tinyint。<br>
-例子：表达逻辑删除的字段名 is_deleted，1 表示删除，0 表示未删除。</li>
-<li>表名、字段名必须使用小写字母或数字。例子：getter_admin，task_config，level3_name</li>
-<li>主键索引名为 pk_字段名；唯一索引名为 uk_字段名；普通索引名则为 idx_字段名</li>
-<li>小数类型为 decimal，禁止使用 float 和 double（精度会丢失）</li>
-<li>char 类型的存放固定长度的数据  如：身份证号(18） 手机号电话号(11)  性别(1)等等，如果存储的数据的大小比定义时的小，会自动补全。存储固定的长度</li>
-<li>varchar类型长度可变。</li>
-<li>in 操作能避免则避免，若实在避免不了，需要仔细评估 in 后边的集合元素数量，控 制在 1000 个之内。</li>
-<li>TRUNCATE TABLE 比 DELETE 速度快，TRUNCATE 无事务且不触发 trigger，有可能造成事故，故不建议在开发代码中使用此语句。TRUNCATE TABLE 在功能上与不带 WHERE 子句的 DELETE 语句相同。</li>
-<li>在表查询中，一律不要使用 * 作为查询的字段列表，需要哪些字段必须明确写明。</li>
-</ul>
-<hr>
-<p>摘录自某阿里巴巴开发手册，哪个版本的忘记了🐷。</p>
-]]></content>
-      <categories>
-        <category>规范</category>
       </categories>
       <tags>
         <tag>java</tag>
@@ -1191,6 +1153,89 @@ JVM是Java语言跨平台（这里的“平台”是指不同的操作系统）�
       </categories>
       <tags>
         <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java开发规范总结</title>
+    <url>/2021/02/06/java/java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1>Java开发规范总结</h1>
+<h2 id="一些命名和定义规范"><a class="header-anchor" href="#一些命名和定义规范">¶</a>一些命名和定义规范</h2>
+<ul>
+<li>类名使用 UpperCamelCase 风格(单词首字母大写)，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO</li>
+<li>方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风格(第一个单词小写，后面的都大写)</li>
+<li>常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。</li>
+<li>抽象类User命名AbstractUser，异常类UserException，测试类UserTest</li>
+<li>实体类Boolean类型的属性命名都不要加 is，例如Boolean isDeleted不推荐</li>
+<li>包名统一使用小写，com.公司名.项目名.模块名…或者cn.公司名.项目名.模块名…</li>
+<li>Long 初始赋值时，必须使用大写的 L，不能是小写的 l，小写容易跟数字 1 混淆，造成误解。正例：Long a=10000L</li>
+</ul>
+<h2 id="代码格式相关"><a class="header-anchor" href="#代码格式相关">¶</a>代码格式相关</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 例1</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">    <span class="comment">// 缩进 4 个空格 </span></span><br><span class="line">    String say = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="comment">// 运算符的左右必须有一个空格 </span></span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line">    <span class="comment">// 关键词 if 与括号之间必须有一个空格，括号内的 f 与左括号，0 与右括号不需要空格 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">       System.out.println(say); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 左大括号前加空格且不换行；左大括号后换行 </span></span><br><span class="line">    <span class="keyword">if</span> (flag == <span class="number">1</span>) &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;world&quot;</span>); </span><br><span class="line">        <span class="comment">// 右大括号前换行，右大括号后有 else，不用换行 </span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">       System.out.println(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">       <span class="comment">// 在右大括号后直接结束，则必须换行 </span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<ul>
+<li>Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例： </span></span><br><span class="line">  <span class="string">&quot;test&quot;</span>.equals(object); </span><br><span class="line"><span class="comment">// 反例： </span></span><br><span class="line">  object.equals(<span class="string">&quot;test&quot;</span>); </span><br><span class="line"><span class="comment">// 说明：推荐使用 java.util.Objects#equals （JDK7 引入的工具类）</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>单行字符数限制不超过 120 个，超出需要换行，第二行相对第一行缩进 4 个空格，从第三行开始，不再继续缩进</li>
+<li>方法参数在定义和传入时，多个参数逗号后边必须加空格。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正例：下例中实参的&quot;a&quot;,后边必须要有一个空格。 </span></span><br><span class="line">    method(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类的静态变量或静态方法直接使用类名.来访问</li>
+<li>如果不允许外部直接通过 new 来创建对象，那么构造方法必须是 private。</li>
+<li>工具类不允许有 public 或 default <font color="#FF0000">构造方法</font></li>
+<li>工具类的方法常多用static修饰，使用的时候直接类名.方法（）</li>
+<li>工具类常量定义和普通类常量定义一样，都用public static final 修饰</li>
+<li>在一个 switch 块内，每个 case 要么通过 break/return 等来终止，要么注释说明程 序将继续执行到哪一个 case 为止；在一个 switch 块内，都必须包含一个 default 语句并且 放在最后，即使它什么代码也没有</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> value1:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> value2:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;do something&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 if/else/for/while/do 语句中必须使用大括号。即使只有一行代码，<font color="#ff0000">避免使用 单行的形式</font>：if (condition) statements;</li>
+<li>表达异常的分支时，少用 if-else 方式，这种方式可以改写成：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// 接着写 else 的业务逻辑代码;</span></span><br></pre></td></tr></table></figure>
+<p>如果非得使用 if()…else if()…else…方式表达逻辑，【强制】避免后续代码维 护困难，请勿超过 3 层。 正例：逻辑上超过 3 层的 if-else 代码可以使用卫语句，或者状态模式来实现。卫语句示例 如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">today</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isBusy()) &#123;</span><br><span class="line">        System.out.println(“change time.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isFree()) &#123;</span><br><span class="line">        System.out.println(“go to travel.”);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(“stay at home to learn Alibaba Java Coding Guideline.”);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果if的判断条件表达式很长，应该将复杂逻辑判断的结果赋值给一个有意义的布尔变量名，以提高可读性</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">boolean</span> existed = (file.open(fileName, <span class="string">&quot;w&quot;</span>) != <span class="keyword">null</span>) &amp;&amp; (...) || (...);</span><br><span class="line"><span class="keyword">if</span> (existed) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不建议在循环中定义对象、变量、 获取数据库连接，以及进行不必要的 try-catch 操作，条件允许下尽可能在循环体外进行，不然会影响代码性能</li>
+</ul>
+<h2 id="注释相关"><a class="header-anchor" href="#注释相关">¶</a>注释相关</h2>
+<ul>
+<li>类、类属性、类方法的注释必须使用 Javadoc 规范，使用/*<em>内容</em>/格式，不得使用 //xxx 方式。因为Javadoc格式鼠标移动会提示。//xxx格式却不能</li>
+<li>所有的枚举类型字段必须要有注释，说明每个数据项的用途。</li>
+<li>项目中注释掉的代码。说明：代码被注释掉有两种可能性：<br>
+1）后续会恢复此段代码逻辑。<br>
+2）如果永久不用。则删除（不用怕，代码仓库保存了历史代码）。</li>
+</ul>
+<h2 id="其它"><a class="header-anchor" href="#其它">¶</a>其它</h2>
+<ul>
+<li>正则表达式不要在方法体内定义</li>
+</ul>
+<h1>MySQL相关</h1>
+<ul>
+<li>表达是与否概念的字段，必须使用 is_xxx 的方式命名，数据类型是 unsigned tinyint。<br>
+例子：表达逻辑删除的字段名 is_deleted，1 表示删除，0 表示未删除。</li>
+<li>表名、字段名必须使用小写字母或数字。例子：getter_admin，task_config，level3_name</li>
+<li>主键索引名为 pk_字段名；唯一索引名为 uk_字段名；普通索引名则为 idx_字段名</li>
+<li>小数类型为 decimal，禁止使用 float 和 double（精度会丢失）</li>
+<li>char 类型的存放固定长度的数据  如：身份证号(18） 手机号电话号(11)  性别(1)等等，如果存储的数据的大小比定义时的小，会自动补全。存储固定的长度</li>
+<li>varchar类型长度可变。</li>
+<li>in 操作能避免则避免，若实在避免不了，需要仔细评估 in 后边的集合元素数量，控 制在 1000 个之内。</li>
+<li>TRUNCATE TABLE 比 DELETE 速度快，TRUNCATE 无事务且不触发 trigger，有可能造成事故，故不建议在开发代码中使用此语句。TRUNCATE TABLE 在功能上与不带 WHERE 子句的 DELETE 语句相同。</li>
+<li>在表查询中，一律不要使用 * 作为查询的字段列表，需要哪些字段必须明确写明。</li>
+</ul>
+<hr>
+<p>摘录自某阿里巴巴开发手册，哪个版本的忘记了🐷。</p>
+]]></content>
+      <categories>
+        <category>规范</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -1684,91 +1729,6 @@ JVM是Java语言跨平台（这里的“平台”是指不同的操作系统）�
       </tags>
   </entry>
   <entry>
-    <title>摊牌了！想做表情管理大师？</title>
-    <url>/2021/04/15/%E5%85%B6%E5%AE%83/%E6%91%8A%E7%89%8C%E4%BA%86%EF%BC%81%E6%83%B3%E5%81%9A%E8%A1%A8%E6%83%85%E7%AE%A1%E7%90%86%E5%A4%A7%E5%B8%88%EF%BC%9F/</url>
-    <content><![CDATA[<h2 id="a-用法教程"><a class="header-anchor" href="#a-用法教程">¶</a><a>用法教程</a></h2>
-<p><strong>用MarkDown也可以添加好玩的表情，用法<code>:对应单词描述:</code></strong><br>
-⚠️⚠️⚠️<u>如果看到你博客的<code>表情不生效</code>那么就要卸载<code>hexo-renderer-marked</code>插件依赖后，再安装新的<code>hexo-renderer-markdown-it</code>和<code>markdown-it-emoji</code>插件，然后再在<code>站点配置文件末尾添加</code>以下代码</u></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Markdown-it config</span></span><br><span class="line"><span class="attr">markdown:</span></span><br><span class="line">  <span class="attr">render:</span></span><br><span class="line">    <span class="attr">html:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">xhtmlOut:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">breaks:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">linkify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">typographer:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">quotes:</span> <span class="string">&#x27;“”‘’&#x27;</span></span><br><span class="line">  <span class="attr">plugins:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-abbr</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-footnote</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-ins</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sub</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sup</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-emoji</span>  <span class="comment"># add emoji</span></span><br><span class="line">  <span class="attr">anchors:</span></span><br><span class="line">    <span class="attr">level:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">collisionSuffix:</span> <span class="string">&#x27;v&#x27;</span></span><br><span class="line">    <span class="attr">permalink:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">permalinkClass:</span> <span class="string">header-anchor</span></span><br><span class="line">    <span class="attr">permalinkSymbol:</span> <span class="string">¶</span></span><br></pre></td></tr></table></figure>
-<h2 id="a-表情效果展示"><a class="header-anchor" href="#a-表情效果展示">¶</a><a>表情效果展示</a></h2>
-<ul>
-<li>数字系列：1️⃣   2️⃣ 3️⃣ 4️⃣</li>
-<li>水果系列：🍎 🍐 🍉 🍊 🍌 🍋 🍑 🍓 🍇 🍍 🍒</li>
-<li>动物系列：🐶 🐱 🐷 🐯 🐻 🐦 🦁 🦌 🐒 🐺 🐴 🐮 🐭 🐟 🐛 🕷</li>
-<li>植物系列：🌹 🌿 🍄 🍅 🥔 🥕</li>
-<li>球类：🏈 🏀 ⚾️</li>
-<li>其它系列：🚲 👨 👩 ❤️ 😢 🔥 👦 👧 🐷 📱 ☎️ 🚗 ⛵️ 📖 📓 💻 👪 🏫 🏥 🔔 ⚠️ 🖊</li>
-</ul>
-<h2 id="a-表情对照单词如下"><a class="header-anchor" href="#a-表情对照单词如下">¶</a><a>表情对照单词如下</a></h2>
-<ul>
-<li>实力不允许我写出更多的单词😢</li>
-</ul>
-<blockquote>
-<p>数字系列：“one”   “two” “three” “four”</p>
-</blockquote>
-<blockquote>
-<p>水果系列：“apple” “pear” “watermelon” “orange” “banana” “lemon” “peach” “strawberry” “grapes” “pineapple” “cherries”</p>
-</blockquote>
-<blockquote>
-<p>动物系列：“dog” “cat” “pig” “tiger” “bear” “bird” “lion” “deer” “monkey” “wolf” “horse” “cow” “mouse” “fish” “bug” “spider”</p>
-</blockquote>
-<blockquote>
-<p>植物系列：“rose” “herb” “mushroom” “tomato” “potato” “carrot”</p>
-</blockquote>
-<blockquote>
-<p>球类：“football” “basketball” “baseball”</p>
-</blockquote>
-<blockquote>
-<p>其它系列：“bike” “man” “woman” “heart” “cry” “fire” “boy” “girl” “pig” “iphone” “phone” “car” “boat” “book” “notebook” “computer” “family” “school” “hospital” “bell” “warning” “pen”</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>表情管理</category>
-      </categories>
-      <tags>
-        <tag>emoji</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript中Array的一些常用方法和操作</title>
-    <url>/2020/12/01/%E5%89%8D%E7%AB%AF/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<span id="more"></span>
-<h1>JavaScript中Array的一些常用方法和操作</h1>
-<p>JavaScript的 Array 对象是用于构造数组的全局对象，数组是类似于列表的高阶对象</p>
-<h2 id="示例"><a class="header-anchor" href="#示例">¶</a>示例</h2>
-<h3 id="数组创建"><a class="header-anchor" href="#数组创建">¶</a>数组创建</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组创建</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">&#x27;Apple&#x27;</span>, <span class="string">&#x27;Banana&#x27;</span>];</span><br></pre></td></tr></table></figure>
-<h3 id="数组长度"><a class="header-anchor" href="#数组长度">¶</a>数组长度</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组长度</span></span><br><span class="line"><span class="keyword">var</span> length=array.length();   <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组取值"><a class="header-anchor" href="#数组取值">¶</a>数组取值</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1、通过数组下标取值</span></span><br><span class="line"><span class="keyword">var</span> first = array[<span class="number">0</span>];   <span class="comment">//Apple</span></span><br><span class="line"><span class="comment">//2、for循环也可以取到想要的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> array)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;下标&quot;</span>+index)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;值&quot;</span>+array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="添加数据"><a class="header-anchor" href="#添加数据">¶</a>添加数据</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//向数组中添加数据(可在for循环中连续添加数据)</span></span><br><span class="line">array.push(obj)  <span class="comment">//obj为插入对象或者数据</span></span><br></pre></td></tr></table></figure>
-<h3 id="判断数据在数组中对下标"><a class="header-anchor" href="#判断数据在数组中对下标">¶</a>判断数据在数组中对下标</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//某个数据在数组中对下标</span></span><br><span class="line">array.indexOf(<span class="string">&#x27;Apple&#x27;</span>);  <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
-<h3 id="替换数组对应下标的数据"><a class="header-anchor" href="#替换数组对应下标的数据">¶</a>替换数组对应下标的数据</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//替换数组对应下标的元素，index为你要替换的下标位置，replaceData为替换数据。</span></span><br><span class="line">array.splice(index,<span class="number">1</span>,replaceData)</span><br></pre></td></tr></table></figure>
-<h3 id="数组连接或者合并"><a class="header-anchor" href="#数组连接或者合并">¶</a>数组连接或者合并</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并两个或多个数组(可为空数组)。此方法不会更改现有数组，而是返回一个新数组。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];   <span class="comment">//可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array2 = [<span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>];		<span class="comment">//也可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array3 = array1.concat(array2);  <span class="comment">//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span></span><br></pre></td></tr></table></figure>
-<h3 id="查找满足条件的第一个值"><a class="header-anchor" href="#查找满足条件的第一个值">¶</a>查找满足条件的第一个值</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回数组中满足条件的第一个元素的值。否则返回 undefined。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"><span class="keyword">const</span> found = array1.find(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">10</span>);  <span class="comment">//从左到右，大于10的第一个数是12。</span></span><br><span class="line"><span class="built_in">console</span>.log(found);  <span class="comment">//所以输出12</span></span><br></pre></td></tr></table></figure>
-<h3 id="判断数组是否包含某个值"><a class="header-anchor" href="#判断数组是否包含某个值">¶</a>判断数组是否包含某个值</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否包含某个值</span></span><br><span class="line"><span class="keyword">const</span> pets = [<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">&#x27;cat&#x27;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组转字符串，元素拼接成字符串"><a class="header-anchor" href="#数组转字符串，元素拼接成字符串">¶</a>数组转字符串，元素拼接成字符串</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组转字符串，元素拼接成字符串</span></span><br><span class="line"><span class="keyword">const</span> elements = [<span class="string">&#x27;Fire&#x27;</span>, <span class="string">&#x27;Air&#x27;</span>, <span class="string">&#x27;Water&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(elements.join());  <span class="comment">//&quot;Fire,Air,Water&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;&#x27;</span>)); <span class="comment">//&quot;FireAirWater&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;-&#x27;</span>)); <span class="comment">//&quot;Fire-Air-Water&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="数组倒置与排序"><a class="header-anchor" href="#数组倒置与排序">¶</a>数组倒置与排序</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组倒置</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(array1.reverse()) <span class="comment">//[&quot;3&quot;, &quot;2&quot;, &quot;1&quot;]</span></span><br><span class="line"><span class="comment">//数组排序方法1</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(numbers); <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">//数组排序方法2</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]; </span><br><span class="line">numbers.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b); </span><br><span class="line"><span class="built_in">console</span>.log(numbers);  <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
-<h3 id="清空数组"><a class="header-anchor" href="#清空数组">¶</a>清空数组</h3>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line">array1= [];</span><br><span class="line"><span class="comment">//方法2 </span></span><br><span class="line">array2.splice(<span class="number">0</span>,array2.length);  </span><br><span class="line"><span class="comment">//方法3</span></span><br><span class="line">array3.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript Array</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript开发常用</title>
     <url>/2021/07/13/%E5%89%8D%E7%AB%AF/JavaScript%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h1>String 对象</h1>
@@ -1967,29 +1927,6 @@ JVM是Java语言跨平台（这里的“平台”是指不同的操作系统）�
       </tags>
   </entry>
   <entry>
-    <title>vue element子组件中调用父组件数据</title>
-    <url>/2020/07/03/%E5%89%8D%E7%AB%AF/vue%20element%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%B0%83%E7%94%A8%E7%88%B6%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<span id="more"></span>
-<h2 id="vue-element子组件中调用父组件数据"><a class="header-anchor" href="#vue-element子组件中调用父组件数据">¶</a>vue element子组件中调用父组件数据</h2>
-<p>看图吧。我是一个沉默寡言的代码编辑者。图中描述的应该算是比较详细的了。<br>
-图一：一个是小头爸爸，一个是大头儿子<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913278.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图一：一个是小头爸爸，一个是大头儿子"><br>
-图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913253.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’"><br>
-图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)"><br>
-图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。<br>
-<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913195.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。"><br>
-好了，完成。拿到数据你就可以随便用了。</p>
-]]></content>
-      <categories>
-        <category>子组件调用父组件数据 父子组件之前通信</category>
-      </categories>
-      <tags>
-        <tag>vue javascript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端js排序</title>
     <url>/2020/07/13/%E5%89%8D%E7%AB%AF/%E5%89%8D%E7%AB%AFjs%E6%8E%92%E5%BA%8F/</url>
     <content><![CDATA[<span id="more"></span>
@@ -2005,6 +1942,45 @@ JVM是Java语言跨平台（这里的“平台”是指不同的操作系统）�
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript中Array的一些常用方法和操作</title>
+    <url>/2020/12/01/%E5%89%8D%E7%AB%AF/JavaScript%E4%B8%ADArray%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%92%8C%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1>JavaScript中Array的一些常用方法和操作</h1>
+<p>JavaScript的 Array 对象是用于构造数组的全局对象，数组是类似于列表的高阶对象</p>
+<h2 id="示例"><a class="header-anchor" href="#示例">¶</a>示例</h2>
+<h3 id="数组创建"><a class="header-anchor" href="#数组创建">¶</a>数组创建</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组创建</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="string">&#x27;Apple&#x27;</span>, <span class="string">&#x27;Banana&#x27;</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="数组长度"><a class="header-anchor" href="#数组长度">¶</a>数组长度</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组长度</span></span><br><span class="line"><span class="keyword">var</span> length=array.length();   <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组取值"><a class="header-anchor" href="#数组取值">¶</a>数组取值</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1、通过数组下标取值</span></span><br><span class="line"><span class="keyword">var</span> first = array[<span class="number">0</span>];   <span class="comment">//Apple</span></span><br><span class="line"><span class="comment">//2、for循环也可以取到想要的值</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> array)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;下标&quot;</span>+index)</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&quot;值&quot;</span>+array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加数据"><a class="header-anchor" href="#添加数据">¶</a>添加数据</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//向数组中添加数据(可在for循环中连续添加数据)</span></span><br><span class="line">array.push(obj)  <span class="comment">//obj为插入对象或者数据</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断数据在数组中对下标"><a class="header-anchor" href="#判断数据在数组中对下标">¶</a>判断数据在数组中对下标</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//某个数据在数组中对下标</span></span><br><span class="line">array.indexOf(<span class="string">&#x27;Apple&#x27;</span>);  <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+<h3 id="替换数组对应下标的数据"><a class="header-anchor" href="#替换数组对应下标的数据">¶</a>替换数组对应下标的数据</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//替换数组对应下标的元素，index为你要替换的下标位置，replaceData为替换数据。</span></span><br><span class="line">array.splice(index,<span class="number">1</span>,replaceData)</span><br></pre></td></tr></table></figure>
+<h3 id="数组连接或者合并"><a class="header-anchor" href="#数组连接或者合并">¶</a>数组连接或者合并</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并两个或多个数组(可为空数组)。此方法不会更改现有数组，而是返回一个新数组。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];   <span class="comment">//可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array2 = [<span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span>];		<span class="comment">//也可为空数组</span></span><br><span class="line"><span class="keyword">const</span> array3 = array1.concat(array2);  <span class="comment">//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="查找满足条件的第一个值"><a class="header-anchor" href="#查找满足条件的第一个值">¶</a>查找满足条件的第一个值</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回数组中满足条件的第一个元素的值。否则返回 undefined。</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"><span class="keyword">const</span> found = array1.find(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">10</span>);  <span class="comment">//从左到右，大于10的第一个数是12。</span></span><br><span class="line"><span class="built_in">console</span>.log(found);  <span class="comment">//所以输出12</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断数组是否包含某个值"><a class="header-anchor" href="#判断数组是否包含某个值">¶</a>判断数组是否包含某个值</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断数组是否包含某个值</span></span><br><span class="line"><span class="keyword">const</span> pets = [<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">&#x27;cat&#x27;</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组转字符串，元素拼接成字符串"><a class="header-anchor" href="#数组转字符串，元素拼接成字符串">¶</a>数组转字符串，元素拼接成字符串</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组转字符串，元素拼接成字符串</span></span><br><span class="line"><span class="keyword">const</span> elements = [<span class="string">&#x27;Fire&#x27;</span>, <span class="string">&#x27;Air&#x27;</span>, <span class="string">&#x27;Water&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(elements.join());  <span class="comment">//&quot;Fire,Air,Water&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;&#x27;</span>)); <span class="comment">//&quot;FireAirWater&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">&#x27;-&#x27;</span>)); <span class="comment">//&quot;Fire-Air-Water&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组倒置与排序"><a class="header-anchor" href="#数组倒置与排序">¶</a>数组倒置与排序</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//数组倒置</span></span><br><span class="line"><span class="keyword">const</span> array1 = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(array1.reverse()) <span class="comment">//[&quot;3&quot;, &quot;2&quot;, &quot;1&quot;]</span></span><br><span class="line"><span class="comment">//数组排序方法1</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(numbers); <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="comment">//数组排序方法2</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]; </span><br><span class="line">numbers.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b); </span><br><span class="line"><span class="built_in">console</span>.log(numbers);  <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+<h3 id="清空数组"><a class="header-anchor" href="#清空数组">¶</a>清空数组</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line">array1= [];</span><br><span class="line"><span class="comment">//方法2 </span></span><br><span class="line">array2.splice(<span class="number">0</span>,array2.length);  </span><br><span class="line"><span class="comment">//方法3</span></span><br><span class="line">array3.length = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript Array</tag>
       </tags>
   </entry>
   <entry>
@@ -2082,6 +2058,29 @@ PS：input-value-border是子组件中的class样式名，而不是组件名。<
       </categories>
       <tags>
         <tag>css</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue element子组件中调用父组件数据</title>
+    <url>/2020/07/03/%E5%89%8D%E7%AB%AF/vue%20element%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%B0%83%E7%94%A8%E7%88%B6%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<span id="more"></span>
+<h2 id="vue-element子组件中调用父组件数据"><a class="header-anchor" href="#vue-element子组件中调用父组件数据">¶</a>vue element子组件中调用父组件数据</h2>
+<p>看图吧。我是一个沉默寡言的代码编辑者。图中描述的应该算是比较详细的了。<br>
+图一：一个是小头爸爸，一个是大头儿子<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913278.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图一：一个是小头爸爸，一个是大头儿子"><br>
+图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913253.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图二：爸爸给儿子取了一个好听的名字叫‘my-economy-info’"><br>
+图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913240.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图三：爸爸给儿子穿了两件衣服，data和task,(俗称绑定数据)"><br>
+图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。<br>
+<img src= "/img/loading.gif" data-lazy-src="https://img-blog.csdnimg.cn/20200703161913195.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIxNjkyMDIx,size_16,color_FFFFFF,t_70" alt="图四：儿子用props接收来自爸爸的爱意data和task,其中，casedata这件衣服没有作用，里面没有数据，因为爸爸没有给它。"><br>
+好了，完成。拿到数据你就可以随便用了。</p>
+]]></content>
+      <categories>
+        <category>子组件调用父组件数据 父子组件之前通信</category>
+      </categories>
+      <tags>
+        <tag>vue javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -2515,36 +2514,22 @@ Ps；如有不明白，请看<a href="http://www.macrozheng.com/#/architect/mall
       </tags>
   </entry>
   <entry>
-    <title>SpringBoot项目整合Swagger-UI接口文档</title>
-    <url>/2020/11/01/%E6%95%B4%E5%90%88/SpringBoot%E6%95%B4%E5%90%88Swagger-UI%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
+    <title>Ping测试两个IP网络之间的连通性</title>
+    <url>/2020/09/27/%E7%BD%91%E7%BB%9C/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
     <content><![CDATA[<span id="more"></span>
-<h1>SpringBoot整合Swagger-UI接口文档</h1>
-<h2 id="Swagger-UI好处"><a class="header-anchor" href="#Swagger-UI好处">¶</a>Swagger-UI好处</h2>
-<p>Swagger-UI   一个好看又好用的项目接口文档，可以动态地根据注解生成在线API文档。==也就是说和你代码的Controller层的接口方法对应，支持在线接口测试，不依赖第三方工具==</p>
-<h2 id="Swagger-UI常用注解介绍"><a class="header-anchor" href="#Swagger-UI常用注解介绍">¶</a>Swagger-UI常用注解介绍</h2>
-<p>==@Api==：用于修饰Controller类，生成Controller相关文档信息<br>
-==@ApiOperation==：用于修饰Controller类中的方法，生成接口方法相关文档信息<br>
-==@ApiParam==：用于修饰接口中的参数，生成接口参数相关文档信息<br>
-==@ApiModelProperty==：用于修饰实体类的属性，当实体类是请求参数或返回结果时，直接生成相关文档信息</p>
-<h2 id="整合步骤"><a class="header-anchor" href="#整合步骤">¶</a>整合步骤</h2>
-<h3 id="1、maven中添加依赖"><a class="header-anchor" href="#1、maven中添加依赖">¶</a>1、maven中添加依赖</h3>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;!--Swagger-UI API文档生产工具--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;<span class="number">2.7</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;<span class="number">2.7</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2、项目中添加Swagger-UI配置类"><a class="header-anchor" href="#2、项目中添加Swagger-UI配置类">¶</a>2、项目中添加Swagger-UI配置类</h3>
-<p>这里参考github上mall项目的配置类</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.macro.mall.tiny.config;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.ApiInfoBuilder;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.PathSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.RequestHandlerSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.ApiInfo;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.DocumentationType;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spring.web.plugins.Docket;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.swagger2.annotations.EnableSwagger2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Swagger2API文档的配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Swagger2Config</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">createRestApi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                <span class="comment">//为当前包下controller生成API文档</span></span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.macro.mall.tiny.controller&quot;</span>))</span><br><span class="line">                <span class="comment">//为有@Api注解的Controller生成API文档</span></span><br><span class="line">                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))</span><br><span class="line">                <span class="comment">//为有@ApiOperation注解的方法生成API文档</span></span><br><span class="line">               .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(<span class="string">&quot;SwaggerUI文档&quot;</span>)   </span><br><span class="line">                .description(<span class="string">&quot;某某某商城项目/系统后台所有接口文档&quot;</span>)</span><br><span class="line">                .contact(<span class="string">&quot;macro&quot;</span>)</span><br><span class="line">                .version(<span class="string">&quot;版本号1.0&quot;</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3、配合注解使用"><a class="header-anchor" href="#3、配合注解使用">¶</a>3、配合注解使用</h3>
-<p>在你要生成接口文档的Controller层的Class类上面添加@Api(tags = “PmsBrandController”, description = “商品品牌管理”)方法上面添加@ApiOperation(“获取所有品牌列表”)注解</p>
-<p><a href="https://imgchr.com/i/Bwdkq0"><img src= "/img/loading.gif" data-lazy-src="https://s1.ax1x.com/2020/11/01/Bwdkq0.png" alt="Bwdkq0.png"></a></p>
-<h3 id="4、查看效果"><a class="header-anchor" href="#4、查看效果">¶</a>4、查看效果</h3>
-<p>访问接口文档地址接口地址：<a href="http://localhost:8086/swagger-ui.html%E6%9F%A5%E7%9C%8B%E6%95%88%E6%9E%9C%EF%BC%8C%E6%B3%A8%E6%84%8F%E6%8D%A2%E6%88%90%E8%87%AA%E5%B7%B1%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%EF%BC%88application.yml%E4%B8%AD%E6%9F%A5%E7%9C%8B%E6%88%96%E8%80%85%E8%AE%BE%E7%BD%AEspringboot%E9%A1%B9%E7%9B%AE%E7%AB%AF%E5%8F%A3%EF%BC%89%EF%BC%8C%E6%88%91%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF8086%E7%AB%AF%E5%8F%A3">http://localhost:8086/swagger-ui.html查看效果，注意换成自己项目的端口号（application.yml中查看或者设置springboot项目端口），我这里使用的是8086端口</a></p>
-<p><a href="https://imgchr.com/i/Bwd2WQ"><img src= "/img/loading.gif" data-lazy-src="https://s1.ax1x.com/2020/11/01/Bwd2WQ.png" alt="Bwd2WQ.png"></a><br>
-参考：<a href="https://github.com/macrozheng/mall">https://github.com/macrozheng/mall</a></p>
+<h2 id="使用ping或者telnet命令"><a class="header-anchor" href="#使用ping或者telnet命令">¶</a>使用ping或者telnet命令</h2>
+<p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
+<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，<a href="http://xn--www-uc0ep96b.baidu.com">例如www.baidu.com</a>)</p>
+<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
+<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
+<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
+<p><em>好记性不如烂笔头，多记录多学习</em></p>
 ]]></content>
       <categories>
-        <category>整合</category>
+        <category>网络</category>
       </categories>
       <tags>
-        <tag>SpringBoot</tag>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2676,6 +2661,117 @@ Ps；如有不明白，请看<a href="http://www.macrozheng.com/#/architect/mall
       </categories>
       <tags>
         <tag>Aop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot项目整合Swagger-UI接口文档</title>
+    <url>/2020/11/01/%E6%95%B4%E5%90%88/SpringBoot%E6%95%B4%E5%90%88Swagger-UI%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1>SpringBoot整合Swagger-UI接口文档</h1>
+<h2 id="Swagger-UI好处"><a class="header-anchor" href="#Swagger-UI好处">¶</a>Swagger-UI好处</h2>
+<p>Swagger-UI   一个好看又好用的项目接口文档，可以动态地根据注解生成在线API文档。==也就是说和你代码的Controller层的接口方法对应，支持在线接口测试，不依赖第三方工具==</p>
+<h2 id="Swagger-UI常用注解介绍"><a class="header-anchor" href="#Swagger-UI常用注解介绍">¶</a>Swagger-UI常用注解介绍</h2>
+<p>==@Api==：用于修饰Controller类，生成Controller相关文档信息<br>
+==@ApiOperation==：用于修饰Controller类中的方法，生成接口方法相关文档信息<br>
+==@ApiParam==：用于修饰接口中的参数，生成接口参数相关文档信息<br>
+==@ApiModelProperty==：用于修饰实体类的属性，当实体类是请求参数或返回结果时，直接生成相关文档信息</p>
+<h2 id="整合步骤"><a class="header-anchor" href="#整合步骤">¶</a>整合步骤</h2>
+<h3 id="1、maven中添加依赖"><a class="header-anchor" href="#1、maven中添加依赖">¶</a>1、maven中添加依赖</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;!--Swagger-UI API文档生产工具--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;<span class="number">2.7</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;<span class="number">2.7</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2、项目中添加Swagger-UI配置类"><a class="header-anchor" href="#2、项目中添加Swagger-UI配置类">¶</a>2、项目中添加Swagger-UI配置类</h3>
+<p>这里参考github上mall项目的配置类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.macro.mall.tiny.config;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.ApiInfoBuilder;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.PathSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.RequestHandlerSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.ApiInfo;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.DocumentationType;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spring.web.plugins.Docket;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.swagger2.annotations.EnableSwagger2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Swagger2API文档的配置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Swagger2Config</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">createRestApi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                <span class="comment">//为当前包下controller生成API文档</span></span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.macro.mall.tiny.controller&quot;</span>))</span><br><span class="line">                <span class="comment">//为有@Api注解的Controller生成API文档</span></span><br><span class="line">                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))</span><br><span class="line">                <span class="comment">//为有@ApiOperation注解的方法生成API文档</span></span><br><span class="line">               .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(<span class="string">&quot;SwaggerUI文档&quot;</span>)   </span><br><span class="line">                .description(<span class="string">&quot;某某某商城项目/系统后台所有接口文档&quot;</span>)</span><br><span class="line">                .contact(<span class="string">&quot;macro&quot;</span>)</span><br><span class="line">                .version(<span class="string">&quot;版本号1.0&quot;</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3、配合注解使用"><a class="header-anchor" href="#3、配合注解使用">¶</a>3、配合注解使用</h3>
+<p>在你要生成接口文档的Controller层的Class类上面添加@Api(tags = “PmsBrandController”, description = “商品品牌管理”)方法上面添加@ApiOperation(“获取所有品牌列表”)注解</p>
+<p><a href="https://imgchr.com/i/Bwdkq0"><img src= "/img/loading.gif" data-lazy-src="https://s1.ax1x.com/2020/11/01/Bwdkq0.png" alt="Bwdkq0.png"></a></p>
+<h3 id="4、查看效果"><a class="header-anchor" href="#4、查看效果">¶</a>4、查看效果</h3>
+<p>访问接口文档地址接口地址：<a href="http://localhost:8086/swagger-ui.html%E6%9F%A5%E7%9C%8B%E6%95%88%E6%9E%9C%EF%BC%8C%E6%B3%A8%E6%84%8F%E6%8D%A2%E6%88%90%E8%87%AA%E5%B7%B1%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%EF%BC%88application.yml%E4%B8%AD%E6%9F%A5%E7%9C%8B%E6%88%96%E8%80%85%E8%AE%BE%E7%BD%AEspringboot%E9%A1%B9%E7%9B%AE%E7%AB%AF%E5%8F%A3%EF%BC%89%EF%BC%8C%E6%88%91%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF8086%E7%AB%AF%E5%8F%A3">http://localhost:8086/swagger-ui.html查看效果，注意换成自己项目的端口号（application.yml中查看或者设置springboot项目端口），我这里使用的是8086端口</a></p>
+<p><a href="https://imgchr.com/i/Bwd2WQ"><img src= "/img/loading.gif" data-lazy-src="https://s1.ax1x.com/2020/11/01/Bwd2WQ.png" alt="Bwd2WQ.png"></a><br>
+参考：<a href="https://github.com/macrozheng/mall">https://github.com/macrozheng/mall</a></p>
+]]></content>
+      <categories>
+        <category>整合</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx代理服务器</title>
+    <url>/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h2 id="Nginx是什么"><a class="header-anchor" href="#Nginx是什么">¶</a>Nginx是什么</h2>
+<ul>
+<li>一个高性能的<code>web代理服务器</code></li>
+<li>nginx占用内存少、支持高并发，最高可达 5w 个并发量</li>
+<li>开源，可用于商业用途，使用配置简单，中文社区也比较活跃</li>
+<li>支持热部署 ，在不打断用户请求的情况下更新版本(⚠️是nginx版本，不是应用版本)</li>
+</ul>
+<h2 id="正向和反向代理区别"><a class="header-anchor" href="#正向和反向代理区别">¶</a>正向和反向代理区别</h2>
+<p><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E6%AD%A3%E5%8F%8D%E4%BB%A3%E7%90%86.6y2of3fqgts0.jpg" alt="区别"></p>
+<h2 id="nginx配置文件理解"><a class="header-anchor" href="#nginx配置文件理解">¶</a>nginx配置文件理解</h2>
+<ul>
+<li>nginx默认的配置，也可以自行修改，换端口，换location的路径和index首页<br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE.3l3m5kj9x720.png" alt="默认配置"></li>
+<li>再来一张菜鸟上面的截图，很详细<br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/config.3xzdplv40rq0.jpg" alt="config"></li>
+</ul>
+<h2 id="nginx实现负载均衡的几种策略"><a class="header-anchor" href="#nginx实现负载均衡的几种策略">¶</a>nginx实现负载均衡的几种策略</h2>
+<p><em>负载均衡其实就是利用多个服务器集群，将客户端的高并发请求分发到不同的服务器来减轻压力</em></p>
+<ul>
+<li>简单的集群配置
+<ul>
+<li><strong>轮询(AB…AB…交替处理请求，相当于列表循环)</strong><br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E9%9B%86%E7%BE%A41.386v5fvlw2w0.jpg" alt="简单集群"></li>
+<li><strong>权重(weight)：</strong><br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/weight.761b1wuvit00.jpg" alt="权重"></li>
+<li><strong>IP绑定(ip_hash)</strong><br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/ip_hash.4x58fei6mxe0.jpg" alt="IP绑定"></li>
+<li><strong>服务响应时间最短(fair):</strong><br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/fair.2eh1xuxxi3fo.jpg" alt="fair"></li>
+<li><strong>当前连接最少(least_conn)</strong><br>
+<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/least_conn.5pjvq3tpbr00.jpg" alt="least_conn"></li>
+</ul>
+</li>
+</ul>
+<h2 id="session共享问题"><a class="header-anchor" href="#session共享问题">¶</a>session共享问题</h2>
+<ul>
+<li>当同一个用户第一次访问tomcat_8111 并且登录成功， 而第二次访问却被分配到了tomcat_8222， 这里并没有记录他的登陆状态，那么就会呈现未登录状态了，严重伤害了用户体验。</li>
+<li>解决办法：<code>使用ip_hash绑定策略</code></li>
+<li></li>
+</ul>
+<h2 id="高可用"><a class="header-anchor" href="#高可用">¶</a>高可用</h2>
+<h3 id="反向代理服务器高可用"><a class="header-anchor" href="#反向代理服务器高可用">¶</a>反向代理服务器高可用</h3>
+<ol>
+<li>当某一台服务器出现问题了，变成了down状态，我们要选择第二台服务器，所以我们在<code>location节点</code>下添加<code>proxy_connect_timeout 1</code>，目的是在连接超过1秒后(防止请求握手服务器失败后处于一直等待状态)，请求自动轮询到下一台没有宕机的服务器去。</li>
+</ol>
+<h3 id="nginx高可用"><a class="header-anchor" href="#nginx高可用">¶</a>nginx高可用</h3>
+<ol>
+<li>使用keepalived来设置主从nginx，防止nginx宕机事故的发生，nginx宕机后启动第二个nginx<br>
+<a href="https://www.cnblogs.com/920913cheng/p/10484786.html">教程参考</a></li>
+</ol>
+<h2 id="nginx解决跨域"><a class="header-anchor" href="#nginx解决跨域">¶</a>nginx解决跨域</h2>
+<ul>
+<li>解决办法：在相对应的<code>location节点</code>中添加以下内容</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Origin</span> <span class="string">*;</span></span><br><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Methods</span> <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span><span class="string">;</span></span><br><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Headers</span> <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&#x27;</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line"><span class="string">if</span> <span class="string">($request_method</span> <span class="string">=</span> <span class="string">&#x27;OPTIONS&#x27;</span><span class="string">)</span> &#123;</span><br><span class="line">    <span class="string">return</span> <span class="number">204</span><span class="string">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="nginx开启https协议"><a class="header-anchor" href="#nginx开启https协议">¶</a>nginx开启https协议</h2>
+<ul>
+<li>需要ssh证书，<a href="https://www.cnblogs.com/wl416896401/p/13903496.html">教程参考</a></li>
+</ul>
+<h2 id="nginx静态资源部署-动静分离"><a class="header-anchor" href="#nginx静态资源部署-动静分离">¶</a>nginx静态资源部署(动静分离)</h2>
+<ul>
+<li>将静态资源部署在 <code>Nginx</code> 上(即：html页面放在nginx安装目录下的html文件夹中，图片等静态资源要在配置文件中的<code>server节点中的location节点中配置</code>)</li>
+<li>动态资源请求(一般为需要查接口查数据库的资源)则利用nginx做反向代理去对应的服务器后台获取数据<br>
+<em>使用前后端动静分离后，可提升静态资源的访问速度（因为不要查后台），即使动态服务不可用，静态资源的访问也不会受到影响。</em></li>
+</ul>
+<h2 id="补充"><a class="header-anchor" href="#补充">¶</a>补充</h2>
+<p>linux系统中，http请求默认端口是80，而nginx配置文件中默认的端口也是80，所以没有改端口的情况下，访问linux的ip，默认也是80端口。</p>
+]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -2867,103 +2963,6 @@ Ps；如有不明白，请看<a href="http://www.macrozheng.com/#/architect/mall
       </categories>
       <tags>
         <tag>ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx代理服务器</title>
-    <url>/2021/05/09/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/nginx%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-    <content><![CDATA[<h2 id="Nginx是什么"><a class="header-anchor" href="#Nginx是什么">¶</a>Nginx是什么</h2>
-<ul>
-<li>一个高性能的<code>web代理服务器</code></li>
-<li>nginx占用内存少、支持高并发，最高可达 5w 个并发量</li>
-<li>开源，可用于商业用途，使用配置简单，中文社区也比较活跃</li>
-<li>支持热部署 ，在不打断用户请求的情况下更新版本(⚠️是nginx版本，不是应用版本)</li>
-</ul>
-<h2 id="正向和反向代理区别"><a class="header-anchor" href="#正向和反向代理区别">¶</a>正向和反向代理区别</h2>
-<p><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E6%AD%A3%E5%8F%8D%E4%BB%A3%E7%90%86.6y2of3fqgts0.jpg" alt="区别"></p>
-<h2 id="nginx配置文件理解"><a class="header-anchor" href="#nginx配置文件理解">¶</a>nginx配置文件理解</h2>
-<ul>
-<li>nginx默认的配置，也可以自行修改，换端口，换location的路径和index首页<br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE.3l3m5kj9x720.png" alt="默认配置"></li>
-<li>再来一张菜鸟上面的截图，很详细<br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/config.3xzdplv40rq0.jpg" alt="config"></li>
-</ul>
-<h2 id="nginx实现负载均衡的几种策略"><a class="header-anchor" href="#nginx实现负载均衡的几种策略">¶</a>nginx实现负载均衡的几种策略</h2>
-<p><em>负载均衡其实就是利用多个服务器集群，将客户端的高并发请求分发到不同的服务器来减轻压力</em></p>
-<ul>
-<li>简单的集群配置
-<ul>
-<li><strong>轮询(AB…AB…交替处理请求，相当于列表循环)</strong><br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/%E9%9B%86%E7%BE%A41.386v5fvlw2w0.jpg" alt="简单集群"></li>
-<li><strong>权重(weight)：</strong><br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/weight.761b1wuvit00.jpg" alt="权重"></li>
-<li><strong>IP绑定(ip_hash)</strong><br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/ip_hash.4x58fei6mxe0.jpg" alt="IP绑定"></li>
-<li><strong>服务响应时间最短(fair):</strong><br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/fair.2eh1xuxxi3fo.jpg" alt="fair"></li>
-<li><strong>当前连接最少(least_conn)</strong><br>
-<img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/moshengxin/Blog-Picture@main/nginx/least_conn.5pjvq3tpbr00.jpg" alt="least_conn"></li>
-</ul>
-</li>
-</ul>
-<h2 id="session共享问题"><a class="header-anchor" href="#session共享问题">¶</a>session共享问题</h2>
-<ul>
-<li>当同一个用户第一次访问tomcat_8111 并且登录成功， 而第二次访问却被分配到了tomcat_8222， 这里并没有记录他的登陆状态，那么就会呈现未登录状态了，严重伤害了用户体验。</li>
-<li>解决办法：<code>使用ip_hash绑定策略</code></li>
-<li></li>
-</ul>
-<h2 id="高可用"><a class="header-anchor" href="#高可用">¶</a>高可用</h2>
-<h3 id="反向代理服务器高可用"><a class="header-anchor" href="#反向代理服务器高可用">¶</a>反向代理服务器高可用</h3>
-<ol>
-<li>当某一台服务器出现问题了，变成了down状态，我们要选择第二台服务器，所以我们在<code>location节点</code>下添加<code>proxy_connect_timeout 1</code>，目的是在连接超过1秒后(防止请求握手服务器失败后处于一直等待状态)，请求自动轮询到下一台没有宕机的服务器去。</li>
-</ol>
-<h3 id="nginx高可用"><a class="header-anchor" href="#nginx高可用">¶</a>nginx高可用</h3>
-<ol>
-<li>使用keepalived来设置主从nginx，防止nginx宕机事故的发生，nginx宕机后启动第二个nginx<br>
-<a href="https://www.cnblogs.com/920913cheng/p/10484786.html">教程参考</a></li>
-</ol>
-<h2 id="nginx解决跨域"><a class="header-anchor" href="#nginx解决跨域">¶</a>nginx解决跨域</h2>
-<ul>
-<li>解决办法：在相对应的<code>location节点</code>中添加以下内容</li>
-</ul>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Origin</span> <span class="string">*;</span></span><br><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Methods</span> <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span><span class="string">;</span></span><br><span class="line"><span class="string">add_header</span> <span class="string">Access-Control-Allow-Headers</span> <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&#x27;</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line"><span class="string">if</span> <span class="string">($request_method</span> <span class="string">=</span> <span class="string">&#x27;OPTIONS&#x27;</span><span class="string">)</span> &#123;</span><br><span class="line">    <span class="string">return</span> <span class="number">204</span><span class="string">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="nginx开启https协议"><a class="header-anchor" href="#nginx开启https协议">¶</a>nginx开启https协议</h2>
-<ul>
-<li>需要ssh证书，<a href="https://www.cnblogs.com/wl416896401/p/13903496.html">教程参考</a></li>
-</ul>
-<h2 id="nginx静态资源部署-动静分离"><a class="header-anchor" href="#nginx静态资源部署-动静分离">¶</a>nginx静态资源部署(动静分离)</h2>
-<ul>
-<li>将静态资源部署在 <code>Nginx</code> 上(即：html页面放在nginx安装目录下的html文件夹中，图片等静态资源要在配置文件中的<code>server节点中的location节点中配置</code>)</li>
-<li>动态资源请求(一般为需要查接口查数据库的资源)则利用nginx做反向代理去对应的服务器后台获取数据<br>
-<em>使用前后端动静分离后，可提升静态资源的访问速度（因为不要查后台），即使动态服务不可用，静态资源的访问也不会受到影响。</em></li>
-</ul>
-<h2 id="补充"><a class="header-anchor" href="#补充">¶</a>补充</h2>
-<p>linux系统中，http请求默认端口是80，而nginx配置文件中默认的端口也是80，所以没有改端口的情况下，访问linux的ip，默认也是80端口。</p>
-]]></content>
-      <categories>
-        <category>服务器</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ping测试两个IP网络之间的连通性</title>
-    <url>/2020/09/27/%E7%BD%91%E7%BB%9C/Ping%E6%B5%8B%E8%AF%95%E4%B8%A4%E4%B8%AAIP%E7%BD%91%E7%BB%9C%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BF%9E%E9%80%9A%E6%80%A7/</url>
-    <content><![CDATA[<span id="more"></span>
-<h2 id="使用ping或者telnet命令"><a class="header-anchor" href="#使用ping或者telnet命令">¶</a>使用ping或者telnet命令</h2>
-<p>1、ping和telnet命令作用类似，都是来测试网络的连通性,一般用ping就可以了</p>
-<p>2、ping命令写法/格式：ping+ip/domain(ip也可以是本机ip，domain为域名，<a href="http://xn--www-uc0ep96b.baidu.com">例如www.baidu.com</a>)</p>
-<p>3、ping命令会发送四次数据包，看到“已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)”代表能连通</p>
-<p>4、telnet命令写法/格式：telnet+ip/domain+port(把ip换成domain也可以，port为端口号)</p>
-<p>5、telnet成功后。cmd窗口一片黑色，只显示一个跳动的点点，不会显示其它内容，说明端口能连通。如果显示’telnet’ 不是内部或外部命令，则需要去系统中开启telnet客户端(教程:<a href="https://blog.csdn.net/qq_35428201/article/details/81048134">https://blog.csdn.net/qq_35428201/article/details/81048134</a>)</p>
-<p><em>好记性不如烂笔头，多记录多学习</em></p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
